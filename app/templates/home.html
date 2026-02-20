@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <header id="home">
+        <div class="header-content">
+            <img src="{{ url_for('static', path='/images/profile.JPG') }}" alt="Stefano Videsott" class="profile-img">
+            <h1>Stefano Videsott</h1>
+            <p>{{ t['home']['header-desc'] }}</p>
+            <div class="header-buttons">
+                <a href="/{{ lang }}/projects" class="btn">
+                    <i class="fas fa-folder-open" style="margin-right: 8px;"></i> {{ t['general']['view-projects'] }}
+                </a>
+                <a href="#contact" class="btn btn-primary">
+                    <i class="fas fa-paper-plane" style="margin-right: 8px;"></i> {{ t['general']['get-in-touch'] }}
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <section id="about">
+        <div class="container">
+            <h2>{{ t['home']['about-title'] }}</h2>
+            <div class="content" style="max-width: 800px; margin: 0 auto; text-align: left;">
+                <p style="margin-bottom: 20px; font-size: 1.1rem; line-height: 1.8; color: var(--text-main);">
+                    {{ t['home']['about-desc-1'] }}
+                </p>
+                <p style="margin-bottom: 20px; font-size: 1.1rem; line-height: 1.8; color: var(--text-main);">
+                    {{ t['home']['about-desc-2'] }}
+                </p>
+                <p style="margin-bottom: 40px; font-size: 1.1rem; line-height: 1.8; color: var(--text-main);">
+                    {{ t['home']['about-desc-3'] }}
+                </p>
+
+                <div style="text-align: center; margin-top: 30px;">
+                    <a href="{{ url_for('static', path='/docs/CV_Stefano-Videsott.pdf') }}" download class="btn btn-primary" style="padding: 12px 30px; font-size: 1.1rem;">
+                        <i class="fas fa-file-download" style="margin-right: 10px;"></i> {{ t['general']['download-cv'] }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills">
+        <div class="container">
+            <h2>{{ t['home']['skills-title'] }}</h2>
+            <div class="skills-container">
+                <div class="skill">
+                    <i class="fas fa-code"></i>
+                    <h3>{{ t['home']['skills-prog'] }}</h3>
+                    <p>{{ t['home']['skills-prog-list'] }}</p>
+                </div>
+                <div class="skill">
+                    <i class="fas fa-laptop-code"></i>
+                    <h3>{{ t['home']['skills-web'] }}</h3>
+                    <p>{{ t['home']['skills-web-list'] }}</p>
+                </div>
+                <div class="skill">
+                    <i class="fas fa-database"></i>
+                    <h3>{{ t['home']['skills-db'] }}</h3>
+                    <p>{{ t['home']['skills-db-list'] }}</p>
+                </div>
+                <div class="skill">
+                    <i class="fas fa-cloud"></i>
+                    <h3>{{ t['home']['skills-cloud'] }}</h3>
+                    <p>{{ t['home']['skills-cloud-list'] }}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <h2>{{ t['home']['contact-title'] }}</h2>
+            <div class="contact-info">
+                <div>
+                    <i class="fas fa-envelope" style="color: var(--primary-color);"></i>
+                    <a href="mailto:stefano.videsott.work@gmail.com" style="color: var(--text-main); font-weight: 500;">stefano.videsott.work@gmail.com</a>
+                </div>
+                <div class="social-links" style="margin-top: 30px;">
+                    <a href="https://github.com/StefanoVidesott" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://www.instagram.com/stefano.videsott" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://linkedin.com/in/stefano-videsott" target="_blank" aria-label="linkedin"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

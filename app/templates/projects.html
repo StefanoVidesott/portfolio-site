@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <section id="projects" style="padding-top: 100px; min-height: 80vh;">
+        <div class="container">
+            <h2>{{ t['projects']['title'] }}</h2>
+            <div class="projects-container">
+
+                <div class="project">
+                    <img src="{{ url_for('static', path='/images/project-air_force_1943.png') }}" alt="Air Force 1943">
+                    <div class="project-content">
+                        <h3>{{ t['projects']['p1-title'] }}</h3>
+                        <p>{{ t['projects']['p1-desc'] }}</p>
+                        <a href="https://weatherlight.itch.io/airforce-1943" target="_blank">{{ t['projects']['p1-link'] }}</a>
+                    </div>
+                </div>
+
+                <div class="project">
+                    <img src="{{ url_for('static', path='/images/project-unitn-p2-configuration.png') }}" alt="Unitn P2 Config">
+                    <div class="project-content">
+                        <h3>{{ t['projects']['p2-title'] }}</h3>
+                        <p>{{ t['projects']['p2-desc'] }}</p>
+                        <a href="https://github.com/StefanoVidesott/unitn-p2-configuration" target="_blank">{{ t['projects']['p2-link'] }}</a>
+                    </div>
+                </div>
+
+                <div class="project">
+                    <img src="{{ url_for('static', path='/images/project-wannawork.png') }}" alt="WannaWork">
+                    <div class="project-content">
+                        <h3>{{ t['projects']['p3-title'] }}</h3>
+                        <p>{{ t['projects']['p3-desc'] }}</p>
+                        <a href="/{{ lang }}/project/wannawork">{{ t['projects']['p3-link'] }}</a>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 4rem;">
+                <a href="/{{ lang }}/home" class="btn btn-primary">Back to Home</a>
+            </div>
+        </div>
+    </section>
+{% endblock %}
