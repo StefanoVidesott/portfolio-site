@@ -9,18 +9,23 @@
     <meta name="description" content="{{ t['general']['meta-desc'] }}">
     <meta name="author" content="Stefano Videsott">
 
-    <link rel="alternate" hreflang="it" href="https://www.tuodominio.com/it/{{ current_page }}" />
-    <link rel="alternate" hreflang="en" href="https://www.tuodominio.com/en/{{ current_page }}" />
-    <link rel="alternate" hreflang="x-default" href="https://www.tuodominio.com/en/{{ current_page }}" />
+    <link rel="alternate" hreflang="it" href="https://www.stefanovidesott.com/it/{{ current_page }}" />
+    <link rel="alternate" hreflang="en" href="https://www.stefanovidesott.com/en/{{ current_page }}" />
+    <link rel="alternate" hreflang="x-default" href="https://www.stefanovidesott.com/en/{{ current_page }}" />
 
     <meta property="og:title" content="Stefano Videsott - Portfolio">
     <meta property="og:description" content="{{ t['general']['meta-desc'] }}">
-    <meta property="og:image" content="{{ url_for('static', path='/images/profile.JPG') }}">
+    <meta property="og:image" content="{{ url_for('static', path='/images/profile.webp') }}">
     <meta property="og:url" content="https://www.stefanovidesott.com/{{ lang }}/{{ current_page }}">
 
-    <link rel="stylesheet" href="{{ url_for('static', path='/css/style.css') }}">
+    {% if env == 'prod' %}
+        <link rel="stylesheet" href="{{ url_for('static', path='/css/style-min.css') }}">
+    {% else %}
+        <link rel="stylesheet" href="{{ url_for('static', path='/css/style.css') }}">
+    {% endif %}
+
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
 
@@ -35,8 +40,15 @@
             <ul class="nav-menu">
                 <li><a href="/{{ lang }}/home#about">{{ t['nav']['about'] }}</a></li>
                 <li><a href="/{{ lang }}/home#skills">{{ t['nav']['skills'] }}</a></li>
+                <li><a href="/{{ lang }}/home#experience">{{ t['nav']['experience'] }}</a></li>
+                <li><a href="/{{ lang }}/home#education">{{ t['nav']['education'] }}</a></li>
                 <li><a href="/{{ lang }}/projects">{{ t['nav']['projects'] }}</a></li>
                 <li><a href="/{{ lang }}/home#contact">{{ t['nav']['contact'] }}</a></li>
+                <li>
+                    <button id="themeToggle" class="theme-toggle-btn" aria-label="Cambia tema">
+                        <i class="fas fa-sun"></i>
+                    </button>
+                </li>
                 <li>
                     <select id="languageSwitcher" aria-label="Select language"
                             onchange="window.location.href = this.value">
@@ -48,12 +60,18 @@
         </div>
     </nav>
 
-    {% block content %}{% endblock %}
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
 
     <footer>
         {{ t['general']['footer-text'] }}
     </footer>
 
-    <script src="{{ url_for('static', path='/js/main.js') }}"></script>
+    {% if env == 'prod' %}
+        <script src="{{ url_for('static', path='/js/main-min.js') }}"></script>
+    {% else %}
+        <script src="{{ url_for('static', path='/js/main.js') }}"></script>
+    {% endif %}
 </body>
 </html>

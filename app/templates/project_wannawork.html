@@ -1,92 +1,109 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <header id="project-header" style="padding: 80px 0 60px; text-align: center; background: linear-gradient(135deg, #2d3436 0%, #1e272e 100%); color: #fff;">
+    <header id="project-header">
         <div class="container">
-            <h1 style="font-size: 3rem; margin-bottom: 10px; color: #fff;">{{ t['wannawork']['title'] }}</h1>
-            <p style="font-size: 1.2rem; color: #dfe6e9; font-weight: 300; margin-bottom: 30px;">{{ t['wannawork']['subtitle'] }}</p>
+            <h1 class="reveal delay-1">{{ t['wannawork']['title'] }}</h1>
+            <p class="reveal delay-2">{{ t['wannawork']['subtitle'] }}</p>
 
-            <div>
-                <a href="https://wannawork-frontend.stefanovidesott.com" target="_blank" class="btn btn-primary" style="padding: 12px 30px; font-size: 1.1rem;">
-                    <i class="fas fa-external-link-alt" style="margin-right: 10px;"></i>
+            <div class="header-buttons reveal delay-3" style="margin-top: 30px; flex-wrap: wrap;">
+
+                <a href="https://wannawork-frontend.stefanovidesott.com" target="_blank" class="btn btn-primary">
+                    <i class="fas fa-external-link-alt" style="margin-right: 8px;"></i>
                     {{ t['wannawork']['visit-website'] }}
                 </a>
+
+                <a href="https://github.com/StefanoVidesott/WannaWork_Frontend" target="_blank" class="btn">
+                    <i class="fab fa-github" style="margin-right: 8px;"></i>
+                    {{ t['wannawork']['github-front'] }}
+                </a>
+
+                <a href="https://github.com/StefanoVidesott/WannaWork_App" target="_blank" class="btn">
+                    <i class="fab fa-github" style="margin-right: 8px;"></i>
+                    {{ t['wannawork']['github-back'] }}
+                </a>
+
             </div>
         </div>
     </header>
 
-    <section id="project-details" style="background-color: var(--bg-body);">
-        <div class="container" style="max-width: 900px;">
+    <section id="project-details" class="section-bg-default">
+        <div class="container container-medium">
 
-            <div style="background: var(--bg-card); padding: 40px; border-radius: var(--radius); box-shadow: var(--shadow-sm); margin-bottom: 40px;">
-                <h2 style="margin-bottom: 30px; font-size: 1.8rem;">{{ t['wannawork']['what-is'] }}</h2>
-                <p style="color: var(--text-muted); margin-bottom: 30px;">{{ t['wannawork']['what-is-text'] }}</p>
+            <div class="detail-card base-card reveal delay-1">
+                <h2>{{ t['wannawork']['what-is'] }}</h2>
+                <p>{{ t['wannawork']['what-is-text'] }}</p>
 
-                <h3 style="color: var(--text-main); margin-bottom: 15px;">{{ t['wannawork']['problem'] }}</h3>
-                <p style="color: var(--text-muted);">{{ t['wannawork']['problem-text'] }}</p>
+                <h3>{{ t['wannawork']['problem'] }}</h3>
+                <p>{{ t['wannawork']['problem-text'] }}</p>
             </div>
 
-            <div style="background: var(--bg-card); padding: 40px; border-radius: var(--radius); box-shadow: var(--shadow-sm); margin-bottom: 40px;">
-                <h2 style="margin-bottom: 30px; font-size: 1.8rem;">{{ t['wannawork']['tech'] }}</h2>
-                <ul style="list-style-type: none; padding: 0;">
-                    <li style="margin-bottom: 15px; color: var(--text-muted);"><i class="fab fa-vuejs" style="color: #42b883; margin-right: 10px; width: 20px;"></i> <strong>{{ t['wannawork']['tech-front'].split(':')[0] }}:</strong> {{ t['wannawork']['tech-front'].split(':')[1] }}</li>
-                    <li style="margin-bottom: 15px; color: var(--text-muted);"><i class="fab fa-node-js" style="color: #68a063; margin-right: 10px; width: 20px;"></i> <strong>{{ t['wannawork']['tech-back'].split(':')[0] }}:</strong> {{ t['wannawork']['tech-back'].split(':')[1] }}</li>
-                    <li style="margin-bottom: 15px; color: var(--text-muted);"><i class="fas fa-database" style="color: #4DB33D; margin-right: 10px; width: 20px;"></i> <strong>{{ t['wannawork']['tech-db'].split(':')[0] }}:</strong> {{ t['wannawork']['tech-db'].split(':')[1] }}</li>
-                    <li style="margin-bottom: 15px; color: var(--text-muted);"><i class="fas fa-server" style="color: #0db7ed; margin-right: 10px; width: 20px;"></i> <strong>{{ t['wannawork']['tech-devops'].split(':')[0] }}:</strong> {{ t['wannawork']['tech-devops'].split(':')[1] }}</li>
+            <div class="detail-card base-card reveal delay-2" style="border-left: 4px solid var(--primary-color);">
+                <h2><i class="fas fa-users" style="color: var(--primary-color); margin-right: 15px;"></i>{{ t['wannawork']['role-title'] }}</h2>
+                <p style="font-size: 1.05rem; line-height: 1.8;">{{ t['wannawork']['role-text'] }}</p>
+            </div>
+
+            <div class="detail-card base-card reveal delay-3">
+                <h2>{{ t['wannawork']['tech'] }}</h2>
+                <ul class="tech-list">
+                    <li><i class="fab fa-vuejs tech-icon icon-vue"></i> <strong>{{ t['wannawork']['tech-front'].split(':')[0] }}:</strong> {{ t['wannawork']['tech-front'].split(':')[1] }}</li>
+                    <li><i class="fab fa-node-js tech-icon icon-node"></i> <strong>{{ t['wannawork']['tech-back'].split(':')[0] }}:</strong> {{ t['wannawork']['tech-back'].split(':')[1] }}</li>
+                    <li><i class="fas fa-database tech-icon icon-db"></i> <strong>{{ t['wannawork']['tech-db'].split(':')[0] }}:</strong> {{ t['wannawork']['tech-db'].split(':')[1] }}</li>
+                    <li><i class="fas fa-server tech-icon icon-docker"></i> <strong>{{ t['wannawork']['tech-devops'].split(':')[0] }}:</strong> {{ t['wannawork']['tech-devops'].split(':')[1] }}</li>
                 </ul>
             </div>
 
-            <div style="background: var(--bg-card); padding: 40px; border-radius: var(--radius); box-shadow: var(--shadow-sm); margin-bottom: 40px;">
-                <h2 style="margin-bottom: 30px; font-size: 1.8rem;">{{ t['wannawork']['docs'] }}</h2>
+            <div class="detail-card base-card reveal delay-4">
+                <h2>{{ t['wannawork']['docs'] }}</h2>
 
-                <div style="display: flex; flex-direction: column; gap: 15px;">
+                <div class="doc-list">
 
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; border: 1px solid rgba(0,0,0,0.05); border-radius: 8px; background-color: var(--bg-body); flex-wrap: wrap; gap: 15px;">
-                        <div style="color: var(--text-muted); flex: 1; min-width: 250px;">
-                            <i class="fas fa-file-pdf" style="color: #e2574c; margin-right: 10px; font-size: 1.2rem;"></i>
+                    <div class="doc-item">
+                        <div class="doc-item-title">
+                            <i class="fas fa-file-pdf icon-pdf"></i>
                             {{ t['wannawork']['docs-d1'] }}
                         </div>
-                        <a href="{{ url_for('static', path='/docs/WannaWork_D1.pdf') }}" download class="btn" style="padding: 8px 20px; font-size: 0.9rem; border-color: var(--primary-color); color: var(--primary-color);">
+                        <a href="{{ url_for('static', path='/docs/WannaWork_D1.pdf') }}" download class="btn btn-download">
                             <i class="fas fa-download" style="margin-right: 5px;"></i> {{ t['wannawork']['download'] }}
                         </a>
                     </div>
 
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; border: 1px solid rgba(0,0,0,0.05); border-radius: 8px; background-color: var(--bg-body); flex-wrap: wrap; gap: 15px;">
-                        <div style="color: var(--text-muted); flex: 1; min-width: 250px;">
-                            <i class="fas fa-file-pdf" style="color: #e2574c; margin-right: 10px; font-size: 1.2rem;"></i>
+                    <div class="doc-item">
+                        <div class="doc-item-title">
+                            <i class="fas fa-file-pdf icon-pdf"></i>
                             {{ t['wannawork']['docs-d2'] }}
                         </div>
-                        <a href="{{ url_for('static', path='/docs/WannaWork_D2.pdf') }}" download class="btn" style="padding: 8px 20px; font-size: 0.9rem; border-color: var(--primary-color); color: var(--primary-color);">
+                        <a href="{{ url_for('static', path='/docs/WannaWork_D2.pdf') }}" download class="btn btn-download">
                             <i class="fas fa-download" style="margin-right: 5px;"></i> {{ t['wannawork']['download'] }}
                         </a>
                     </div>
 
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; border: 1px solid rgba(0,0,0,0.05); border-radius: 8px; background-color: var(--bg-body); flex-wrap: wrap; gap: 15px;">
-                        <div style="color: var(--text-muted); flex: 1; min-width: 250px;">
-                            <i class="fas fa-file-pdf" style="color: #e2574c; margin-right: 10px; font-size: 1.2rem;"></i>
+                    <div class="doc-item">
+                        <div class="doc-item-title">
+                            <i class="fas fa-file-pdf icon-pdf"></i>
                             {{ t['wannawork']['docs-d3'] }}
                         </div>
-                        <a href="{{ url_for('static', path='/docs/WannaWork_D3.pdf') }}" download class="btn" style="padding: 8px 20px; font-size: 0.9rem; border-color: var(--primary-color); color: var(--primary-color);">
+                        <a href="{{ url_for('static', path='/docs/WannaWork_D3.pdf') }}" download class="btn btn-download">
                             <i class="fas fa-download" style="margin-right: 5px;"></i> {{ t['wannawork']['download'] }}
                         </a>
                     </div>
 
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; border: 1px solid rgba(0,0,0,0.05); border-radius: 8px; background-color: var(--bg-body); flex-wrap: wrap; gap: 15px;">
-                        <div style="color: var(--text-muted); flex: 1; min-width: 250px;">
-                            <i class="fas fa-file-pdf" style="color: #e2574c; margin-right: 10px; font-size: 1.2rem;"></i>
+                    <div class="doc-item">
+                        <div class="doc-item-title">
+                            <i class="fas fa-file-pdf icon-pdf"></i>
                             {{ t['wannawork']['docs-d4'] }}
                         </div>
-                        <a href="{{ url_for('static', path='/docs/WannaWork_D4.pdf') }}" download class="btn" style="padding: 8px 20px; font-size: 0.9rem; border-color: var(--primary-color); color: var(--primary-color);">
+                        <a href="{{ url_for('static', path='/docs/WannaWork_D4.pdf') }}" download class="btn btn-download">
                             <i class="fas fa-download" style="margin-right: 5px;"></i> {{ t['wannawork']['download'] }}
                         </a>
                     </div>
 
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; border: 1px solid rgba(0,0,0,0.05); border-radius: 8px; background-color: var(--bg-body); flex-wrap: wrap; gap: 15px;">
-                        <div style="color: var(--text-muted); flex: 1; min-width: 250px;">
-                            <i class="fas fa-file-excel" style="color: #217346; margin-right: 10px; font-size: 1.2rem;"></i>
+                    <div class="doc-item">
+                        <div class="doc-item-title">
+                            <i class="fas fa-file-excel icon-excel"></i>
                             {{ t['wannawork']['docs-bp'] }}
                         </div>
-                        <a href="{{ url_for('static', path='/docs/WannaWork_BusinessPlan.xlsx') }}" download class="btn" style="padding: 8px 20px; font-size: 0.9rem; border-color: var(--primary-color); color: var(--primary-color);">
+                        <a href="{{ url_for('static', path='/docs/WannaWork_BusinessPlan.xlsx') }}" download class="btn btn-download">
                             <i class="fas fa-download" style="margin-right: 5px;"></i> {{ t['wannawork']['download'] }}
                         </a>
                     </div>
@@ -94,8 +111,8 @@
                 </div>
             </div>
 
-            <div style="text-align: center; margin-top: 2rem;">
-                <a href="/{{ lang }}/projects" class="btn"><i class="fas fa-arrow-left" style="margin-right: 8px;"></i> {{ t['wannawork']['back-to-projects'] }}</a>
+            <div class="reveal delay-5 center-actions">
+                <a href="/{{ lang }}/projects" class="btn"><i class="fas fa-arrow-left" style="margin-right: 8px;"></i> {{ t['general']['back-to-projects'] }}</a>
             </div>
 
         </div>

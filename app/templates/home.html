@@ -3,10 +3,15 @@
 {% block content %}
     <header id="home">
         <div class="header-content">
-            <img src="{{ url_for('static', path='/images/profile.JPG') }}" alt="Stefano Videsott" class="profile-img">
-            <h1>Stefano Videsott</h1>
-            <p>{{ t['home']['header-desc'] }}</p>
-            <div class="header-buttons">
+            <img src="{{ url_for('static', path='/images/profile.webp') }}" alt="Stefano Videsott" class="profile-img reveal" loading="lazy">
+            <h1 class="reveal delay-1">Stefano Videsott</h1>
+
+            <div class="typing-container reveal delay-2">
+                <span class="typed-text" data-words="{{ t['home']['header-roles'] | join('|') }}"></span>
+                <span class="cursor">&nbsp;</span>
+            </div>
+
+            <div class="header-buttons reveal delay-3">
                 <a href="/{{ lang }}/projects" class="btn">
                     <i class="fas fa-folder-open" style="margin-right: 8px;"></i> {{ t['general']['view-projects'] }}
                 </a>
@@ -19,20 +24,14 @@
 
     <section id="about">
         <div class="container">
-            <h2>{{ t['home']['about-title'] }}</h2>
-            <div class="content" style="max-width: 800px; margin: 0 auto; text-align: left;">
-                <p style="margin-bottom: 20px; font-size: 1.1rem; line-height: 1.8; color: var(--text-main);">
-                    {{ t['home']['about-desc-1'] }}
-                </p>
-                <p style="margin-bottom: 20px; font-size: 1.1rem; line-height: 1.8; color: var(--text-main);">
-                    {{ t['home']['about-desc-2'] }}
-                </p>
-                <p style="margin-bottom: 40px; font-size: 1.1rem; line-height: 1.8; color: var(--text-main);">
-                    {{ t['home']['about-desc-3'] }}
-                </p>
+            <h2 class="reveal">{{ t['home']['about-title'] }}</h2>
+            <div class="content container-narrow about-text">
+                <p class="reveal delay-1">{{ t['home']['about-desc-1'] }}</p>
+                <p class="reveal delay-2">{{ t['home']['about-desc-2'] }}</p>
+                <p class="reveal delay-3">{{ t['home']['about-desc-3'] }}</p>
 
-                <div style="text-align: center; margin-top: 30px;">
-                    <a href="{{ url_for('static', path='/docs/CV_Stefano-Videsott.pdf') }}" download class="btn btn-primary" style="padding: 12px 30px; font-size: 1.1rem;">
+                <div class="reveal delay-4 download-btn-wrapper">
+                    <a href="{{ url_for('static', path='/docs/' ~ lang ~ '/CV_Stefano-Videsott.pdf') }}" download class="btn btn-primary">
                         <i class="fas fa-file-download" style="margin-right: 10px;"></i> {{ t['general']['download-cv'] }}
                     </a>
                 </div>
@@ -40,26 +39,26 @@
         </div>
     </section>
 
-    <section id="skills">
+    <section id="skills" class="section-bg-alt">
         <div class="container">
-            <h2>{{ t['home']['skills-title'] }}</h2>
+            <h2 class="reveal">{{ t['home']['skills-title'] }}</h2>
             <div class="skills-container">
-                <div class="skill">
+                <div class="skill base-card reveal delay-1">
                     <i class="fas fa-code"></i>
                     <h3>{{ t['home']['skills-prog'] }}</h3>
                     <p>{{ t['home']['skills-prog-list'] }}</p>
                 </div>
-                <div class="skill">
+                <div class="skill base-card reveal delay-2">
                     <i class="fas fa-laptop-code"></i>
                     <h3>{{ t['home']['skills-web'] }}</h3>
                     <p>{{ t['home']['skills-web-list'] }}</p>
                 </div>
-                <div class="skill">
+                <div class="skill base-card reveal delay-3">
                     <i class="fas fa-database"></i>
                     <h3>{{ t['home']['skills-db'] }}</h3>
                     <p>{{ t['home']['skills-db-list'] }}</p>
                 </div>
-                <div class="skill">
+                <div class="skill base-card reveal delay-4">
                     <i class="fas fa-cloud"></i>
                     <h3>{{ t['home']['skills-cloud'] }}</h3>
                     <p>{{ t['home']['skills-cloud-list'] }}</p>
@@ -68,18 +67,135 @@
         </div>
     </section>
 
-    <section id="contact">
-        <div class="container">
-            <h2>{{ t['home']['contact-title'] }}</h2>
-            <div class="contact-info">
-                <div>
-                    <i class="fas fa-envelope" style="color: var(--primary-color);"></i>
-                    <a href="mailto:stefano.videsott.work@gmail.com" style="color: var(--text-main); font-weight: 500;">stefano.videsott.work@gmail.com</a>
+    <section id="experience" class="section-bg-default">
+        <div class="container container-medium">
+            <h2 class="reveal section-title">{{ t['experience']['title'] }}</h2>
+
+            <div class="resume-card base-card reveal delay-1">
+                <h3>{{ t['experience']['job1-title'] }} <span>@ {{ t['experience']['job1-company'] }}</span></h3>
+                <p class="meta-info">
+                    <i class="fas fa-calendar-alt"></i> {{ t['experience']['job1-date'] }} &nbsp;|&nbsp;
+                    <i class="fas fa-map-marker-alt"></i> {{ t['experience']['job1-location'] }}
+                </p>
+                <ul class="item-list">
+                    {% for task in t['experience']['job1-tasks'] %}
+                        <li>{{ task }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="resume-card base-card border-secondary reveal delay-2">
+                <h3>{{ t['experience']['job2-title'] }} <span>@ {{ t['experience']['job2-company'] }}</span></h3>
+                <p class="resume-meta muted">
+                    <i class="fas fa-calendar-alt"></i> {{ t['experience']['job2-date'] }} &nbsp;|&nbsp;
+                    <i class="fas fa-map-marker-alt"></i> {{ t['experience']['job2-location'] }}
+                </p>
+                <ul class="item-list">
+                    {% for task in t['experience']['job2-tasks'] %}
+                        <li>{{ task }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="education" class="section-bg-alt">
+        <div class="container container-medium">
+            <h2 class="reveal section-title">{{ t['education']['title'] }}</h2>
+
+            <div class="resume-card base-card reveal delay-1">
+                <h3>{{ t['education']['edu1-title'] }} <span>@ {{ t['education']['edu1-school'] }}</span></h3>
+                <p class="meta-info">
+                    <i class="fas fa-graduation-cap"></i> {{ t['education']['edu1-date'] }} &nbsp;|&nbsp;
+                    <i class="fas fa-map-marker-alt"></i> {{ t['education']['edu1-location'] }}
+                </p>
+                <ul class="resume-list">
+                    {% for task in t['education']['edu1-tasks'] %}
+                        <li>{{ task }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="interests-languages" class="section-bg-alt">
+        <div class="container container-medium two-col-layout">
+
+            <div class="col-main reveal delay-1">
+                <h2 class="col-title">{{ t['interests']['title'] }}</h2>
+                <div class="info-card base-card">
+                    <h3>{{ t['interests']['int1-title'] }}</h3>
+                    <p class="info-subtitle">{{ t['interests']['int1-org'] }}</p>
+                    <p class="info-meta">
+                        <i class="fas fa-calendar-alt"></i> {{ t['interests']['int1-date'] }} | <i class="fas fa-map-marker-alt"></i> {{ t['interests']['int1-location'] }}
+                    </p>
+                    <p class="info-desc">{{ t['interests']['int1-desc'] }}</p>
+                    <ul class="item-list">
+                        {% for task in t['interests']['int1-tasks'] %}
+                            <li>{{ task }}</li>
+                        {% endfor %}
+                    </ul>
                 </div>
-                <div class="social-links" style="margin-top: 30px;">
-                    <a href="https://github.com/StefanoVidesott" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                    <a href="https://www.instagram.com/stefano.videsott" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="https://linkedin.com/in/stefano-videsott" target="_blank" aria-label="linkedin"><i class="fab fa-linkedin"></i></a>
+            </div>
+
+            <div class="col-sidebar reveal delay-2">
+                <h2 class="col-title">{{ t['languages']['title'] }}</h2>
+
+                <div class="lang-card base-card">
+                    <i class="fas fa-language"></i>
+                    <div>
+                        <h3>{{ t['languages']['lang1'] }}</h3>
+                        <p>{{ t['languages']['lang1-lvl'] }}</p>
+                    </div>
+                </div>
+
+                <div class="lang-card base-card">
+                    <i class="fas fa-globe-americas"></i>
+                    <div>
+                        <h3>{{ t['languages']['lang2'] }}</h3>
+                        <p>{{ t['languages']['lang2-lvl'] }}</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="contact" class="section-bg-default">
+        <div class="container container-medium">
+            <h2 class="reveal section-title">{{ t['home']['contact-title'] }}</h2>
+
+            <div class="two-col-layout">
+                <div class="col-sidebar reveal delay-1">
+                    <div class="info-card base-card" style="height: 100%; display: flex; flex-direction: column; justify-content: center;">
+                        <div class="contact-email" style="font-size: 1.2rem; margin-bottom: 20px;">
+                            <i class="fas fa-envelope"></i>
+                            <a href="mailto:stefano.videsott.work@gmail.com">stefano.videsott.work@gmail.com</a>
+                        </div>
+                        <p style="color: var(--text-muted); margin-bottom: 30px;">
+                            {{ t['home']['about-desc-3'] }} </p>
+                        <div class="social-links contact-socials" style="margin-top: 0;">
+                            <a href="https://github.com/StefanoVidesott" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                            <a href="https://www.instagram.com/stefano.videsott" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="https://linkedin.com/in/stefano-videsott" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-main reveal delay-2">
+                    <div class="base-card" style="padding: 30px;">
+                        <form id="contactForm" class="contact-form">
+                            <input type="text" id="name" name="name" class="form-control" placeholder="{{ t['home']['contact-form']['name'] }}" required>
+                            <input type="email" id="email" name="email" class="form-control" placeholder="{{ t['home']['contact-form']['email'] }}" required>
+                            <textarea id="message" name="message" class="form-control" placeholder="{{ t['home']['contact-form']['message'] }}" required></textarea>
+
+                            <button type="submit" class="btn btn-primary" id="submitBtn">
+                                <i class="fas fa-paper-plane" style="margin-right: 8px;"></i> <span id="btnText">{{ t['home']['contact-form']['send'] }}</span>
+                            </button>
+
+                            <div id="formResponse" class="form-message"></div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

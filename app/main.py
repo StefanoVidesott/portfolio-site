@@ -1,19 +1,65 @@
+import os
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse, FileResponse
+from starlette.exceptions import HTTPException as StarletteHTTPException
 from app.translations import translations
+
+from fastapi import BackgroundTasks
+from pydantic import BaseModel
+import smtplib
+from email.message import EmailMessage
+
+from dotenv import load_dotenv
+load_dotenv()
 
 app = FastAPI()
 
-app.mount("/static", StaticFiles(directory="app/static"), name="static")
-
-templates = Jinja2Templates(directory="app/templates")
-
 SUPPORTED_LANGS = ["it", "en"]
+CURRENT_ENV = os.getenv("ENVIRONMENT", "dev")
+
+app.mount("/static", StaticFiles(directory="app/static"), name="static")
+templates = Jinja2Templates(directory="app/templates")
+templates.env.globals["env"] = CURRENT_ENV
+
+class ContactRequest(BaseModel):
+    name: str
+    email: str
+    message: str
+
+def send_email_task(contact: ContactRequest):
+    SMTP_SERVER = os.getenv("SMTP_SERVER")
+    SMTP_PORT = os.getenv("SMTP_PORT")
+    SENDER_EMAIL = os.getenv("SENDER_EMAIL")
+    SENDER_PASSWORD = os.getenv("SENDER_PASSWORD")
+    RECEIVER_EMAIL = os.getenv("RECEIVER_EMAIL")
+
+    msg = EmailMessage()
+    msg.set_content(f"Nuovo messaggio dal tuo Portfolio!\n\nNome: {contact.name}\nEmail: {contact.email}\n\nMessaggio:\n{contact.message}")
+
+    msg['Subject'] = f"Nuovo Contatto da: {contact.name}"
+    msg['From'] = SENDER_EMAIL
+    msg['To'] = RECEIVER_EMAIL
+
+    try:
+        with smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT) as server:
+            server.login(SENDER_EMAIL, SENDER_PASSWORD)
+            server.send_message(msg)
+    except Exception as e:
+        print(f"Errore invio email: {e}")
+
+@app.get("/favicon.ico")
+async def get_favicon():
+    return FileResponse("app/static/favicon.ico")
 
 @app.get("/")
-async def root():
+async def root(request: Request):
+    accept_language = request.headers.get("accept-language", "")
+
+    if accept_language.startswith("it"):
+        return RedirectResponse(url="/it/home")
+
     return RedirectResponse(url="/en/home")
 
 @app.get("/{lang}/home")
@@ -27,6 +73,11 @@ async def home(request: Request, lang: str):
         "t": translations[lang],
         "current_page": "home"
     })
+
+@app.post("/api/contact")
+async def handle_contact(contact: ContactRequest, background_tasks: BackgroundTasks):
+    background_tasks.add_task(send_email_task, contact)
+    return {"status": "success", "message": "Email is being sent"}
 
 @app.get("/{lang}/projects")
 async def projects(request: Request, lang: str):
@@ -51,6 +102,18 @@ async def project_wannawork(request: Request, lang: str):
         "t": translations[lang],
         "current_page": "project/wannawork"
     })
+
+@app.exception_handler(404)
+async def custom_404_handler(request: Request, exc: StarletteHTTPException):
+    path_parts = request.url.path.split('/')
+    lang = path_parts[1] if len(path_parts) > 1 and path_parts[1] in SUPPORTED_LANGS else "en"
+
+    return templates.TemplateResponse("404.html", {
+        "request": request,
+        "lang": lang,
+        "t": translations[lang],
+        "current_page": "home"
+    }, status_code=404)
 
 @app.get("/robots.txt")
 async def get_robots():

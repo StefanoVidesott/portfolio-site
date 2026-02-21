@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <section id="error-404" class="page-section section-bg-default" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; min-height: 70vh;">
+        <div class="container container-narrow">
+
+            <h1 class="reveal" style="font-size: 8rem; color: var(--primary-color); line-height: 1; margin-bottom: 10px;">404</h1>
+
+            <h2 class="reveal delay-1" style="margin-bottom: 20px;">{{ t['404']['title'] }}</h2>
+            <p class="reveal delay-2" style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 40px;">
+                {{ t['404']['message'] }}
+            </p>
+
+            <div class="reveal delay-3">
+                <a href="/{{ lang }}/home" class="btn btn-primary" style="padding: 14px 40px; font-size: 1.1rem;">
+                    <i class="fas fa-home" style="margin-right: 10px;"></i> {{ t['404']['back-btn'] }}
+                </a>
+            </div>
+
+        </div>
+    </section>
+{% endblock %}

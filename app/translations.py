@@ -3,6 +3,8 @@ translations = {
         "nav": {
             "about": "Chi Sono",
             "skills": "Competenze",
+            "education": "Istruzione",
+            "experience": "Esperienza",
             "projects": "Progetti",
             "contact": "Contatti"
         },
@@ -16,7 +18,11 @@ translations = {
             "meta-desc": "Portfolio di Stefano Videsott, Sviluppatore Software e studente di Informatica all'Università di Trento. Scopri i miei progetti IT, app web e competenze DevOps."
         },
         "home": {
-            "header-desc": "Studente di Informatica",
+            "header-roles": [
+                "Studente di Informatica",
+                "Sviluppatore Software",
+                "Appassionato di DevOps"
+            ],
             "about-title": "Chi Sono",
             "about-desc-1": "Ciao, sono Stefano Videsott, uno studente appassionato di informatica all'Università di Trento ed ex sviluppatore software presso Airpim SRL. Mi sono occupato nello sviluppo di soluzioni software e sono desideroso di imparare ed esplorare nuove tecnologie nel mondo IT.",
             "about-desc-2": "Con una solida base in linguaggi di programmazione come C++, C#, Python e Java, mi piace costruire applicazioni che risolvono problemi reali, o anche qualche gioco. Il mio percorso nel settore tecnologico è guidato dalla curiosità e da un impegno per il miglioramento continuo.",
@@ -30,7 +36,69 @@ translations = {
             "skills-web-list": "Creazione di SPA, MPA e API RESTful con FastAPI, Node.js e Express.",
             "skills-db-list": "Progettazione e modellazione di database SQL (MySQL e MariaDB) e NoSQL (MongoDB).",
             "skills-cloud-list": "Containerizzazione con Docker, Nginx e Linux.",
-            "contact-title": "Contattami"
+            "contact-title": "Contattami",
+            "contact-form": {
+                "name": "Il tuo Nome",
+                "email": "La tua Email",
+                "message": "Il tuo Messaggio",
+                "send": "Invia Messaggio",
+                "sending": "Invio in corso...",
+                "success": "Messaggio inviato con successo! Ti risponderò al più presto.",
+                "error": "Si è verificato un errore. Riprova più tardi o scrivimi direttamente via mail."
+            },
+        },
+        "experience": {
+            "title": "Esperienze Lavorative",
+            "job1-title": "Programmatore",
+            "job1-company": "Airpim SRL",
+            "job1-date": "Maggio 2024 - Maggio 2025",
+            "job1-location": "Rovereto, TN",
+            "job1-tasks": [
+                "Sviluppo e manutenzione di applicazioni web e API backend.",
+                "Tecnologie: Python, Flask, SQLAlchemy, MySQL, Docker.",
+                "Implementazione di sistemi di visualizzazione e manipolazione di dati.",
+                "Collaborazione con il team per migliorare l'architettura software."
+            ],
+            "job2-title": "Cameriere",
+            "job2-company": "Ristorante \"Al Gusto\"",
+            "job2-date": "Agosto 2023 - Maggio 2024",
+            "job2-location": "Trento, TN",
+            "job2-tasks": [
+                "Gestione dell'accoglienza e servizio clienti.",
+                "Sviluppo di capacità di comunicazione, problem-solving e gestione ottimale dello stress e del tempo."
+            ]
+        },
+        "education": {
+            "title": "Istruzione",
+            "edu1-title": "Laurea Triennale in Informatica",
+            "edu1-school": "Università di Trento",
+            "edu1-date": "Settembre 2024 - Presente",
+            "edu1-location": "Trento, TN",
+            "edu1-tasks": [
+                "Acquisizione di solide basi matematiche e informatiche, con focus su algoritmi, strutture dati, programmazione e architetture di sistema.",
+                "Sviluppo di un rigoroso approccio ingegneristico e scientifico per l'analisi di problemi complessi e la progettazione di soluzioni software.",
+                "Studio approfondito di Ingegneria del Software, Sistemi Operativi, Reti, Basi di Dati e Logica Computazionale."
+            ]
+        },
+        "languages": {
+            "title": "Lingue",
+            "lang1": "Italiano",
+            "lang1-lvl": "Madrelingua",
+            "lang2": "Inglese",
+            "lang2-lvl": "Buona conoscenza (B2)"
+        },
+        "interests": {
+            "title": "Interessi e Attività",
+            "int1-title": "Corso coristico e strumentale",
+            "int1-org": "I Minipolifonici",
+            "int1-date": "2013 - Presente",
+            "int1-location": "Trento, TN",
+            "int1-desc": "Studio strumentale e pratica orchestrale in ensemble di vario tipo e livello.",
+            "int1-tasks": [
+                "Membro del coro giovanile \"I Minipolifonici\", con esibizioni in Italia e all'estero.",
+                "Partecipazione a eventi e concorsi prestigiosi, ottenendo riconoscimenti e premi.",
+                "Sviluppo di capacità di lavoro di squadra, disciplina e interpretazione."
+            ]
         },
         "projects": {
             "title": "Progetti",
@@ -63,13 +131,24 @@ translations = {
             "docs-d4": "D4 - Autovalutazione: Analisi delle criticità e conclusioni.",
             "docs-bp": "Business Plan: Proiezioni finanziarie a 5 anni, analisi di costi e ricavi.",
             "visit-website": "Visita il Sito Web",
-            "download": "Scarica"
+            "download": "Scarica",
+            "github-front": "Codice Frontend",
+            "github-back": "Codice Backend",
+            "role-title": "Il Mio Ruolo nel Team",
+            "role-text": "Questo progetto è stato realizzato in gruppo. Ho contribuito attivamente alla fase di analisi iniziale (D1) e mi sono occupato interamente della stesura del documento di design (D2), dello sviluppo completo del codice (Frontend e Backend) e dell'autovalutazione finale (D4). Il documento D3 e il Business Plan sono stati curati da altri membri e sono inclusi qui solo per completezza."
+        },
+        "404": {
+            "title": "Pagina Non Trovata",
+            "message": "Oops! Sembra che tu ti sia perso. La pagina che stai cercando non esiste o è stata spostata.",
+            "back-btn": "Riportami alla Home"
         }
     },
     "en": {
         "nav": {
             "about": "About",
             "skills": "Skills",
+            "experience": "Experience",
+            "education": "Education",
             "projects": "Projects",
             "contact": "Contact"
         },
@@ -83,7 +162,11 @@ translations = {
             "meta-desc": "Portfolio of Stefano Videsott, Software Developer and CS student at the University of Trento. Discover my IT projects, web apps, and DevOps skills."
         },
         "home": {
-            "header-desc": "Computer Science Student",
+            "header-roles": [
+                "Computer Science Student",
+                "Software Developer",
+                "DevOps Enthusiast"
+            ],
             "about-title": "About Me",
             "about-desc-1": "Hi, I'm Stefano Videsott, a passionate computer science student at the University of Trento and former software developer at Airpim SRL. I have worked on developing innovative software solutions and I am eager to learn and explore new technologies in the IT world.",
             "about-desc-2": "With a solid foundation in programming languages such as C++, C#, Python and Java, I enjoy building applications that solve real-world problems, as well as the occasional game. My journey in the tech field is driven by curiosity and a commitment to continuous improvement.",
@@ -97,7 +180,69 @@ translations = {
             "skills-web-list": "Building SPAs, MPAs and RESTful APIs using FastAPI, Node.js and Express.",
             "skills-db-list": "Design and data modeling for SQL (MySQL e MariaDB) and NoSQL (MongoDB) databases.",
             "skills-cloud-list": "Containerization with Docker, Nginx and Linux.",
-            "contact-title": "Contact Me"
+            "contact-title": "Contact Me",
+            "contact-form": {
+                "name": "Your Name",
+                "email": "Your Email",
+                "message": "Your Message",
+                "send": "Send Message",
+                "sending": "Sending...",
+                "success": "Message sent successfully! I will get back to you soon.",
+                "error": "An error occurred. Please try again later or email me directly."
+            },
+        },
+        "experience": {
+            "title": "Work Experience",
+            "job1-title": "Software Developer",
+            "job1-company": "Airpim SRL",
+            "job1-date": "May 2024 - May 2025",
+            "job1-location": "Rovereto, TN",
+            "job1-tasks": [
+                "Development and maintenance of web applications and backend APIs.",
+                "Technologies: Python, Flask, SQLAlchemy, MySQL, Docker.",
+                "Implementation of data visualization and manipulation systems.",
+                "Collaboration with the team to improve software architecture."
+            ],
+            "job2-title": "Waiter",
+            "job2-company": "Restaurant \"Al Gusto\"",
+            "job2-date": "August 2023 - May 2024",
+            "job2-location": "Trento, TN",
+            "job2-tasks": [
+                "Customer greeting and service management.",
+                "Development of communication, problem-solving, stress, and time management skills."
+            ]
+        },
+        "education": {
+            "title": "Education",
+            "edu1-title": "Bachelor's Degree in Computer Science",
+            "edu1-school": "University of Trento",
+            "edu1-date": "September 2024 - Present",
+            "edu1-location": "Trento, TN",
+            "edu1-tasks": [
+                "Acquired a solid mathematical and computer science foundation, focusing on algorithms, data structures, programming, and computer architectures.",
+                "Developed a rigorous engineering and scientific approach to analyze complex problems and design software solutions.",
+                "In-depth study of Software Engineering, Operating Systems, Computer Networks, Databases, and Computational Logic."
+            ]
+        },
+        "languages": {
+            "title": "Languages",
+            "lang1": "Italian",
+            "lang1-lvl": "Native Speaker",
+            "lang2": "English",
+            "lang2-lvl": "Fluent (B2)"
+        },
+        "interests": {
+            "title": "Interests & Activities",
+            "int1-title": "Choir and Instrumental Course",
+            "int1-org": "I Minipolifonici",
+            "int1-date": "2013 - Present",
+            "int1-location": "Trento, TN",
+            "int1-desc": "Instrumental study and orchestral practice in various ensembles.",
+            "int1-tasks": [
+                "Member of the youth choir \"I Minipolifonici\", with performances in Italy and abroad.",
+                "Participation in prestigious events and competitions, obtaining awards and recognition.",
+                "Development of teamwork, discipline, and interpretation skills."
+            ]
         },
         "projects": {
             "title": "Projects",
@@ -130,7 +275,18 @@ translations = {
             "docs-d4": "D4 - Self-Evaluation: Critical analysis and conclusions.",
             "docs-bp": "Business Plan: 5-year financial projections, cost and revenue analysis.",
             "visit-website": "Visit Website",
-            "download": "Download"
+            "download": "Download",
+            "visit-website": "Visit Website",
+            "download": "Download",
+            "github-front": "Frontend Code",
+            "github-back": "Backend Code",
+            "role-title": "My Role in the Team",
+            "role-text": "This was a group project. I actively contributed to the initial analysis phase (D1) and was entirely responsible for drafting the design document (D2), developing the complete codebase (Frontend and Backend), and writing the final self-evaluation (D4). The D3 document and the Business Plan were handled by other team members and are included here only for project completeness."
+        },
+        "404": {
+            "title": "Page Not Found",
+            "message": "Oops! It looks like you're lost. The page you are looking for doesn't exist or has been moved.",
+            "back-btn": "Take Me Home"
         }
     }
 }
