@@ -1,5 +1,6 @@
 import os
-from fastapi import FastAPI, Request
+import httpx
+from fastapi import FastAPI, Request, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse, FileResponse
@@ -18,15 +19,19 @@ app = FastAPI()
 
 SUPPORTED_LANGS = ["it", "en"]
 CURRENT_ENV = os.getenv("ENVIRONMENT", "dev")
+TURNSTILE_SITE_KEY = os.getenv("TURNSTILE_SITE_KEY", "")
+TURNSTILE_SECRET_KEY = os.getenv("TURNSTILE_SECRET_KEY", "")
 
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 templates = Jinja2Templates(directory="app/templates")
 templates.env.globals["env"] = CURRENT_ENV
+templates.env.globals["turnstile_site_key"] = TURNSTILE_SITE_KEY
 
 class ContactRequest(BaseModel):
     name: str
     email: str
     message: str
+    turnstile_token: str
 
 def send_email_task(contact: ContactRequest):
     SMTP_SERVER = os.getenv("SMTP_SERVER")
@@ -76,6 +81,20 @@ async def home(request: Request, lang: str):
 
 @app.post("/api/contact")
 async def handle_contact(contact: ContactRequest, background_tasks: BackgroundTasks):
+    if TURNSTILE_SECRET_KEY:
+        async with httpx.AsyncClient() as client:
+            response = await client.post(
+                "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+                data={
+                    "secret": TURNSTILE_SECRET_KEY,
+                    "response": contact.turnstile_token
+                }
+            )
+            result = response.json()
+
+            if not result.get("success"):
+                raise HTTPException(status_code=400, detail="Controllo anti-spam fallito.")
+
     background_tasks.add_task(send_email_task, contact)
     return {"status": "success", "message": "Email is being sent"}
 

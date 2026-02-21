@@ -127,10 +127,22 @@ document.addEventListener("DOMContentLoaded", () => {
             btnText.innerText = "Invio in corso...";
             formResponse.className = 'form-message';
 
+            const tokenElement = document.querySelector('[name="cf-turnstile-response"]');
+            const turnstileToken = tokenElement ? tokenElement.value : "";
+
+            if (!turnstileToken) {
+                formResponse.innerText = "Per favore, attendi la verifica di sicurezza.";
+                formResponse.classList.add('error');
+                submitBtn.disabled = false;
+                btnText.innerText = originalText;
+                return;
+            }
+
             const formData = {
                 name: document.getElementById('name').value,
                 email: document.getElementById('email').value,
-                message: document.getElementById('message').value
+                message: document.getElementById('message').value,
+                turnstile_token: turnstileToken
             };
 
             try {
@@ -142,8 +154,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 if (response.ok) {
                     formResponse.innerText = "Messaggio inviato con successo!";
-                    formResponse.classList.add('success');
+                    formResponse.className = 'form-message success';
                     contactForm.reset();
+                    if (typeof turnstile !== 'undefined') turnstile.reset();
                 } else {
                     throw new Error('Errore dal server');
                 }

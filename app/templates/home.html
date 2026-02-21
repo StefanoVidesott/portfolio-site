@@ -189,6 +189,8 @@
                             <input type="email" id="email" name="email" class="form-control" placeholder="{{ t['home']['contact-form']['email'] }}" required>
                             <textarea id="message" name="message" class="form-control" placeholder="{{ t['home']['contact-form']['message'] }}" required></textarea>
 
+                            <div class="cf-turnstile" data-sitekey="{{ turnstile_site_key }}" data-theme="dark" style="margin-bottom: 15px;"></div>
+
                             <button type="submit" class="btn btn-primary" id="submitBtn">
                                 <i class="fas fa-paper-plane" style="margin-right: 8px;"></i> <span id="btnText">{{ t['home']['contact-form']['send'] }}</span>
                             </button>
