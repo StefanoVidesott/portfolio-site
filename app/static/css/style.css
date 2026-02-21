@@ -470,8 +470,24 @@ nav {
 .contact-info div { margin: 20px 0; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; gap: 15px; }
 .contact-info i { color: var(--primary-color); }
 
-.social-links a { color: var(--text-muted); font-size: 32px; transition: all 0.3s ease; }
-.social-links a:hover { color: var(--primary-color); transform: scale(1.1); }
+.social-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.social-links a {
+    color: var(--text-muted);
+    font-size: 32px;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.social-links a:hover {
+    color: var(--primary-color);
+    transform: scale(1.1);
+}
 
 footer {
 	background: linear-gradient(135deg, #2d3436 0%, #1e272e 100%);
