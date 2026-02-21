@@ -74,6 +74,9 @@ SMTP_PORT=465
 SENDER_EMAIL=la_tua_email@gmail.com
 SENDER_PASSWORD=la_tua_app_password
 RECEIVER_EMAIL=la_tua_email@gmail.com
+
+TURNSTILE_SITE_KEY=1x00000000000000000000AA
+TURNSTILE_SECRET_KEY=1x0000000000000000000000000000000AA
 ```
 
 3. **Configura Docker Compose per lo sviluppo:**
