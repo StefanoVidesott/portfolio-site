@@ -25,12 +25,12 @@ jobs:
             echo "🐳 Ricreando l'immagine Docker e riavviando il container..."
             docker compose up -d --build
 
-            echo " Ripulendo la cache di cloudflare..."
-            curl https://api.cloudflare.com/client/v4/zones/70916b528b23e7d015161a482fddda8a/purge_cache \
-              -H 'Content-Type: application/json' \
-              -H "Authorization: Bearer ${{ CLOUDFLARE_PURGE_API_TOKEN }}" \
+            echo "🧹 Ripulendo la cache di cloudflare..."
+            curl -X POST "https://api.cloudflare.com/client/v4/zones/70916b528b23e7d015161a482fddda8a/purge_cache" \
+              -H "Content-Type: application/json" \
+              -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_PURGE_API_TOKEN }}" \
               -d '{
-                "hosts": ["www.stefanovidesott.com"],
+                "hosts": ["www.stefanovidesott.com", "stefanovidesott.com"],
                 "files": [
                   "https://www.stefanovidesott.com/static/css/style.css",
                   "https://www.stefanovidesott.com/static/css/style-min.css",
