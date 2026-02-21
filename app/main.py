@@ -21,11 +21,14 @@ SUPPORTED_LANGS = ["it", "en"]
 CURRENT_ENV = os.getenv("ENVIRONMENT", "dev")
 TURNSTILE_SITE_KEY = os.getenv("TURNSTILE_SITE_KEY", "")
 TURNSTILE_SECRET_KEY = os.getenv("TURNSTILE_SECRET_KEY", "")
+CLOUDFLARE_WEB_ANALYTICS_TOKEN = os.getenv("CLOUDFLARE_WEB_ANALYTICS_TOKEN", "")
+
 
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 templates = Jinja2Templates(directory="app/templates")
 templates.env.globals["env"] = CURRENT_ENV
 templates.env.globals["turnstile_site_key"] = TURNSTILE_SITE_KEY
+templates.env.globals["cloudflare_web_analytics_token"] = CLOUDFLARE_WEB_ANALYTICS_TOKEN
 
 class ContactRequest(BaseModel):
     name: str
