@@ -24,8 +24,17 @@
         <link rel="stylesheet" href="{{ url_for('static', path='/css/style.css') }}">
     {% endif %}
 
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@600;700;800&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    {% if env == 'prod' %}
+        <script defer src="{{ url_for('static', path='/js/main-min.js') }}"></script>
+        <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "{{ cloudflare_web_analytics_token }}"}'></script>
+    {% else %}
+        <script defer src="{{ url_for('static', path='/js/main.js') }}"></script>
+    {% endif %}
+
+    <script defer src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
 
@@ -67,14 +76,5 @@
     <footer>
         {{ t['general']['footer-text'] }}
     </footer>
-
-    {% if env == 'prod' %}
-        <script src="{{ url_for('static', path='/js/main-min.js') }}"></script>
-        <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "{{ cloudflare_web_analytics_token }}"}'></script>
-    {% else %}
-        <script src="{{ url_for('static', path='/js/main.js') }}"></script>
-    {% endif %}
-    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-
 </body>
 </html>
