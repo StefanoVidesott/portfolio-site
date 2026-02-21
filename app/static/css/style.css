@@ -707,3 +707,16 @@ textarea.form-control {
     word-break: break-all;
     line-height: 1.4;
 }
+
+.turnstile-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+}
+
+.turnstile-wrapper iframe {
+    max-width: 100% !important;
+}
