@@ -1,6 +1,7 @@
 import os
 import httpx
 import smtplib
+import sentry_sdk
 
 from fastapi import FastAPI, Request, HTTPException, BackgroundTasks
 from fastapi.staticfiles import StaticFiles
@@ -11,18 +12,33 @@ from starlette.middleware.base import BaseHTTPMiddleware
 from pydantic import BaseModel
 from email.message import EmailMessage
 from dotenv import load_dotenv
+from sentry_sdk.integrations.fastapi import FastApiIntegration
+from sentry_sdk.integrations.starlette import StarletteIntegration
 
 from app.translations import translations
 
 load_dotenv()
-app = FastAPI()
 
 SUPPORTED_LANGS = ["it", "en"]
 CURRENT_ENV = os.getenv("ENVIRONMENT", "dev")
 TURNSTILE_SITE_KEY = os.getenv("TURNSTILE_SITE_KEY", "")
 TURNSTILE_SECRET_KEY = os.getenv("TURNSTILE_SECRET_KEY", "")
 CLOUDFLARE_WEB_ANALYTICS_TOKEN = os.getenv("CLOUDFLARE_WEB_ANALYTICS_TOKEN", "")
+SENTRY_DSN = os.getenv("SENTRY_DSN", "")
 
+if SENTRY_DSN:
+    sentry_sdk.init(
+        dsn=SENTRY_DSN,
+        enable_tracing=True,
+        traces_sample_rate=1.0,
+        environment=CURRENT_ENV,
+        integrations=[
+            StarletteIntegration(transaction_style="url"),
+            FastApiIntegration(transaction_style="url"),
+        ],
+    )
+
+app = FastAPI()
 
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 templates = Jinja2Templates(directory="app/templates")
