@@ -75,8 +75,7 @@ async def home(request: Request, lang: str):
     if lang not in SUPPORTED_LANGS:
         return RedirectResponse(url="/en/home")
 
-    return templates.TemplateResponse("home.html", {
-        "request": request,
+    return templates.TemplateResponse(request=request, name="home.html", context={
         "lang": lang,
         "t": translations[lang],
         "current_page": "home"
@@ -106,8 +105,7 @@ async def projects(request: Request, lang: str):
     if lang not in SUPPORTED_LANGS:
         return RedirectResponse(url="/en/projects")
 
-    return templates.TemplateResponse("projects.html", {
-        "request": request,
+    return templates.TemplateResponse(request=request, name="projects.html", context={
         "lang": lang,
         "t": translations[lang],
         "current_page": "projects"
@@ -118,8 +116,7 @@ async def project_wannawork(request: Request, lang: str):
     if lang not in SUPPORTED_LANGS:
         return RedirectResponse(url="/en/project/wannawork")
 
-    return templates.TemplateResponse("project_wannawork.html", {
-        "request": request,
+    return templates.TemplateResponse(request=request, name="project_wannawork.html", context={
         "lang": lang,
         "t": translations[lang],
         "current_page": "project/wannawork"
@@ -130,8 +127,7 @@ async def custom_404_handler(request: Request, exc: StarletteHTTPException):
     path_parts = request.url.path.split('/')
     lang = path_parts[1] if len(path_parts) > 1 and path_parts[1] in SUPPORTED_LANGS else "en"
 
-    return templates.TemplateResponse("404.html", {
-        "request": request,
+    return templates.TemplateResponse(request=request, name="404.html", context={
         "lang": lang,
         "t": translations[lang],
         "current_page": "home"
