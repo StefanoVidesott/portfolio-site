@@ -45,6 +45,12 @@ jobs:
             echo "📥 Scaricando gli ultimi aggiornamenti da GitHub..."
             git pull origin main
 
+            echo "🧰 Aggiornando i file minificati main-min.js e style-min.css..."
+            rm -f ./app/static/js/main-min.js
+            rm -f ./app/static/css/style-min.css
+            curl -X POST -s --data-urlencode 'input@./app/static/js/main.js' https://www.toptal.com/developers/javascript-minifier/api/raw -o ./app/static/js/main-min.js
+            curl -X POST -s --data-urlencode 'input@./app/static/css/style.css' https://www.toptal.com/developers/cssminifier/api/raw -o ./app/static/css/style-min.css
+
             echo "🐳 Ricreando l'immagine Docker e riavviando il container..."
             docker compose up -d --build
 
@@ -53,12 +59,9 @@ jobs:
               -H "Content-Type: application/json" \
               -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_PURGE_API_TOKEN }}" \
               -d '{
-                "hosts": ["www.stefanovidesott.com", "stefanovidesott.com"],
-                "files": [
-                  "https://www.stefanovidesott.com/static/css/style.css",
-                  "https://www.stefanovidesott.com/static/css/style-min.css",
-                  "https://www.stefanovidesott.com/static/js/main.js",
-                  "https://www.stefanovidesott.com/static/js/main-min.js"
+                "hosts": [
+                  "www.stefanovidesott.com",
+                  "stefanovidesott.com"
                 ]
               }'
 
