@@ -39,6 +39,7 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
         response.headers["X-Frame-Options"] = "DENY"
         response.headers["X-Content-Type-Options"] = "nosniff"
         response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+        response.headers["Permissions-Policy"] = "fullscreen=(), camera=(), microphone=(), geolocation=(), interest-cohort=(), browsing-topics=()"
         csp_directives = [
             "default-src 'self';",
             "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://static.cloudflareinsights.com;",
