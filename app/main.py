@@ -1,20 +1,20 @@
 import os
 import httpx
-from fastapi import FastAPI, Request, HTTPException
+import smtplib
+
+from fastapi import FastAPI, Request, HTTPException, BackgroundTasks
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse, FileResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
+from starlette.middleware.base import BaseHTTPMiddleware
+from pydantic import BaseModel
+from email.message import EmailMessage
+from dotenv import load_dotenv
+
 from app.translations import translations
 
-from fastapi import BackgroundTasks
-from pydantic import BaseModel
-import smtplib
-from email.message import EmailMessage
-
-from dotenv import load_dotenv
 load_dotenv()
-
 app = FastAPI()
 
 SUPPORTED_LANGS = ["it", "en"]
@@ -29,6 +29,30 @@ templates = Jinja2Templates(directory="app/templates")
 templates.env.globals["env"] = CURRENT_ENV
 templates.env.globals["turnstile_site_key"] = TURNSTILE_SITE_KEY
 templates.env.globals["cloudflare_web_analytics_token"] = CLOUDFLARE_WEB_ANALYTICS_TOKEN
+
+class SecurityHeadersMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
+        response = await call_next(request)
+
+        if os.getenv("ENVIRONMENT") == "prod":
+            response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains; preload"
+        response.headers["X-Frame-Options"] = "DENY"
+        response.headers["X-Content-Type-Options"] = "nosniff"
+        response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+        csp_directives = [
+            "default-src 'self';",
+            "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://static.cloudflareinsights.com;",
+            "style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com;",
+            "font-src 'self' data: https://cdnjs.cloudflare.com https://fonts.gstatic.com;",
+            "img-src 'self' data:;",
+            "frame-src 'self' https://challenges.cloudflare.com;",
+            "connect-src 'self' https://cloudflareinsights.com https://challenges.cloudflare.com;"
+        ]
+        response.headers["Content-Security-Policy"] = " ".join(csp_directives)
+
+        return response
+
+app.add_middleware(SecurityHeadersMiddleware)
 
 class ContactRequest(BaseModel):
     name: str
