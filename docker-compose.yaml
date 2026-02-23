@@ -8,4 +8,5 @@ services:
       - .env
     volumes:
       - ./data:/portfolio/data
+      - ./alembic:/portfolio/alembic
     restart: always
