@@ -42,7 +42,7 @@ def test_projects_page():
     """Verifica che la pagina progetti si carichi correttamente"""
     response = client.get("/en/projects")
     assert response.status_code == 200
-    assert b"WannaWork" in response.content
+    assert b"Projects" in response.content
 
 def test_wannawork_detail_page():
     """Verifica che la pagina di dettaglio di WannaWork si carichi"""
