@@ -1,0 +1,78 @@
+{
+  "nav": {
+        "about": "About",
+        "skills": "Skills",
+        "experience": "Experience",
+        "education": "Education",
+        "projects": "Projects",
+        "contact": "Contact"
+    },
+    "general": {
+        "view-projects": "View Projects",
+        "get-in-touch": "Get in Touch",
+        "download-cv": "Download my CV",
+        "back-to-home": "Back to Home",
+        "back-to-projects": "Back to Projects",
+        "footer-text": "© 2024 Stefano Videsott. All rights reserved.",
+        "meta-desc": "Portfolio of Stefano Videsott, Software Developer and CS student at the University of Trento. Discover my IT projects, web apps, and DevOps skills."
+    },
+    "home": {
+        "header-roles": [
+            "Computer Science Student",
+            "Software Developer",
+            "DevOps Enthusiast"
+        ],
+        "about-title": "About Me",
+        "about-desc-1": "Hi, I'm Stefano Videsott, a passionate computer science student at the University of Trento and former software developer at Airpim SRL. I have worked on developing innovative software solutions and I am eager to learn and explore new technologies in the IT world.",
+        "about-desc-2": "With a solid foundation in programming languages such as C++, C#, Python and Java, I enjoy building applications that solve real-world problems, as well as the occasional game. My journey in the tech field is driven by curiosity and a commitment to continuous improvement.",
+        "about-desc-3": "When I'm not coding, I enjoy playing music, exploring projects, experimenting with the latest in AI, and expanding my knowledge through blogs, tutorials and posts.",
+        "skills-title": "Skills",
+        "experience-title": "Work Experience",
+        "education-title": "Education",
+        "contact-title": "Contact Me",
+        "languages-title": "Languages",
+        "interests-title": "Interests & Activities",
+        "contact-form": {
+            "name": "Your Name",
+            "email": "Your Email",
+            "message": "Your Message",
+            "send": "Send Message",
+            "sending": "Sending...",
+            "success": "Message sent successfully! I will get back to you soon.",
+            "error": "An error occurred. Please try again later or email me directly."
+        }
+    },
+    "projects": {
+        "title": "Projects"
+    },
+    "wannawork": {
+        "title": "WannaWork - Job Matching",
+        "subtitle": "Software Engineering Project at the University of Trento",
+        "what-is": "What is WannaWork?",
+        "what-is-text": "WannaWork is a Single Page Application designed to facilitate local job matching. It connects students, who can create profiles, upload resumes, and search for part-time jobs, with local employers, who can post jobs and manage applications.",
+        "problem": "The Problem & Solution",
+        "problem-text": "It was created to solve the difficulty students face in finding flexible part-time jobs and to digitize local job hunting, which often still relies on paper resumes. By centralizing this process, it creates a direct bridge between small businesses and local youth, boosting the economy and youth employment.",
+        "tech": "Tech Stack",
+        "tech-front": "Frontend: Vue.js 3 (Composition API), Pinia, Vue Router, TailwindCSS, and DaisyUI.",
+        "tech-back": "Backend: Node.js, Express.js (RESTful APIs), JWT for stateless authentication, bcryptjs.",
+        "tech-db": "Database: MongoDB (NoSQL) with Mongoose ODM.",
+        "tech-devops": "Testing & DevOps: Jest, Supertest, OpenAPI (Swagger), Docker, Nginx, Let's Encrypt. Dual deployment (Render.com and Self-Hosted on Arch Linux).",
+        "docs": "Engineering Documentation",
+        "docs-d1": "D1 - Requirements Analysis: Pitch, functional/non-functional requirements, Use Cases, User Stories, and mockups.",
+        "docs-d2": "D2 - Design & Implementation: Architecture, RESTful APIs, E-R schema, testing, and deployment.",
+        "docs-d3": "D3 - Analysis & Design: Advanced UML Diagrams (Component and Class diagrams).",
+        "docs-d4": "D4 - Self-Evaluation: Critical analysis and conclusions.",
+        "docs-bp": "Business Plan: 5-year financial projections, cost and revenue analysis.",
+        "visit-website": "Visit Website",
+        "download": "Download",
+        "github-front": "Frontend Code",
+        "github-back": "Backend Code",
+        "role-title": "My Role in the Team",
+        "role-text": "This was a group project. I actively contributed to the initial analysis phase (D1) and was entirely responsible for drafting the design document (D2), developing the complete codebase (Frontend and Backend), and writing the final self-evaluation (D4). The D3 document and the Business Plan were handled by other team members and are included here only for project completeness."
+    },
+    "404": {
+        "title": "Page Not Found",
+        "message": "Oops! It looks like you're lost. The page you are looking for doesn't exist or has been moved.",
+        "back-btn": "Take Me Home"
+    }
+}

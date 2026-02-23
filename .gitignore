@@ -1,4 +1,15 @@
-.env
+# Database locale
+data/
+*.db
+*.sqlite3
+
+# Cache e log vari
+__pycache__/
+.pytest_cache/
+
+# File di development
+translations.json
 docker-compose.override.yml
 
-app/__pycache__/
+# Enviorment
+.env

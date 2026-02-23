@@ -6,32 +6,45 @@
             <h2 class="reveal section-title">{{ t['projects']['title'] }}</h2>
             <div class="projects-container">
 
-                <div class="project base-card reveal delay-1">
-                    <img src="{{ url_for('static', path='/images/project-air_force_1943.webp') }}" alt="Air Force 1943" loading="lazy">
-                    <div class="project-content">
-                        <h3>{{ t['projects']['p1-title'] }}</h3>
-                        <p>{{ t['projects']['p1-desc'] }}</p>
-                        <a href="https://weatherlight.itch.io/airforce-1943" target="_blank">{{ t['projects']['p1-link'] }}</a>
-                    </div>
-                </div>
+                {% for project in projects %}
+                    <div class="project base-card reveal delay-{{ loop.index }}">
 
-                <div class="project base-card reveal delay-2">
-                    <img src="{{ url_for('static', path='/images/project-unitn-p2-configuration.webp') }}" alt="Unitn P2 Config" loading="lazy">
-                    <div class="project-content">
-                        <h3>{{ t['projects']['p2-title'] }}</h3>
-                        <p>{{ t['projects']['p2-desc'] }}</p>
-                        <a href="https://github.com/StefanoVidesott/unitn-p2-configuration" target="_blank">{{ t['projects']['p2-link'] }}</a>
-                    </div>
-                </div>
+                        <img src="{{ project.image_url }}" alt="{% if lang == 'it' %}{{ project.title_it }}{% else %}{{ project.title_en }}{% endif %}" loading="lazy">
 
-                <div class="project base-card reveal delay-3">
-                    <img src="{{ url_for('static', path='/images/project-wannawork.webp') }}" alt="WannaWork" loading="lazy">
-                    <div class="project-content">
-                        <h3>{{ t['projects']['p3-title'] }}</h3>
-                        <p>{{ t['projects']['p3-desc'] }}</p>
-                        <a href="/{{ lang }}/project/wannawork">{{ t['projects']['p3-link'] }}</a>
+                        <div class="project-content">
+                            <h3>
+                                {% if lang == 'it' %}
+                                    {{ project.title_it }}
+                                {% else %}
+                                    {{ project.title_en }}
+                                {% endif %}
+                            </h3>
+
+                            <p>
+                                {% if lang == 'it' %}
+                                    {{ project.description_it }}
+                                {% else %}
+                                    {{ project.description_en }}
+                                {% endif %}
+                            </p>
+
+                            {% if project.slug == 'wannawork' %}
+                                {% if lang == 'it' %}
+                                    <a href="/{{ lang }}/project/{{ project.slug }}">{{ project.link_it }}</a>
+                                {% else %}
+                                    <a href="/{{ lang }}/project/{{ project.slug }}">{{ project.link_en }}</a>
+                                {% endif %}
+                            {% else %}
+                                {% if lang == 'it' %}
+                                    <a href="{{ project.url }}" target="_blank">{{ project.link_it }}</a>
+                                {% else %}
+                                    <a href="{{ project.url }}" target="_blank">{{ project.link_en }}</a>
+                                {% endif %}
+                            {% endif %}
+                        </div>
                     </div>
-                </div>
+                {% endfor %}
+
             </div>
 
             <div class="reveal delay-4 center-actions">

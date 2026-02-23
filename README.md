@@ -4,11 +4,11 @@
   <p>
     <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
     <img src="https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi" alt="FastAPI" />
+    <img src="https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white" alt="SQLite" />
     <img src="https://img.shields.io/badge/pytest-%23ffffff.svg?style=for-the-badge&logo=pytest&logoColor=2f9fe3" alt="Pytest" />
+    <img src="https://img.shields.io/badge/Sentry-362D59?style=for-the-badge&logo=sentry&logoColor=white" alt="Sentry" />
     <img src="https://img.shields.io/badge/Jinja-B41717?style=for-the-badge&logo=jinja&logoColor=white" alt="Jinja2" />
     <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript" />
-    <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5" />
-    <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" alt="CSS3" />
     <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker" />
     <img src="https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white" alt="GitHub Actions" />
     <img src="https://img.shields.io/badge/Cloudflare-F38020?style=for-the-badge&logo=cloudflare&logoColor=white" alt="Cloudflare" />
@@ -17,7 +17,7 @@
 
 ---
 
-Un portfolio personale web dinamico, bilingue e responsivo costruito con **FastAPI** (Python) e **Vanilla JavaScript/CSS**. Progettato per essere veloce, leggero e facilmente manutenibile, con un'architettura divisa tra ambiente di sviluppo e produzione tramite **Docker** e deployment automatizzato.
+Un portfolio personale web dinamico, bilingue e responsivo costruito con **FastAPI** (Python) e **Vanilla JavaScript/CSS**. Progettato per essere veloce, sicuro e architetturalmente scalabile. Utilizza un approccio "ibrido" che unisce file JSON per la localizzazione statica (i18n) e un database SQLite (gestito tramite SQLAlchemy) per i contenuti dinamici.
 
 <p align="center">
   <a href="https://www.stefanovidesott.com" target="_blank">
@@ -27,21 +27,23 @@ Un portfolio personale web dinamico, bilingue e responsivo costruito con **FastA
 
 ## ✨ Funzionalità Principali
 
-* 🌍 **Multilingua (IT / EN):** Sistema di traduzione personalizzato tramite dizionari Python (`translations.py`) gestito da Jinja2. Include lo *Smart Routing* basato sull'header `Accept-Language` del browser dell'utente.
-* 🌗 **Dark/Light Mode:** Tema scuro di default con switch manuale al tema chiaro salvato nel `localStorage`.
-* 📧 **Form di Contatto Funzionante:** Endpoint API backend che utilizza `BackgroundTasks` di FastAPI e `smtplib` per inviare e-mail reali in background, senza bloccare la UI.
-* 🛡️ **Sicurezza Avanzata:** Headers HTTP restrittivi (**CSP** e **HSTS**) implementati via Middleware per proteggere da attacchi XSS/Clickjacking. Integrazione nativa con **Cloudflare Turnstile**.
+* 🌍 **Architettura Ibrida e Multilingua (IT / EN):** Interfaccia statica tradotta tramite file `.json` standard (i18n) e *Smart Routing* basato sull'header `Accept-Language`.
+* 🗄️ **Database-Driven (CMS):** Progetti, Esperienze Lavorative, Istruzione, Competenze e Lingue sono entità relazionali salvate su **SQLite** ed estratte dinamicamente tramite **SQLAlchemy**.
+* 🛡️ **Sicurezza Avanzata:**  Headers HTTP restrittivi (**CSP** e **HSTS**) implementati via Middleware per proteggere da XSS/Clickjacking. 
+  * Integrazione nativa con **Cloudflare Turnstile** per il blocco bot.
+  * **Rate Limiting** basato su IP (tramite `slowapi`) per proteggere l'endpoint di contatto dallo spamming.
+* 📡 **Osservabilità e Monitoraggio:** Integrazione con **Sentry** per il tracciamento degli errori in tempo reale e il monitoraggio delle performance in produzione.
+* 📧 **Form di Contatto Asincrono:** Endpoint API backend che utilizza i `BackgroundTasks` di FastAPI e `smtplib` per inviare e-mail reali senza bloccare il thread principale o la UI.
 * ✅ **Test Automatizzati:** Test suite completa scritta con `pytest` per validare rotte, smart routing, gestione 404 e validazione dei payload API.
-* 🚀 **CI/CD Pipeline Avanzata:** Deployment tramite **GitHub Actions**. Al push su `main`, la pipeline esegue i test. Se superati, si collega via SSH, minifica CSS e JS, aggiorna i container Docker e svuota automaticamente la cache di Cloudflare tramite API.
-* 📊 **Analitiche Privacy-Friendly:** Tracciamento delle visite cookieless e GDPR-compliant tramite **Cloudflare Web Analytics** (caricato condizionalmente solo in produzione).
-* ✨ **Animazioni UI Custom:** Effetti di comparsa allo scroll e *typing effect* scritti in puro Vanilla JS.
+* 🚀 **CI/CD Pipeline:** Deployment tramite **GitHub Actions**. Al push su `main`, la pipeline esegue i test, si collega via SSH, minifica CSS e JS, aggiorna i container Docker e svuota la cache di Cloudflare tramite API.
 
 ## 🛠️ Stack Tecnologico
 
-* **Backend:** Python 3.10, FastAPI, Uvicorn, Jinja2, Pytest
-* **Frontend:** HTML5, CSS3 (Custom Properties/Variables), Vanilla JavaScript
-* **DevOps & Infrastructure:** Docker, Docker Compose, Nginx, GitHub Actions
-* **Security & Analytics:** Cloudflare Turnstile, Cloudflare Web Analytics, Security Headers
+* **Backend:** Python 3.10, FastAPI, Uvicorn, Jinja2, SQLAlchemy, SlowAPI
+* **Database:** SQLite (su Docker Volume persistente)
+* **Frontend:** HTML5, CSS3, Vanilla JavaScript
+* **DevOps & Testing:** Docker, Nginx, GitHub Actions, Pytest
+* **Security & Observability:** Sentry, Cloudflare Turnstile, Web Analytics
 
 ## 📂 Struttura del Progetto
 
@@ -49,16 +51,18 @@ Un portfolio personale web dinamico, bilingue e responsivo costruito con **FastA
 portfolio-site/
 ├── .github/workflows/       # Pipeline CI/CD (deploy.yml)
 ├── app/
-│   ├── main.py              # Logica API FastAPI, Middleware e routing
-│   ├── translations.py      # Dizionari per il multilingua (IT/EN)
-│   ├── static/              # Asset statici (CSS, JS, immagini, PDF)
+│   ├── main.py              # Logica API FastAPI, Middleware, Rate Limiting
+│   ├── database.py          # Configurazione engine SQLAlchemy e sessioni
+│   ├── models.py            # Modelli del database (Project, Experience, ecc.)
+│   ├── locales/             # File JSON per le traduzioni statiche dell'UI (it/en)
+│   ├── static/              # Asset statici (CSS, JS minificati, immagini, PDF)
 │   ├── templates/           # Template HTML (Jinja2)
 │   └── tests/               # Suite di test automatizzati (pytest)
+├── seed.py                  # Script Python per inizializzare e popolare il database
 ├── .env.example             # Template per le variabili d'ambiente
 ├── docker-compose.yml       # Configurazione Docker (Produzione)
 ├── docker-compose.override.yml.dev # Configurazione Docker (Sviluppo locale)
 ├── Dockerfile               # Istruzioni build dell'immagine Python
-├── README.md
 └── requirements.txt         # Dipendenze Python
 ```
 
@@ -72,7 +76,7 @@ cd portfolio-site
 ```
 
 2. **Configura le variabili d'ambiente:**
-Crea un file `.env` (o rinomina `.env.example`) nella root del progetto e inserisci le tue credenziali:
+Crea un file `.env` (o rinomina `.env.example`) nella root del progetto e inserisci le credenziali:
 
 ```env
 ENVIRONMENT=dev
@@ -87,24 +91,24 @@ RECEIVER_EMAIL=la_tua_email@gmail.com
 TURNSTILE_SITE_KEY=1x00000000000000000000AA
 TURNSTILE_SECRET_KEY=1x0000000000000000000000000000000AA
 
+SENTRY_DSN= # (lasciare vuoto in locale per disabilitare il tracciamento)
 CLOUDFLARE_WEB_ANALYTICS_TOKEN= # (lasciare vuoto in locale)
 ```
 
-3. **Configura Docker Compose per lo sviluppo:**
-Rinomina il file `docker-compose.override.yml.dev` in `docker-compose.override.yml`. (Questo file monta la cartella `app` per il live-reload e *non* va committato in produzione).
-4. **Avvia il container Docker:**
+3. **Inizializza il Database:**
+Assicurati che esista la cartella `data/` nella root. Avvia i container e poi lancia lo script di seeding per popolare i contenuti:
 
 ```bash
-docker compose up --build
+docker compose up -d --build
+docker exec -it portfolio_container python seed.py
 ```
 
-*Il sito sarà disponibile all'indirizzo `http://localhost:8001` (o la porta configurata).*
+*Il sito sarà disponibile all'indirizzo `http://localhost:8001`.*
 
-5. **Esegui i Test Automatizzati:**
-Per eseguire la test suite localmente:
+4. **Esegui i Test Automatizzati:**
 
 ```bash
-docker exec -it <nome_container> python -m pytest
+docker exec -it portfolio_container python -m pytest
 ```
 
 ## 🚢 Messa in Produzione (Deployment)
@@ -115,5 +119,6 @@ Ogni `git push` sul ramo `main` innesca una GitHub Action che esegue la suite di
 **Per il setup iniziale sul server:**
 
 1. Clona la repository sul server e imposta `ENVIRONMENT=prod` nel file `.env`.
-2. Inserisci i token reali di Cloudflare e le credenziali SMTP.
-3. La porta esposta da Docker (es. `8001`) è progettata per essere servita tramite un reverse proxy **Nginx** con certificati SSL.
+2. Inserisci i token reali di Cloudflare, Sentry e le credenziali SMTP.
+3. Esegui il seed iniziale del database.
+4. La porta esposta da Docker (es. `8001`) è progettata per essere servita tramite un reverse proxy **Nginx** con certificati SSL.

@@ -43,78 +43,68 @@
         <div class="container">
             <h2 class="reveal">{{ t['home']['skills-title'] }}</h2>
             <div class="skills-container">
-                <div class="skill base-card reveal delay-1">
-                    <i class="fas fa-code"></i>
-                    <h3>{{ t['home']['skills-prog'] }}</h3>
-                    <p>{{ t['home']['skills-prog-list'] }}</p>
+
+                {% for skill in skills %}
+                <div class="skill base-card reveal delay-{{ loop.index }}">
+                    <i class="{{ skill.icon_class }}"></i>
+                    <h3>{% if lang == 'it' %}{{ skill.title_it }}{% else %}{{ skill.title_en }}{% endif %}</h3>
+                    <p>{% if lang == 'it' %}{{ skill.skills_list_it }}{% else %}{{ skill.skills_list_en }}{% endif %}</p>
                 </div>
-                <div class="skill base-card reveal delay-2">
-                    <i class="fas fa-laptop-code"></i>
-                    <h3>{{ t['home']['skills-web'] }}</h3>
-                    <p>{{ t['home']['skills-web-list'] }}</p>
-                </div>
-                <div class="skill base-card reveal delay-3">
-                    <i class="fas fa-database"></i>
-                    <h3>{{ t['home']['skills-db'] }}</h3>
-                    <p>{{ t['home']['skills-db-list'] }}</p>
-                </div>
-                <div class="skill base-card reveal delay-4">
-                    <i class="fas fa-cloud"></i>
-                    <h3>{{ t['home']['skills-cloud'] }}</h3>
-                    <p>{{ t['home']['skills-cloud-list'] }}</p>
-                </div>
+                {% endfor %}
+
             </div>
         </div>
     </section>
 
     <section id="experience" class="section-bg-default">
         <div class="container container-medium">
-            <h2 class="reveal section-title">{{ t['experience']['title'] }}</h2>
+            <h2 class="reveal section-title">{{ t['home']['experience-title'] }}</h2>
 
-            <div class="resume-card base-card reveal delay-1">
-                <h3>{{ t['experience']['job1-title'] }} <span>@ {{ t['experience']['job1-company'] }}</span></h3>
-                <p class="meta-info">
-                    <i class="fas fa-calendar-alt"></i> {{ t['experience']['job1-date'] }} &nbsp;|&nbsp;
-                    <i class="fas fa-map-marker-alt"></i> {{ t['experience']['job1-location'] }}
+            {% for job in experiences %}
+            <div class="resume-card base-card {% if not job.is_highlighted %}border-secondary{% endif %} reveal delay-{{ loop.index }}">
+
+                <h3>{% if lang == 'it' %}{{ job.title_it }}{% else %}{{ job.title_en }}{% endif %} <span>@ {{ job.company }}</span></h3>
+
+                <p class="meta-info {% if not job.is_highlighted %}muted{% endif %}">
+                    <i class="fas fa-calendar-alt"></i> {% if lang == 'it' %}{{ job.date_it }}{% else %}{{ job.date_en }}{% endif %} &nbsp;|&nbsp;
+                    <i class="fas fa-map-marker-alt"></i> {{ job.location }}
                 </p>
+
                 <ul class="item-list">
-                    {% for task in t['experience']['job1-tasks'] %}
+                    {% set tasks = job.tasks_it if lang == 'it' else job.tasks_en %}
+                    {% for task in tasks %}
                         <li>{{ task }}</li>
                     {% endfor %}
                 </ul>
             </div>
+            {% endfor %}
 
-            <div class="resume-card base-card border-secondary reveal delay-2">
-                <h3>{{ t['experience']['job2-title'] }} <span>@ {{ t['experience']['job2-company'] }}</span></h3>
-                <p class="resume-meta muted">
-                    <i class="fas fa-calendar-alt"></i> {{ t['experience']['job2-date'] }} &nbsp;|&nbsp;
-                    <i class="fas fa-map-marker-alt"></i> {{ t['experience']['job2-location'] }}
-                </p>
-                <ul class="item-list">
-                    {% for task in t['experience']['job2-tasks'] %}
-                        <li>{{ task }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
         </div>
     </section>
 
     <section id="education" class="section-bg-alt">
         <div class="container container-medium">
-            <h2 class="reveal section-title">{{ t['education']['title'] }}</h2>
+            <h2 class="reveal section-title">{{ t['home']['education-title'] }}</h2>
 
-            <div class="resume-card base-card reveal delay-1">
-                <h3>{{ t['education']['edu1-title'] }} <span>@ {{ t['education']['edu1-school'] }}</span></h3>
-                <p class="meta-info">
-                    <i class="fas fa-graduation-cap"></i> {{ t['education']['edu1-date'] }} &nbsp;|&nbsp;
-                    <i class="fas fa-map-marker-alt"></i> {{ t['education']['edu1-location'] }}
+            {% for edu in education %}
+            <div class="resume-card base-card {% if not edu.is_highlighted %}border-secondary{% endif %} reveal delay-{{ loop.index }}">
+
+                <h3>{% if lang == 'it' %}{{ edu.title_it }}{% else %}{{ edu.title_en }}{% endif %} <span>@ {{ edu.school }}</span></h3>
+
+                <p class="meta-info {% if not edu.is_highlighted %}muted{% endif %}">
+                    <i class="fas fa-graduation-cap"></i> {% if lang == 'it' %}{{ edu.date_it }}{% else %}{{ edu.date_en }}{% endif %} &nbsp;|&nbsp;
+                    <i class="fas fa-map-marker-alt"></i> {{ edu.location }}
                 </p>
-                <ul class="resume-list">
-                    {% for task in t['education']['edu1-tasks'] %}
+
+                <ul class="item-list">
+                    {% set tasks = edu.tasks_it if lang == 'it' else edu.tasks_en %}
+                    {% for task in tasks %}
                         <li>{{ task }}</li>
                     {% endfor %}
                 </ul>
             </div>
+            {% endfor %}
+
         </div>
     </section>
 
@@ -122,40 +112,38 @@
         <div class="container container-medium two-col-layout">
 
             <div class="col-main reveal delay-1">
-                <h2 class="col-title">{{ t['interests']['title'] }}</h2>
-                <div class="info-card base-card">
-                    <h3>{{ t['interests']['int1-title'] }}</h3>
-                    <p class="info-subtitle">{{ t['interests']['int1-org'] }}</p>
+                <h2 class="col-title">{{ t['home']['interests-title'] }}</h2>
+
+                {% for interest in interests %}
+                <div class="info-card base-card" style="margin-bottom: 20px;">
+                    <h3>{% if lang == 'it' %}{{ interest.title_it }}{% else %}{{ interest.title_en }}{% endif %}</h3>
+                    <p class="info-subtitle">{{ interest.organization }}</p>
                     <p class="info-meta">
-                        <i class="fas fa-calendar-alt"></i> {{ t['interests']['int1-date'] }} | <i class="fas fa-map-marker-alt"></i> {{ t['interests']['int1-location'] }}
+                        <i class="fas fa-calendar-alt"></i> {% if lang == 'it' %}{{ interest.date_it }}{% else %}{{ interest.date_en }}{% endif %} | <i class="fas fa-map-marker-alt"></i> {{ interest.location }}
                     </p>
-                    <p class="info-desc">{{ t['interests']['int1-desc'] }}</p>
+                    <p class="info-desc">{% if lang == 'it' %}{{ interest.description_it }}{% else %}{{ interest.description_en }}{% endif %}</p>
                     <ul class="item-list">
-                        {% for task in t['interests']['int1-tasks'] %}
+                        {% set tasks = interest.tasks_it if lang == 'it' else interest.tasks_en %}
+                        {% for task in tasks %}
                             <li>{{ task }}</li>
                         {% endfor %}
                     </ul>
                 </div>
+                {% endfor %}
             </div>
 
             <div class="col-sidebar reveal delay-2">
-                <h2 class="col-title">{{ t['languages']['title'] }}</h2>
+                <h2 class="col-title">{{ t['home']['languages-title'] }}</h2>
 
+                {% for language in languages %}
                 <div class="lang-card base-card">
-                    <i class="fas fa-language"></i>
+                    <i class="{{ language.icon_class }}"></i>
                     <div>
-                        <h3>{{ t['languages']['lang1'] }}</h3>
-                        <p>{{ t['languages']['lang1-lvl'] }}</p>
+                        <h3>{% if lang == 'it' %}{{ language.title_it }}{% else %}{{ language.title_en }}{% endif %}</h3>
+                        <p>{% if lang == 'it' %}{{ language.level_it }}{% else %}{{ language.level_en }}{% endif %}</p>
                     </div>
                 </div>
-
-                <div class="lang-card base-card">
-                    <i class="fas fa-globe-americas"></i>
-                    <div>
-                        <h3>{{ t['languages']['lang2'] }}</h3>
-                        <p>{{ t['languages']['lang2-lvl'] }}</p>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
 
         </div>

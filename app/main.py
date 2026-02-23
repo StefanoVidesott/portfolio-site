@@ -1,9 +1,13 @@
 import os
+import json
 import httpx
 import smtplib
 import sentry_sdk
 
-from fastapi import FastAPI, Request, HTTPException, BackgroundTasks
+from app import models
+from app.database import engine, Base, get_db
+
+from fastapi import FastAPI, Request, HTTPException, BackgroundTasks, Depends
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse, FileResponse
@@ -14,8 +18,7 @@ from email.message import EmailMessage
 from dotenv import load_dotenv
 from sentry_sdk.integrations.fastapi import FastApiIntegration
 from sentry_sdk.integrations.starlette import StarletteIntegration
-
-from app.translations import translations
+from sqlalchemy.orm import Session
 
 load_dotenv()
 
@@ -38,7 +41,21 @@ if SENTRY_DSN:
         ],
     )
 
+translations = {}
+locales_dir = os.path.join(os.path.dirname(__file__), "locales")
+
+for lang in SUPPORTED_LANGS:
+    file_path = os.path.join(locales_dir, f"{lang}.json")
+    try:
+        with open(file_path, "r", encoding="utf-8") as f:
+            translations[lang] = json.load(f)
+    except FileNotFoundError:
+        print(f"ATTENZIONE: File di traduzione non trovato per la lingua: {lang}")
+        translations[lang] = {}
+
 app = FastAPI()
+
+models.Base.metadata.create_all(bind=engine)
 
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 templates = Jinja2Templates(directory="app/templates")
@@ -112,13 +129,24 @@ async def root(request: Request):
     return RedirectResponse(url="/en/home")
 
 @app.get("/{lang}/home")
-async def home(request: Request, lang: str):
+async def home(request: Request, lang: str, db: Session = Depends(get_db)):
     if lang not in SUPPORTED_LANGS:
         return RedirectResponse(url="/en/home")
+
+    db_experiences = db.query(models.Experience).filter(models.Experience.is_featured == True).order_by(models.Experience.order).all()
+    db_education = db.query(models.Education).filter(models.Education.is_featured == True).order_by(models.Education.order).all()
+    db_skills = db.query(models.SkillCategory).filter(models.SkillCategory.is_featured == True).order_by(models.SkillCategory.order).all()
+    db_interests = db.query(models.Interest).filter(models.Interest.is_featured == True).order_by(models.Interest.order).all()
+    db_languages = db.query(models.Language).filter(models.Language.is_featured == True).order_by(models.Language.order).all()
 
     return templates.TemplateResponse(request=request, name="home.html", context={
         "lang": lang,
         "t": translations[lang],
+        "experiences": db_experiences,
+        "education": db_education,
+        "skills": db_skills,
+        "interests": db_interests,
+        "languages": db_languages,
         "current_page": "home"
     })
 
@@ -142,13 +170,16 @@ async def handle_contact(contact: ContactRequest, background_tasks: BackgroundTa
     return {"status": "success", "message": "Email is being sent"}
 
 @app.get("/{lang}/projects")
-async def projects(request: Request, lang: str):
+async def projects(request: Request, lang: str, db: Session = Depends(get_db)):
     if lang not in SUPPORTED_LANGS:
         return RedirectResponse(url="/en/projects")
+
+    db_projects = db.query(models.Project).filter(models.Project.is_featured == True).order_by(models.Project.order).all()
 
     return templates.TemplateResponse(request=request, name="projects.html", context={
         "lang": lang,
         "t": translations[lang],
+        "projects": db_projects,
         "current_page": "projects"
     })
 

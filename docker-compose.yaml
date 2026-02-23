@@ -6,4 +6,6 @@ services:
       - "8001:80"
     env_file:
       - .env
+    volumes:
+      - ./data:/portfolio/data
     restart: always
