@@ -8,15 +8,43 @@
 
     <meta name="description" content="{{ t['general']['meta-desc'] }}">
     <meta name="author" content="Stefano Videsott">
+    <meta name="theme-color" content="#f5c73d">
 
     <link rel="alternate" hreflang="it" href="https://www.stefanovidesott.com/it/{{ current_page }}" />
     <link rel="alternate" hreflang="en" href="https://www.stefanovidesott.com/en/{{ current_page }}" />
     <link rel="alternate" hreflang="x-default" href="https://www.stefanovidesott.com/en/{{ current_page }}" />
 
-    <meta property="og:title" content="Stefano Videsott - Portfolio">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Stefano Videsott">
+    <meta property="og:title" content="Stefano Videsott | {% if lang == 'it' %}Sviluppatore Software{% else %}Software Developer{% endif %}">
     <meta property="og:description" content="{{ t['general']['meta-desc'] }}">
-    <meta property="og:image" content="{{ url_for('static', path='/images/profile.webp') }}">
+    <meta property="og:image" content="https://www.stefanovidesott.com{{ url_for('static', path='/images/profile.webp') }}">
     <meta property="og:url" content="https://www.stefanovidesott.com/{{ lang }}/{{ current_page }}">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Stefano Videsott | {% if lang == 'it' %}Sviluppatore Software{% else %}Software Developer{% endif %}">
+    <meta name="twitter:description" content="{{ t['general']['meta-desc'] }}">
+    <meta name="twitter:image" content="https://www.stefanovidesott.com{{ url_for('static', path='/images/profile.webp') }}">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Stefano Videsott",
+      "url": "https://www.stefanovidesott.com",
+      "image": "https://www.stefanovidesott.com/static/images/profile.webp",
+      "jobTitle": "Software Developer",
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "Università di Trento"
+      },
+      "sameAs": [
+        "https://github.com/StefanoVidesott",
+        "https://linkedin.com/in/stefano-videsott",
+        "https://www.instagram.com/stefano.videsott"
+      ]
+    }
+    </script>
 
     {% if env == 'prod' %}
         <link rel="stylesheet" href="{{ url_for('static', path='/css/style-min.css') }}">
