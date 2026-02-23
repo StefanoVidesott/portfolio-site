@@ -54,6 +54,9 @@ jobs:
             echo "🐳 Ricreando l'immagine Docker e riavviando il container..."
             docker compose up -d --build
 
+            echo "🔄 Eseguendo le migrazioni del database con Alembic..."
+            docker exec portfolio_container alembic upgrade head
+
             echo "🧹 Ripulendo la cache di cloudflare..."
             curl -X POST "https://api.cloudflare.com/client/v4/zones/70916b528b23e7d015161a482fddda8a/purge_cache" \
               -H "Content-Type: application/json" \
