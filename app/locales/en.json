@@ -1,5 +1,9 @@
 {
-  "nav": {
+    "meta": {
+        "title": "Stefano Videsott | Software Developer",
+        "desc": "Personal portfolio of Stefano Videsott. Software Developer with experience in Python, FastAPI, React, and cloud architectures."
+    },
+    "nav": {
         "about": "About",
         "skills": "Skills",
         "experience": "Experience",

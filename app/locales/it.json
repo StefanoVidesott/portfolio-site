@@ -1,4 +1,8 @@
 {
+    "meta": {
+        "title": "Stefano Videsott | Sviluppatore Software",
+        "desc": "Portfolio personale di Stefano Videsott. Sviluppatore Software con esperienza in Python, FastAPI, React e architetture cloud."
+    },
     "nav": {
         "about": "Chi Sono",
         "skills": "Competenze",
