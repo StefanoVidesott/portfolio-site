@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section id="dynamic-form" class="page-section section-bg-default">
+    <div class="container">
+
+        <div class="reveal active admin-form-header">
+            <a href="/{{ lang }}/admin/dashboard" class="back-link back-link-top">
+                <i class="fas fa-arrow-left mr-8"></i> Torna alla Dashboard
+            </a>
+            <h2 class="section-title admin-header-title">{{ title }}</h2>
+        </div>
+
+        <div class="base-card reveal delay-1 admin-form-card">
+            <form action="{{ action_url }}" method="POST" class="contact-form">
+
+                {% for group_name, fields in schema.items() %}
+
+                    <h3 class="admin-group-title {% if not loop.first %}mt-40{% endif %}">
+                        {{ t['admin']['forms']['groups'][group_name] }}
+                    </h3>
+
+                    <div class="form-grid">
+
+                        {% for field in fields %}
+
+                            <div class="size-{{ field.size }}">
+
+                                {% if field.type == 'checkbox' %}
+                                    <div class="admin-checkbox-wrapper">
+                                        <label class="admin-checkbox-label">
+                                            <input type="checkbox" id="{{ field.name }}" name="{{ field.name }}" value="true" {% if field.value %}checked{% endif %} class="admin-checkbox-input">
+                                            {{ t['admin']['forms']['labels'].get(field.name, field.name) }} {% if field.required %}<span class="admin-required">*</span>{% endif %}
+                                        </label>
+                                    </div>
+
+                                {% elif field.type == 'textarea' %}
+                                    <label for="{{ field.name }}" class="admin-label">
+                                        {{ t['admin']['forms']['labels'].get(field.name, field.name) }} {% if field.required %}<span class="admin-required">*</span>{% endif %}
+                                    </label>
+                                    <textarea id="{{ field.name }}" name="{{ field.name }}" class="form-control admin-textarea" {% if field.required %}required{% endif %}>{{ field.value }}</textarea>
+
+                                {% else %}
+                                    <label for="{{ field.name }}" class="admin-label">
+                                        {{ t['admin']['forms']['labels'].get(field.name, field.name) }} {% if field.required %}<span class="admin-required">*</span>{% endif %}
+                                    </label>
+                                    <input type="{{ field.type }}" id="{{ field.name }}" name="{{ field.name }}" class="form-control" value="{{ field.value }}" {% if field.required %}required{% endif %}>
+                                {% endif %}
+
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+
+                <div class="admin-form-actions">
+                    <button type="submit" class="btn btn-primary btn-save">
+                        <i class="fas fa-save mr-8"></i> {{ t['admin']['forms']['actions']['save'] }}
+                    </button>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+</section>
+{% endblock %}

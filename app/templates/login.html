@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section id="login" class="page-section section-bg-default login-section">
+    <div class="container container-narrow">
+
+        <div class="base-card reveal active login-card">
+            <h2 class="login-title">{{ t['admin']['login']['title'] }}</h2>
+
+            {% if error %}
+            <div class="form-message error" style="margin-bottom: 25px;">
+                <i class="fas fa-exclamation-circle mr-8"></i> {{ error }}
+            </div>
+            {% endif %}
+
+            <form action="/{{ lang }}/admin/login" method="POST" class="contact-form">
+                <div class="login-input-group">
+                    <label for="username" class="admin-label">{{ t['admin']['login']['username'] }}</label>
+                    <input type="text" id="username" name="username" class="form-control" placeholder="{{ t['admin']['login']['username_placeholder'] }}" required autofocus>
+                </div>
+
+                <div class="login-input-group">
+                    <label for="password" class="admin-label">{{ t['admin']['login']['password'] }}</label>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="{{ t['admin']['login']['password_placeholder'] }}" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-full">
+                    <i class="fas fa-sign-in-alt mr-8"></i> {{ t['admin']['login']['submit'] }}
+                </button>
+            </form>
+
+            <div class="back-link-wrapper">
+                <a href="/{{ lang }}/home" class="back-link"><i class="fas fa-arrow-left mr-8"></i> {{ t['admin']['login']['back_home'] }}</a>
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endblock %}

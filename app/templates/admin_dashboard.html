@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% macro admin_table(items, entity_type, title_attr, subtitle_attr, t, icon_attr=None, img_attr=None, visibility_attr='is_featured') %}
+<div class="base-card reveal delay-1 admin-table-wrapper">
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th class="td-order">{{ t['admin']['dashboard']['table_headers']['order'] }}</th>
+                <th>{{ t['admin']['dashboard']['table_headers']['details'] }}</th>
+                <th class="td-visibility">{{ t['admin']['dashboard']['table_headers']['visibility'] }}</th>
+                <th class="td-actions">{{ t['admin']['dashboard']['table_headers']['actions'] }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td class="td-order">#{{ item.order }}</td>
+
+                <td class="td-content">
+                    {% if img_attr and item[img_attr] %}
+                        <img src="{{ item[img_attr] }}" alt="cover" class="admin-table-img">
+                    {% elif icon_attr and item[icon_attr] %}
+                        <div class="admin-table-icon">
+                            <i class="{{ item[icon_attr] }}"></i>
+                        </div>
+                    {% endif %}
+
+                    <div>
+                        <strong class="admin-item-title">{{ item[title_attr] }}</strong><br>
+                        <span class="admin-item-subtitle">{{ item[subtitle_attr] }}</span>
+                    </div>
+                </td>
+
+                <td>
+                    {% if item[visibility_attr] %}
+                        <span class="admin-badge admin-badge-success"><i class="fas fa-eye mr-8"></i>{{ t['admin']['dashboard']['table']['visible'] }}</span>
+                    {% else %}
+                        <span class="admin-badge admin-badge-muted"><i class="fas fa-eye-slash mr-8"></i>{{ t['admin']['dashboard']['table']['hidden'] }}</span>
+                    {% endif %}
+                </td>
+
+                <td class="td-actions">
+                    <a href="/{{ lang }}/admin/{{ entity_type }}/edit/{{ item.id }}" class="btn btn-action btn-action-edit" title="{{ t['admin']['dashboard']['table']['edit'] }}">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <form action="/admin/{{ entity_type }}/delete/{{ item.id }}" method="POST" style="display: inline;" onsubmit="return confirm('{{ t['admin']['dashboard']['table']['delete_confirm'] }}');">
+                        <button type="submit" class="btn btn-action btn-action-delete" title="{{ t['admin']['dashboard']['table']['delete'] }}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="4" class="table-empty">
+                    {{ t['admin']['dashboard']['table']['empty'] }}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endmacro %}
+
+
+<section id="dashboard" class="page-section section-bg-default">
+    <div class="container">
+
+        <div class="reveal active admin-header">
+            <h2 class="section-title admin-header-title">{{ t['admin']['dashboard']['title'] }}</h2>
+            <a href="/{{ lang }}/admin/logout" class="btn btn-outline">
+                <i class="fas fa-sign-out-alt mr-8"></i> {{ t['admin']['dashboard']['logout'] }}
+            </a>
+        </div>
+
+        <div class="reveal delay-1 admin-section-header">
+            <h3 class="admin-section-title">{{ t['admin']['dashboard']['sections']['projects'] }}</h3>
+            <a href="/{{ lang }}/admin/projects/new" class="btn btn-primary btn-sm">
+                <i class="fas fa-plus mr-8"></i> {{ t['admin']['dashboard']['sections']['new_project'] }}
+            </a>
+        </div>
+        {{ admin_table(projects, 'projects', 'title_it', 'slug', t, img_attr='image_url', visibility_attr='is_featured') }}
+
+        <div class="reveal delay-1 admin-section-header">
+            <h3 class="admin-section-title">{{ t['admin']['dashboard']['sections']['experiences'] }}</h3>
+            <a href="/{{ lang }}/admin/experiences/new" class="btn btn-primary btn-sm">
+                <i class="fas fa-plus mr-8"></i> {{ t['admin']['dashboard']['sections']['new_experience'] }}
+            </a>
+        </div>
+        {{ admin_table(experiences, 'experiences', 'title_it', 'company', t, visibility_attr='is_highlighted') }}
+
+        <div class="reveal delay-1 admin-section-header">
+            <h3 class="admin-section-title">{{ t['admin']['dashboard']['sections']['education'] }}</h3>
+            <a href="/{{ lang }}/admin/education/new" class="btn btn-primary btn-sm">
+                <i class="fas fa-plus mr-8"></i> {{ t['admin']['dashboard']['sections']['new_education'] }}
+            </a>
+        </div>
+        {{ admin_table(education, 'education', 'title_it', 'school', t, visibility_attr='is_highlighted') }}
+
+        <div class="reveal delay-1 admin-section-header">
+            <h3 class="admin-section-title">{{ t['admin']['dashboard']['sections']['skills'] }}</h3>
+            <a href="/{{ lang }}/admin/skills/new" class="btn btn-primary btn-sm">
+                <i class="fas fa-plus mr-8"></i> {{ t['admin']['dashboard']['sections']['new_skill'] }}
+            </a>
+        </div>
+        {{ admin_table(skills, 'skills', 'title_it', 'skills_list_it', t, icon_attr='icon_class', visibility_attr='is_featured') }}
+
+        <div class="reveal delay-1 admin-section-header">
+            <h3 class="admin-section-title">{{ t['admin']['dashboard']['sections']['interests'] }}</h3>
+            <a href="/{{ lang }}/admin/interests/new" class="btn btn-primary btn-sm">
+                <i class="fas fa-plus mr-8"></i> {{ t['admin']['dashboard']['sections']['new_interest'] }}
+            </a>
+        </div>
+        {{ admin_table(interests, 'interests', 'title_it', 'organization', t, visibility_attr='is_featured') }}
+
+        <div class="reveal delay-1 admin-section-header">
+            <h3 class="admin-section-title">{{ t['admin']['dashboard']['sections']['languages'] }}</h3>
+            <a href="/{{ lang }}/admin/languages/new" class="btn btn-primary btn-sm">
+                <i class="fas fa-plus mr-8"></i> {{ t['admin']['dashboard']['sections']['new_language'] }}
+            </a>
+        </div>
+        {{ admin_table(languages, 'languages', 'title_it', 'level_it', t, icon_attr='icon_class', visibility_attr='is_featured') }}
+
+    </div>
+</section>
+{% endblock %}

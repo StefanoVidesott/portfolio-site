@@ -70,6 +70,90 @@
         "role-title": "Il Mio Ruolo nel Team",
         "role-text": "Questo progetto è stato realizzato in gruppo. Ho contribuito attivamente alla fase di analisi iniziale (D1) e mi sono occupato interamente della stesura del documento di design (D2), dello sviluppo completo del codice (Frontend e Backend) e dell'autovalutazione finale (D4). Il documento D3 e il Business Plan sono stati curati da altri membri e sono inclusi qui solo per completezza."
     },
+    "admin": {
+        "login": {
+            "title": "Admin Login",
+            "username": "Username",
+            "username_placeholder": "Inserisci username",
+            "password": "Password",
+            "password_placeholder": "Inserisci password",
+            "submit": "Accedi",
+            "back_home": "Torna alla Home",
+            "error_invalid": "Credenziali non valide. Riprova."
+        },
+        "dashboard": {
+            "title": "Dashboard Overview",
+            "logout": "Logout",
+            "table_headers": {
+                "order": "Ord.",
+                "details": "Dettagli",
+                "visibility": "Visibilità",
+                "actions": "Azioni"
+            },
+            "table": {
+                "visible": "Visibile",
+                "hidden": "Nascosto",
+                "edit": "Modifica",
+                "delete": "Elimina",
+                "delete_confirm": "Vuoi eliminare definitivamente questo elemento?",
+                "empty": "Nessun elemento trovato."
+            },
+            "sections": {
+                "projects": "Progetti",
+                "new_project": "Nuovo Progetto",
+                "experiences": "Esperienze",
+                "new_experience": "Nuova Esperienza",
+                "education": "Formazione",
+                "new_education": "Nuovo Titolo",
+                "skills": "Competenze (Skills)",
+                "new_skill": "Nuova Skill",
+                "interests": "Interessi & Extra",
+                "new_interest": "Nuovo Interesse",
+                "languages": "Lingue",
+                "new_language": "Nuova Lingua"
+            }
+        },
+        "forms": {
+            "groups": {
+                "general-data": "Dati Generali",
+                "it": "🇮🇹 Italiano",
+                "en": "🇬🇧 Inglese"
+            },
+            "labels": {
+                "slug": "Slug (URL univoco)",
+                "order": "Ordine",
+                "image_url": "URL Immagine",
+                "is_featured": "Visibile",
+                "is_highlighted": "In Evidenza",
+                "url": "URL Esterno",
+                "icon_class": "Icona (es: fas fa-code)",
+                "company": "Azienda",
+                "school": "Scuola / Istituto",
+                "organization": "Organizzazione",
+                "location": "Luogo",
+                "date_it": "Data / Periodo",
+                "date_en": "Data / Periodo",
+                "title_it": "Titolo / Ruolo",
+                "title_en": "Titolo / Ruolo",
+                "link_it": "Testo Bottone",
+                "link_en": "Testo Bottone",
+                "description_it": "Descrizione",
+                "description_en": "Descrizione",
+                "skills_list_it": "Lista Competenze",
+                "skills_list_en": "Lista Competenze",
+                "tasks_it": "Mansioni (una per riga)",
+                "tasks_en": "Mansioni (una per riga)",
+                "level_it": "Livello di competenza",
+                "level_en": "Livello di competenza"
+            },
+            "actions": {
+                "back_to_dashboard": "Torna alla Dashboard",
+                "save": "Salva",
+                "new_prefix": "Nuovo:",
+                "edit_prefix": "Modifica:"
+            }
+        }
+    },
     "404": {
         "title": "Pagina Non Trovata",
         "message": "Oops! Sembra che tu ti sia perso. La pagina che stai cercando non esiste o è stata spostata.",

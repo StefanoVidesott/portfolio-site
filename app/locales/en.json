@@ -70,6 +70,90 @@
         "role-title": "My Role in the Team",
         "role-text": "This was a group project. I actively contributed to the initial analysis phase (D1) and was entirely responsible for drafting the design document (D2), developing the complete codebase (Frontend and Backend), and writing the final self-evaluation (D4). The D3 document and the Business Plan were handled by other team members and are included here only for project completeness."
     },
+    "admin": {
+        "login": {
+            "title": "Admin Login",
+            "username": "Username",
+            "username_placeholder": "Enter username",
+            "password": "Password",
+            "password_placeholder": "Enter password",
+            "submit": "Log In",
+            "back_home": "Back to Home",
+            "error_invalid": "Invalid credentials. Please try again."
+        },
+        "dashboard": {
+            "title": "Dashboard Overview",
+            "logout": "Log Out",
+            "table_headers": {
+                "order": "Order",
+                "details": "Details",
+                "visibility": "Visibility",
+                "actions": "Actions"
+            },
+            "table": {
+                "visible": "Visible",
+                "hidden": "Hidden",
+                "edit": "Edit",
+                "delete": "Delete",
+                "delete_confirm": "Do you want to permanently delete this item?",
+                "empty": "No items found."
+            },
+            "sections": {
+                "projects": "Projects",
+                "new_project": "New Project",
+                "experiences": "Experiences",
+                "new_experience": "New Experience",
+                "education": "Education",
+                "new_education": "New Qualification",
+                "skills": "Skills",
+                "new_skill": "New Skill",
+                "interests": "Interests & Extras",
+                "new_interest": "New Interest",
+                "languages": "Languages",
+                "new_language": "New Language"
+            }
+        },
+        "forms": {
+            "groups": {
+                "general-data": "General Data",
+                "it": "🇮🇹 Italian",
+                "en": "🇬🇧 English"
+            },
+            "labels": {
+                "slug": "Slug (Unique URL)",
+                "order": "Order",
+                "image_url": "Image URL",
+                "is_featured": "Visible",
+                "is_highlighted": "Highlighted",
+                "url": "External URL",
+                "icon_class": "Icon (e.g.: fas fa-code)",
+                "company": "Company",
+                "school": "School / Institution",
+                "organization": "Organization",
+                "location": "Location",
+                "date_it": "Date / Period",
+                "date_en": "Date / Period",
+                "title_it": "Title / Role",
+                "title_en": "Title / Role",
+                "link_it": "Button Text",
+                "link_en": "Button Text",
+                "description_it": "Description",
+                "description_en": "Description",
+                "skills_list_it": "Skills List",
+                "skills_list_en": "Skills List",
+                "tasks_it": "Responsibilities (one per line)",
+                "tasks_en": "Responsibilities (one per line)",
+                "level_it": "Proficiency Level",
+                "level_en": "Proficiency Level"
+            },
+            "actions": {
+                "back_to_dashboard": "Back to Dashboard",
+                "save": "Save",
+                "new_prefix": "New:",
+                "edit_prefix": "Edit:"
+            }
+        }
+    },
     "404": {
         "title": "Page Not Found",
         "message": "Oops! It looks like you're lost. The page you are looking for doesn't exist or has been moved.",

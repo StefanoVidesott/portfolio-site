@@ -8,12 +8,13 @@ import sentry_sdk
 from app import models
 from app.database import engine, Base, get_db
 
-from fastapi import FastAPI, Request, HTTPException, BackgroundTasks, Depends
+from fastapi import FastAPI, Request, HTTPException, BackgroundTasks, Depends, Form
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse, FileResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from starlette.middleware.base import BaseHTTPMiddleware
+from starlette.middleware.sessions import SessionMiddleware
 from pydantic import BaseModel
 from email.message import EmailMessage
 from dotenv import load_dotenv
@@ -29,6 +30,14 @@ TURNSTILE_SITE_KEY = os.getenv("TURNSTILE_SITE_KEY", "")
 TURNSTILE_SECRET_KEY = os.getenv("TURNSTILE_SECRET_KEY", "")
 CLOUDFLARE_WEB_ANALYTICS_TOKEN = os.getenv("CLOUDFLARE_WEB_ANALYTICS_TOKEN", "")
 SENTRY_DSN = os.getenv("SENTRY_DSN", "")
+ENTITY_MODELS = {
+    "projects": models.Project,
+    "skills": models.SkillCategory,
+    "experiences": models.Experience,
+    "education": models.Education,
+    "interests": models.Interest,
+    "languages": models.Language,
+}
 
 if SENTRY_DSN:
     sentry_sdk.init(
@@ -91,6 +100,7 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
         return response
 
 app.add_middleware(SecurityHeadersMiddleware)
+app.add_middleware(SessionMiddleware, secret_key=os.getenv("SECRET_KEY", "chiave-di-sviluppo-fallback"))
 
 class ContactRequest(BaseModel):
     name: str
@@ -118,6 +128,67 @@ def send_email_task(contact: ContactRequest):
             server.send_message(msg)
     except Exception as e:
         print(f"Errore invio email: {e}")
+
+def generate_form_schema(model_class, instance=None):
+    schema = {}
+
+    for column in model_class.__table__.columns:
+        if column.name == "id":
+            continue
+
+        info = column.info or {}
+        group_name = info.get("group", "Altro")
+
+        if group_name not in schema:
+            schema[group_name] = []
+
+        val = ""
+        if instance and hasattr(instance, column.name):
+            val = getattr(instance, column.name)
+            if val is None: val = ""
+        elif column.default is not None:
+            val = column.default.arg if not callable(column.default.arg) else ""
+
+        schema[group_name].append({
+            "name": column.name,
+            "type": info.get("type", "text"),
+            "required": not column.nullable,
+            "value": val,
+            "size": info.get("size", "12" if info.get("type") == "textarea" else "6")
+        })
+
+    return schema
+
+def populate_instance_from_form(instance, model_class, form_data):
+    for column in model_class.__table__.columns:
+        if column.name == "id":
+            continue
+
+        if getattr(column.type, "python_type", None) is bool or str(column.type) == "BOOLEAN":
+            val = form_data.get(column.name)
+            setattr(instance, column.name, val in ["true", "on", "1"])
+            continue
+
+        if str(column.type) == "JSON":
+            val = form_data.get(column.name, "")
+            if val:
+                lines = [line.strip() for line in val.split("\n") if line.strip()]
+                setattr(instance, column.name, lines)
+            else:
+                setattr(instance, column.name, [])
+            continue
+
+        if column.name in form_data:
+            val = form_data.get(column.name)
+            if val == "":
+                if column.nullable:
+                    setattr(instance, column.name, None)
+                elif getattr(column.type, "python_type", None) is int:
+                    setattr(instance, column.name, 0)
+                else:
+                    setattr(instance, column.name, "")
+            else:
+                setattr(instance, column.name, val)
 
 @app.get("/favicon.ico")
 async def get_favicon():
@@ -197,6 +268,199 @@ async def project_wannawork(request: Request, lang: str):
         "t": translations[lang],
         "current_page": "project/wannawork"
     })
+
+@app.get("/admin")
+async def admin_redirect(request: Request):
+    accept_language = request.headers.get("accept-language", "")
+
+    if accept_language.startswith("it"):
+        return RedirectResponse(url="/it/admin/login")
+
+    return RedirectResponse(url="/en/admin/login")
+
+@app.get("/{lang}/admin/login")
+async def admin_login_page(request: Request, lang: str):
+
+    if request.session.get("is_admin"):
+        return RedirectResponse(url=f"/{lang}/admin/dashboard")
+
+    return templates.TemplateResponse(request=request, name="login.html", context={
+        "lang": lang,
+        "t": translations[lang],
+        "current_page": f"/{lang}/admin/login"
+    })
+
+@app.post("/{lang}/admin/login")
+async def admin_login(
+    request: Request,
+    lang: str,
+    username: str = Form(...),
+    password: str = Form(...)
+):
+    correct_username = os.getenv("ADMIN_USERNAME")
+    correct_password = os.getenv("ADMIN_PASSWORD")
+
+    if username == correct_username and password == correct_password:
+        request.session["is_admin"] = True
+        return RedirectResponse(url=f"/{lang}/admin/dashboard", status_code=303)
+
+    return templates.TemplateResponse(
+        request=request,
+        name="login.html",
+        context={
+            "error": translations[lang]['admin']['login']['error_invalid'],
+            "lang": lang,
+            "t": translations[lang],
+            "current_page": "admin/login"
+        },
+        status_code=401
+    )
+
+@app.get("/{lang}/admin/logout")
+async def admin_logout(request: Request, lang: str):
+    request.session.clear()
+    return RedirectResponse(url=f"/{lang}/home")
+
+@app.get("/{lang}/admin/dashboard")
+async def admin_dashboard(request: Request, lang: str, db: Session = Depends(get_db)):
+    if not request.session.get("is_admin"):
+        return RedirectResponse(url=f"/{lang}/admin/login")
+
+    db_projects = db.query(models.Project).order_by(models.Project.order).all()
+    db_skills = db.query(models.SkillCategory).order_by(models.SkillCategory.order).all()
+    db_experiences = db.query(models.Experience).order_by(models.Experience.order).all()
+    db_education = db.query(models.Education).order_by(models.Education.order).all()
+    db_interests = db.query(models.Interest).order_by(models.Interest.order).all()
+    db_languages = db.query(models.Language).order_by(models.Language.order).all()
+
+    return templates.TemplateResponse(
+        request=request,
+        name="admin_dashboard.html",
+        context={
+            "projects": db_projects,
+            "skills": db_skills,
+            "experiences": db_experiences,
+            "education": db_education,
+            "interests": db_interests,
+            "languages": db_languages,
+            "lang": lang,
+            "t": translations[lang],
+            "current_page": "admin/dashboard"
+        })
+
+@app.get("/{lang}/admin/{entity_type}/new")
+async def new_entity_page(request: Request, lang: str, entity_type: str):
+    if not request.session.get("is_admin"):
+        return RedirectResponse(url=f"/{lang}/admin/login")
+
+    model_class = ENTITY_MODELS.get(entity_type)
+    if not model_class:
+        return RedirectResponse(url=f"/{lang}/admin/dashboard")
+
+    form_schema = generate_form_schema(model_class)
+
+    return templates.TemplateResponse(
+        request=request,
+        name="admin_dynamic_form.html",
+        context={
+            "lang": lang,
+            "t": translations[lang],
+            "schema": form_schema,
+            "action_url": f"/admin/{entity_type}/new",
+            "title": f"{translations['it']['admin']['forms']['actions']['new_prefix']} {entity_type.capitalize()}",
+            "current_page": f"admin/{entity_type}/new"
+        }
+    )
+
+@app.post("/admin/{entity_type}/new")
+async def create_entity(request: Request, entity_type: str, db: Session = Depends(get_db)):
+    if not request.session.get("is_admin"):
+        return RedirectResponse(url=f"/{lang}/admin/login")
+
+    model_class = ENTITY_MODELS.get(entity_type)
+    if not model_class:
+        return RedirectResponse(url=f"/{lang}/admin/dashboard")
+
+    form_data = await request.form()
+
+    new_item = model_class()
+    populate_instance_from_form(new_item, model_class, form_data)
+
+    db.add(new_item)
+    db.commit()
+
+    return RedirectResponse(url=f"/{lang}/admin/dashboard", status_code=303)
+
+
+@app.get("/{lang}/admin/{entity_type}/edit/{item_id}")
+async def edit_entity_page(request: Request, lang: str, entity_type: str, item_id: int, db: Session = Depends(get_db)):
+    if not request.session.get("is_admin"):
+        return RedirectResponse(url=f"/{lang}/admin/login")
+
+    model_class = ENTITY_MODELS.get(entity_type)
+    if not model_class:
+        return RedirectResponse(url=f"/{lang}/admin/dashboard")
+
+    item = db.query(model_class).filter(model_class.id == item_id).first()
+    if not item:
+        return RedirectResponse(url=f"/{lang}/admin/dashboard")
+
+    for col in model_class.__table__.columns:
+        if str(col.type) == "JSON":
+            current_val = getattr(item, col.name)
+            if isinstance(current_val, list):
+                setattr(item, col.name, "\n".join(current_val))
+
+    form_schema = generate_form_schema(model_class, instance=item)
+
+    display_title = getattr(item, 'title_it', getattr(item, 'name', f"ID {item.id}"))
+
+    return templates.TemplateResponse(
+        request=request,
+        name="admin_dynamic_form.html",
+        context={
+            "lang": lang,
+            "t": translations[lang],
+            "schema": form_schema,
+            "action_url": f"/admin/{entity_type}/edit/{item.id}",
+            "title": f"{translations['it']['admin']['forms']['actions']['edit_prefix']} {display_title}",
+            "current_page": f"admin/{entity_type}/edit/{item_id}"
+        }
+    )
+
+@app.post("/admin/{entity_type}/edit/{item_id}")
+async def update_entity(request: Request, entity_type: str, item_id: int, db: Session = Depends(get_db)):
+    if not request.session.get("is_admin"):
+        return RedirectResponse(url=f"/{lang}/admin/login")
+
+    model_class = ENTITY_MODELS.get(entity_type)
+    if not model_class:
+        return RedirectResponse(url=f"/{lang}/admin/dashboard")
+
+    db_item = db.query(model_class).filter(model_class.id == item_id).first()
+    if not db_item:
+         return RedirectResponse(url=f"/{lang}/admin/dashboard")
+
+    form_data = await request.form()
+    populate_instance_from_form(db_item, model_class, form_data)
+
+    db.commit()
+    return RedirectResponse(url=f"/{lang}/admin/dashboard", status_code=303)
+
+
+@app.post("/admin/{entity_type}/delete/{item_id}")
+async def delete_entity(request: Request, entity_type: str, item_id: int, db: Session = Depends(get_db)):
+    if not request.session.get("is_admin"):
+        return RedirectResponse(url=f"/{lang}/admin/login")
+
+    model_class = ENTITY_MODELS.get(entity_type)
+    if model_class:
+        db_item = db.query(model_class).filter(model_class.id == item_id).first()
+        if db_item:
+            db.delete(db_item)
+            db.commit()
+
+    return RedirectResponse(url=f"/{lang}/admin/dashboard", status_code=303)
 
 @app.exception_handler(404)
 async def custom_404_handler(request: Request, exc: StarletteHTTPException):
