@@ -1,6 +1,7 @@
 import os
 import json
 import httpx
+import secrets
 import smtplib
 import sentry_sdk
 
@@ -65,17 +66,22 @@ templates.env.globals["cloudflare_web_analytics_token"] = CLOUDFLARE_WEB_ANALYTI
 
 class SecurityHeadersMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
+        nonce = secrets.token_hex(16)
+        request.state.nonce = nonce
+
         response = await call_next(request)
 
         if os.getenv("ENVIRONMENT") == "prod":
             response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains; preload"
+
         response.headers["X-Frame-Options"] = "DENY"
         response.headers["X-Content-Type-Options"] = "nosniff"
         response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
         response.headers["Permissions-Policy"] = "fullscreen=(), camera=(), microphone=(), geolocation=(), interest-cohort=(), browsing-topics=()"
+
         csp_directives = [
             "default-src 'self';",
-            "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://static.cloudflareinsights.com;",
+            f"script-src 'self' 'nonce-{nonce}' https://challenges.cloudflare.com https://static.cloudflareinsights.com;",
             "style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com;",
             "font-src 'self' data: https://cdnjs.cloudflare.com https://fonts.gstatic.com;",
             "img-src 'self' data:;",
