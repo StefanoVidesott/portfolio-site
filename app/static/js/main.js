@@ -1,4 +1,3 @@
-/* ================= MENU RESPONSIVE ================= */
 document.addEventListener("DOMContentLoaded", () => {
     const navToggle = document.querySelector(".nav-toggle");
     const navMenu = document.querySelector(".nav-menu");
@@ -170,4 +169,10 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    const languageSwitcher = document.getElementById('languageSwitcher');
+    if (languageSwitcher) {
+        languageSwitcher.addEventListener('change', function() {
+            window.location.href = this.value;
+        });
+    }
 });

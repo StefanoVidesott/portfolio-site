@@ -87,8 +87,7 @@
                     </button>
                 </li>
                 <li>
-                    <select id="languageSwitcher" aria-label="Select language"
-                            onchange="window.location.href = this.value">
+                    <select id="languageSwitcher" aria-label="Select language">
                         <option value="/en/{{ current_page }}" {% if lang == 'en' %}selected{% endif %}>English</option>
                         <option value="/it/{{ current_page }}" {% if lang == 'it' %}selected{% endif %}>Italiano</option>
                     </select>
