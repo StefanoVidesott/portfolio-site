@@ -42,6 +42,19 @@ def seed_data():
             "image_url": "/static/images/project-wannawork.webp",
             "is_featured": True,
             "order": 3
+        },
+        {
+            "slug": "portfolio-headless-cms",
+            "title_it": "Personal Portfolio & CMS",
+            "title_en": "Personal Portfolio & CMS",
+            "description_it": "Portfolio web dinamico e bilingue sviluppato da zero con FastAPI e Vanilla JS. Integra un Custom CMS basato su SQLite e una pipeline CI/CD automatizzata.",
+            "description_en": "Dynamic and bilingual web portfolio built from scratch with FastAPI and Vanilla JS. It integrates a custom SQLite-based CMS and an automated CI/CD pipeline.",
+            "link_it": "Visualizza su GitHub",
+            "link_en": "View on GitHub",
+            "image_url": "/static/images/project-portfolio.webp",
+            "url": "https://github.com/StefanoVidesott/portfolio-site",
+            "is_featured": True,
+            "order": 4
         }
     ]
 

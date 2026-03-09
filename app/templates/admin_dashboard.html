@@ -44,7 +44,7 @@
                     <a href="/{{ lang }}/admin/{{ entity_type }}/edit/{{ item.id }}" class="btn btn-action btn-action-edit" title="{{ t['admin']['dashboard']['table']['edit'] }}">
                         <i class="fas fa-edit"></i>
                     </a>
-                    <form action="/admin/{{ entity_type }}/delete/{{ item.id }}" method="POST" style="display: inline;" onsubmit="return confirm('{{ t['admin']['dashboard']['table']['delete_confirm'] }}');">
+                    <form action="/{{ lang }}/admin/{{ entity_type }}/delete/{{ item.id }}" method="POST" style="display: inline;" onsubmit="return confirm('{{ t['admin']['dashboard']['table']['delete_confirm'] }}');">
                         <button type="submit" class="btn btn-action btn-action-delete" title="{{ t['admin']['dashboard']['table']['delete'] }}">
                             <i class="fas fa-trash"></i>
                         </button>

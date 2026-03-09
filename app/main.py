@@ -1,6 +1,8 @@
 import os
 import json
+import uuid
 import httpx
+import shutil
 import secrets
 import smtplib
 import sentry_sdk
@@ -15,6 +17,7 @@ from fastapi.responses import RedirectResponse, FileResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.middleware.sessions import SessionMiddleware
+from starlette.datastructures import UploadFile
 from pydantic import BaseModel
 from email.message import EmailMessage
 from dotenv import load_dotenv
@@ -30,6 +33,10 @@ TURNSTILE_SITE_KEY = os.getenv("TURNSTILE_SITE_KEY", "")
 TURNSTILE_SECRET_KEY = os.getenv("TURNSTILE_SECRET_KEY", "")
 CLOUDFLARE_WEB_ANALYTICS_TOKEN = os.getenv("CLOUDFLARE_WEB_ANALYTICS_TOKEN", "")
 SENTRY_DSN = os.getenv("SENTRY_DSN", "")
+
+UPLOAD_DIR = os.path.join("app", "static", "images", "uploaded")
+os.makedirs(UPLOAD_DIR, exist_ok=True)
+
 ENTITY_MODELS = {
     "projects": models.Project,
     "skills": models.SkillCategory,
@@ -163,6 +170,20 @@ def populate_instance_from_form(instance, model_class, form_data):
     for column in model_class.__table__.columns:
         if column.name == "id":
             continue
+
+        file_field_name = f"{column.name}_file"
+        if file_field_name in form_data:
+            uploaded_file = form_data[file_field_name]
+            if hasattr(uploaded_file, "filename") and uploaded_file.filename:
+                ext = os.path.splitext(uploaded_file.filename)[1]
+                unique_filename = f"{uuid.uuid4().hex}{ext}"
+                file_path = os.path.join(UPLOAD_DIR, unique_filename)
+
+                with open(file_path, "wb") as buffer:
+                    shutil.copyfileobj(uploaded_file.file, buffer)
+
+                setattr(instance, column.name, f"/static/images/uploaded/{unique_filename}")
+                continue
 
         if getattr(column.type, "python_type", None) is bool or str(column.type) == "BOOLEAN":
             val = form_data.get(column.name)
@@ -366,14 +387,14 @@ async def new_entity_page(request: Request, lang: str, entity_type: str):
             "lang": lang,
             "t": translations[lang],
             "schema": form_schema,
-            "action_url": f"/admin/{entity_type}/new",
+            "action_url": f"/{lang}/admin/{entity_type}/new",
             "title": f"{translations['it']['admin']['forms']['actions']['new_prefix']} {entity_type.capitalize()}",
             "current_page": f"admin/{entity_type}/new"
         }
     )
 
-@app.post("/admin/{entity_type}/new")
-async def create_entity(request: Request, entity_type: str, db: Session = Depends(get_db)):
+@app.post("/{lang}/admin/{entity_type}/new")
+async def create_entity(request: Request, lang: str, entity_type: str, db: Session = Depends(get_db)):
     if not request.session.get("is_admin"):
         return RedirectResponse(url=f"/{lang}/admin/login")
 
@@ -422,14 +443,14 @@ async def edit_entity_page(request: Request, lang: str, entity_type: str, item_i
             "lang": lang,
             "t": translations[lang],
             "schema": form_schema,
-            "action_url": f"/admin/{entity_type}/edit/{item.id}",
+            "action_url": f"/{lang}/admin/{entity_type}/edit/{item.id}",
             "title": f"{translations['it']['admin']['forms']['actions']['edit_prefix']} {display_title}",
             "current_page": f"admin/{entity_type}/edit/{item_id}"
         }
     )
 
-@app.post("/admin/{entity_type}/edit/{item_id}")
-async def update_entity(request: Request, entity_type: str, item_id: int, db: Session = Depends(get_db)):
+@app.post("/{lang}/admin/{entity_type}/edit/{item_id}")
+async def update_entity(request: Request, lang: str, entity_type: str, item_id: int, db: Session = Depends(get_db)):
     if not request.session.get("is_admin"):
         return RedirectResponse(url=f"/{lang}/admin/login")
 
@@ -448,8 +469,8 @@ async def update_entity(request: Request, entity_type: str, item_id: int, db: Se
     return RedirectResponse(url=f"/{lang}/admin/dashboard", status_code=303)
 
 
-@app.post("/admin/{entity_type}/delete/{item_id}")
-async def delete_entity(request: Request, entity_type: str, item_id: int, db: Session = Depends(get_db)):
+@app.post("/{lang}/admin/{entity_type}/delete/{item_id}")
+async def delete_entity(request: Request, lang: str, entity_type: str, item_id: int, db: Session = Depends(get_db)):
     if not request.session.get("is_admin"):
         return RedirectResponse(url=f"/{lang}/admin/login")
 

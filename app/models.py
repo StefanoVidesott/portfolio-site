@@ -24,7 +24,7 @@ class Project(Base):
     order = Column(Integer, default=0, info={"type": "number", "group": "general-data", "size": "4"})
     is_featured = Column(Boolean, default=False, info={"type": "checkbox", "group": "general-data", "size": "4"})
 
-    image_url = Column(String, nullable=False, info={"type": "text", "group": "general-data", "size": "6"})
+    image_url = Column(String, nullable=False, info={"type": "image_upload", "group": "general-data", "size": "6"})
     url = Column(String, nullable=True, info={"type": "text", "group": "general-data", "size": "6"})
 
     title_it = Column(String, nullable=False, info={"type": "text", "group": "it", "size": "6"})

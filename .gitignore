@@ -13,3 +13,5 @@ docker-compose.override.yml
 
 # Enviorment
 .env
+
+app/static/images/uploaded
