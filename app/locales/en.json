@@ -17,8 +17,32 @@
         "download-cv": "Download my CV",
         "back-to-home": "Back to Home",
         "back-to-projects": "Back to Projects",
-        "footer-text": "© 2024 Stefano Videsott. All rights reserved.",
-        "meta-desc": "Portfolio of Stefano Videsott, Software Developer and CS student at the University of Trento. Discover my IT projects, web apps, and DevOps skills."
+        "footer-text": "© 2026 Stefano Videsott. All rights reserved.",
+        "meta-desc": "Portfolio of Stefano Videsott, Software Developer and Computer Science student at the University of Trento. Discover my IT projects, web apps, and DevOps skills.",
+        "privacy-policy": "Privacy Policy",
+        "privacy-consent-pre": "I have read and agree to the"
+    },
+    "privacy": {
+        "title": "Privacy Policy and Cookie Policy",
+        "last_updated": "Last updated: March 2026",
+        "intro": "This policy describes how the personal data of users visiting this website is collected, used, and protected, in compliance with the General Data Protection Regulation (GDPR - EU Regulation 2016/679).",
+        "section1_title": "1. Data Controller",
+        "section1_text": "The Data Controller is <strong>Stefano Videsott</strong>.<br>Contact email: <a href=\"mailto:stefano.videsott.work@gmail.com\" style=\"color: var(--primary-color);\">stefano.videsott.work@gmail.com</a>",
+        "section2_title": "2. Data Collected and Purposes",
+        "section2_li1": "<strong>Data provided voluntarily (Contact Form):</strong> When you fill out the contact form, we collect your Name and Email address. This data is used exclusively to respond to your contact requests. The legal basis is the legitimate interest in responding to communications received or the execution of pre-contractual measures.",
+        "section2_li2": "<strong>Navigation data and Security:</strong> During navigation, the computer systems responsible for operating the site acquire certain data (e.g., anonymized IP addresses, user agents) whose transmission is implicit in the use of Internet protocols. This data serves solely to ensure site security and block cyber attacks or bots.",
+        "section3_title": "3. Third-Party Services",
+        "section3_intro": "This site is built to maximize user privacy and does not use advertising profiling services. However, it relies on essential technical services:",
+        "section3_li1": "<strong>Cloudflare:</strong> Used as a Content Delivery Network (CDN) to speed up the site and protect it from DDoS attacks. Cloudflare processes traffic data in an aggregated form.",
+        "section3_li2": "<strong>Cloudflare Turnstile:</strong> An anti-spam verification system integrated into the contact form. It verifies that the user is human without using tracking cookies.",
+        "section3_li3": "<strong>Cloudflare Web Analytics:</strong> A natively <em>cookie-less</em> and anonymized visit measurement system, which does not track the user across different websites.",
+        "section3_li4": "<strong>Sentry:</strong> Platform for monitoring server technical errors. It collects anonymized diagnostic data in the event of a site crash to allow for its correction.",
+        "section4_title": "4. Cookie Policy (Technical Cookies Only)",
+        "section4_text": "This site <strong>does not use profiling or marketing cookies</strong>. We do not use tools like Google Analytics or Meta Pixel. <br><br>The only cookies present are <strong>Strictly Necessary Technical Cookies</strong> related to accessing the site's Administration area (Session Cookie). Since these cookies are essential for the technical functioning of the infrastructure and do not track users for commercial purposes, current legislation <strong>does not require displaying a prior consent banner</strong>.",
+        "section5_title": "5. Data Retention",
+        "section5_text": "Emails received via the contact form are kept in the Data Controller's email inbox for the time strictly necessary to process the request. They are not added to any newsletter or marketing database without explicit consent.",
+        "section6_title": "6. User Rights",
+        "section6_text": "Under Articles 15 and following of the GDPR, you have the right to request access to your personal data at any time, its rectification, deletion, or restriction of processing. You can exercise these rights by sending an email to <a href=\"mailto:stefano.videsott.work@gmail.com\" style=\"color: var(--primary-color);\">stefano.videsott.work@gmail.com</a>."
     },
     "home": {
         "header-roles": [

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ lang }}">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,7 +23,8 @@
     <meta property="og:description" content="{{ t['meta']['desc'] }}">
     <meta property="og:url" content="https://www.stefanovidesott.com/{{ lang }}/{{ current_page }}">
 
-    <meta property="og:image" content="https://www.stefanovidesott.com{{ url_for('static', path='/images/profile.webp') }}">
+    <meta property="og:image"
+        content="https://www.stefanovidesott.com{{ url_for('static', path='/images/profile.webp') }}">
     <meta property="og:image:type" content="image/webp">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -30,7 +32,8 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{ t['meta']['title'] }}">
     <meta name="twitter:description" content="{{ t['meta']['desc'] }}">
-    <meta name="twitter:image" content="https://www.stefanovidesott.com{{ url_for('static', path='/images/profile.webp') }}">
+    <meta name="twitter:image"
+        content="https://www.stefanovidesott.com{{ url_for('static', path='/images/profile.webp') }}">
 
     <script type="application/ld+json" nonce="{{ request.state.nonce }}">
     {
@@ -53,23 +56,27 @@
     </script>
 
     {% if env == 'prod' %}
-        <link rel="stylesheet" href="{{ url_for('static', path='/css/style-min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/style-min.css') }}">
     {% else %}
-        <link rel="stylesheet" href="{{ url_for('static', path='/css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/style.css') }}">
     {% endif %}
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@600;700;800&display=swap">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@600;700;800&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
     {% if env == 'prod' %}
-        <script nonce="{{ request.state.nonce }}" defer src="{{ url_for('static', path='/js/main-min.js') }}"></script>
-        <script nonce="{{ request.state.nonce }}" defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "{{ cloudflare_web_analytics_token }}"}'></script>
+    <script nonce="{{ request.state.nonce }}" defer src="{{ url_for('static', path='/js/main-min.js') }}"></script>
+    <script nonce="{{ request.state.nonce }}" defer src='https://static.cloudflareinsights.com/beacon.min.js'
+        data-cf-beacon='{"token": "{{ cloudflare_web_analytics_token }}"}'></script>
     {% else %}
-        <script nonce="{{ request.state.nonce }}" defer src="{{ url_for('static', path='/js/main.js') }}"></script>
+    <script nonce="{{ request.state.nonce }}" defer src="{{ url_for('static', path='/js/main.js') }}"></script>
     {% endif %}
 
-    <script nonce="{{ request.state.nonce }}" defer src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <script nonce="{{ request.state.nonce }}" defer src="https://challenges.cloudflare.com/turnstile/v0/api.js" async
+        defer></script>
 </head>
+
 <body>
 
     <nav aria-label="Main navigation">
@@ -94,8 +101,8 @@
                 </li>
                 <li>
                     <select id="languageSwitcher" aria-label="Select language">
-                        <option value="/en/{{ current_page }}" {% if lang == 'en' %}selected{% endif %}>English</option>
-                        <option value="/it/{{ current_page }}" {% if lang == 'it' %}selected{% endif %}>Italiano</option>
+                        <option value="/en/{{ current_page }}" {% if lang=='en' %}selected{% endif %}>English</option>
+                        <option value="/it/{{ current_page }}" {% if lang=='it' %}selected{% endif %}>Italiano</option>
                     </select>
                 </li>
             </ul>
@@ -107,7 +114,17 @@
     </main>
 
     <footer>
-        {{ t['general']['footer-text'] }}
+        <div class="container">
+            <p style="margin: 0;">
+                {{ t['general']['footer-text'] }} |
+                <a href="/{{ lang }}/privacy"
+                    style="color: var(--text-muted); text-decoration: underline; transition: color 0.2s;">
+                    {{ t['general']['privacy-policy'] }}
+                </a>
+            </p>
+        </div>
     </footer>
+
 </body>
+
 </html>

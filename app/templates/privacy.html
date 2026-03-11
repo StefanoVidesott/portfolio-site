@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="page-section section-bg-default">
+    <div class="container container-narrow">
+
+        <div class="reveal active" style="margin-bottom: 40px;">
+            <a href="/{{ lang }}/home"
+                style="color: var(--text-muted); font-size: 0.95rem; display: inline-block; margin-bottom: 15px;">
+                <i class="fas fa-arrow-left"></i> {{ t['general']['back-to-home'] }}
+            </a>
+            <h2 class="section-title" style="margin-bottom: 0; text-align: left;">{{ t['privacy']['title'] }}</h2>
+            <p style="color: var(--text-muted); margin-top: 10px;">{{ t['privacy']['last_updated'] }}</p>
+        </div>
+
+        <div class="base-card reveal delay-1" style="padding: 40px; text-align: left;">
+
+            <div style="margin-bottom: 30px;">
+                <p>{{ t['privacy']['intro'] | safe }}</p>
+            </div>
+
+            <h3
+                style="color: var(--primary-color); margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px;">
+                {{ t['privacy']['section1_title'] }}</h3>
+            <p style="margin-bottom: 30px;">{{ t['privacy']['section1_text'] | safe }}</p>
+
+            <h3
+                style="color: var(--primary-color); margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px;">
+                {{ t['privacy']['section2_title'] }}</h3>
+            <ul style="margin-bottom: 30px; padding-left: 20px; color: var(--text-main);">
+                <li style="margin-bottom: 10px;">{{ t['privacy']['section2_li1'] | safe }}</li>
+                <li style="margin-bottom: 10px;">{{ t['privacy']['section2_li2'] | safe }}</li>
+            </ul>
+
+            <h3
+                style="color: var(--primary-color); margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px;">
+                {{ t['privacy']['section3_title'] }}</h3>
+            <p style="margin-bottom: 10px;">{{ t['privacy']['section3_intro'] | safe }}</p>
+            <ul style="margin-bottom: 30px; padding-left: 20px; color: var(--text-main);">
+                <li style="margin-bottom: 10px;">{{ t['privacy']['section3_li1'] | safe }}</li>
+                <li style="margin-bottom: 10px;">{{ t['privacy']['section3_li2'] | safe }}</li>
+                <li style="margin-bottom: 10px;">{{ t['privacy']['section3_li3'] | safe }}</li>
+                <li style="margin-bottom: 10px;">{{ t['privacy']['section3_li4'] | safe }}</li>
+            </ul>
+
+            <h3
+                style="color: var(--primary-color); margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px;">
+                {{ t['privacy']['section4_title'] }}</h3>
+            <p style="margin-bottom: 30px;">{{ t['privacy']['section4_text'] | safe }}</p>
+
+            <h3
+                style="color: var(--primary-color); margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px;">
+                {{ t['privacy']['section5_title'] }}</h3>
+            <p style="margin-bottom: 30px;">{{ t['privacy']['section5_text'] | safe }}</p>
+
+            <h3
+                style="color: var(--primary-color); margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px;">
+                {{ t['privacy']['section6_title'] }}</h3>
+            <p style="margin-bottom: 30px;">{{ t['privacy']['section6_text'] | safe }}</p>
+
+        </div>
+    </div>
+</section>
+{% endblock %}

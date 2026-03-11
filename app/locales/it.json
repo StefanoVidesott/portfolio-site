@@ -17,8 +17,32 @@
         "download-cv": "Scarica il mio CV",
         "back-to-home": "Torna alla Home",
         "back-to-projects": "Torna ai Progetti",
-        "footer-text": "© 2024 Stefano Videsott. Tutti i diritti riservati.",
-        "meta-desc": "Portfolio di Stefano Videsott, Sviluppatore Software e studente di Informatica all'Università di Trento. Scopri i miei progetti IT, app web e competenze DevOps."
+        "footer-text": "© 2026 Stefano Videsott. Tutti i diritti riservati.",
+        "meta-desc": "Portfolio di Stefano Videsott, Sviluppatore Software e studente di Informatica all'Università di Trento. Scopri i miei progetti IT, app web e competenze DevOps.",
+        "privacy-policy": "Privacy Policy",
+        "privacy-consent-pre": "Ho letto e accetto la"
+    },
+    "privacy": {
+        "title": "Informativa sulla Privacy e Cookie Policy",
+        "last_updated": "Ultimo aggiornamento: Marzo 2026",
+        "intro": "La presente informativa descrive come vengono raccolti, utilizzati e protetti i dati personali degli utenti che visitano questo sito web, nel rispetto del Regolamento Generale sulla Protezione dei Dati (GDPR - Regolamento UE 2016/679).",
+        "section1_title": "1. Titolare del Trattamento",
+        "section1_text": "Il Titolare del trattamento dei dati è <strong>Stefano Videsott</strong>.<br>Email di contatto: <a href=\"mailto:stefano.videsott.work@gmail.com\" style=\"color: var(--primary-color);\">stefano.videsott.work@gmail.com</a>",
+        "section2_title": "2. Dati Raccolti e Finalità",
+        "section2_li1": "<strong>Dati forniti volontariamente (Modulo di Contatto):</strong> Quando compili il modulo di contatto, raccogliamo il tuo Nome e il tuo indirizzo Email. Questi dati vengono utilizzati esclusivamente per rispondere alle tue richieste di contatto. La base giuridica è il legittimo interesse a rispondere alle comunicazioni ricevute o l'esecuzione di misure precontrattuali.",
+        "section2_li2": "<strong>Dati di navigazione e Sicurezza:</strong> Durante la navigazione, i sistemi informatici preposti al funzionamento del sito acquisiscono alcuni dati (es. indirizzi IP anonimizzati, user agent) la cui trasmissione è implicita nell'uso dei protocolli di Internet. Questi dati servono unicamente a garantire la sicurezza del sito e bloccare attacchi informatici o bot.",
+        "section3_title": "3. Servizi di Terze Parti",
+        "section3_intro": "Questo sito è costruito per massimizzare la privacy degli utenti e non utilizza servizi di profilazione pubblicitaria. Si avvale tuttavia di servizi tecnici essenziali:",
+        "section3_li1": "<strong>Cloudflare:</strong> Utilizzato come Content Delivery Network (CDN) per velocizzare il sito e proteggerlo da attacchi DDoS. Cloudflare elabora i dati di traffico in forma aggregata.",
+        "section3_li2": "<strong>Cloudflare Turnstile:</strong> Un sistema di verifica anti-spam integrato nel modulo di contatti. Verifica che l'utente sia umano senza utilizzare cookie traccianti.",
+        "section3_li3": "<strong>Cloudflare Web Analytics:</strong> Sistema di misurazione delle visite nativamente <em>cookie-less</em> e anonimizzato, che non traccia l'utente attraverso diversi siti web.",
+        "section3_li4": "<strong>Sentry:</strong> Piattaforma di monitoraggio degli errori tecnici del server. Raccoglie dati diagnostici anonimizzati nel caso si verifichi un crash del sito, al fine di permetterne la correzione.",
+        "section4_title": "4. Cookie Policy (Solo Cookie Tecnici)",
+        "section4_text": "Questo sito <strong>non utilizza cookie di profilazione o di marketing</strong>. Non impieghiamo strumenti come Google Analytics o Meta Pixel. <br><br>Gli unici cookie presenti sono <strong>Cookie Tecnici Strettamente Necessari</strong> legati all'accesso dell'area di Amministrazione del sito (Cookie di Sessione). Poiché questi cookie sono essenziali per il funzionamento tecnico dell'infrastruttura e non tracciano gli utenti a fini commerciali, la normativa vigente <strong>non richiede l'esposizione di un banner di consenso preventivo</strong>.",
+        "section5_title": "5. Conservazione dei Dati",
+        "section5_text": "Le email ricevute tramite il modulo di contatto vengono conservate sulla casella di posta elettronica del Titolare per il tempo strettamente necessario a evadere la richiesta. Non vengono inserite in nessuna newsletter o database di marketing senza esplicito consenso.",
+        "section6_title": "6. Diritti dell'Utente",
+        "section6_text": "Ai sensi degli artt. 15 e seguenti del GDPR, hai il diritto di chiedere in qualsiasi momento l'accesso ai tuoi dati personali, la rettifica, la cancellazione degli stessi o la limitazione del trattamento. Puoi esercitare questi diritti inviando un'email a <a href=\"mailto:stefano.videsott.work@gmail.com\" style=\"color: var(--primary-color);\">stefano.videsott.work@gmail.com</a>."
     },
     "home": {
         "header-roles": [

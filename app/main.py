@@ -483,6 +483,17 @@ async def delete_entity(request: Request, lang: str, entity_type: str, item_id: 
 
     return RedirectResponse(url=f"/{lang}/admin/dashboard", status_code=303)
 
+@app.get("/{lang}/privacy")
+async def privacy_policy(request: Request, lang: str):
+    if lang not in SUPPORTED_LANGS:
+        return RedirectResponse(url="/it/privacy")
+
+    return templates.TemplateResponse(request=request, name="privacy.html", context={
+        "lang": lang,
+        "t": translations[lang],
+        "current_page": "privacy"
+    })
+
 @app.exception_handler(404)
 async def custom_404_handler(request: Request, exc: StarletteHTTPException):
     path_parts = request.url.path.split('/')
