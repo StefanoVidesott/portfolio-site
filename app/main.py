@@ -95,12 +95,12 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
 
         csp_directives = [
             "default-src 'self';",
-            f"script-src 'self' 'nonce-{nonce}' https://challenges.cloudflare.com https://static.cloudflareinsights.com;",
+            f"script-src 'self' 'nonce-{nonce}' https://challenges.cloudflare.com https://static.cloudflareinsights.com https://umami.stefanovidesott.com;",
             "style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com;",
             "font-src 'self' data: https://cdnjs.cloudflare.com https://fonts.gstatic.com;",
             "img-src 'self' data:;",
             "frame-src 'self' https://challenges.cloudflare.com;",
-            "connect-src 'self' https://cloudflareinsights.com https://challenges.cloudflare.com;"
+            "connect-src 'self' https://cloudflareinsights.com https://challenges.cloudflare.com https://umami.stefanovidesott.com;"
         ]
         response.headers["Content-Security-Policy"] = " ".join(csp_directives)
 
