@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OG Image – Stefano Videsott</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary-hue: 45;
+    --primary-color: hsl(var(--primary-hue), 80%, 45%);
+    --primary-light: hsl(var(--primary-hue), 90%, 60%);
+    --text-main: #f1f2f6;
+    --text-muted: #a4b0be;
+    --bg-body: #0d1117;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1200px;
+    height: 630px;
+    overflow: hidden;
+    background: var(--bg-body);
+    font-family: 'DM Sans', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ── CARD ── */
+  .card {
+    position: relative;
+    width: 1200px;
+    height: 630px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+  }
+
+  /* ── BACKGROUND LAYERS (z-index 0-2) ── */
+  .bg-gradient {
+    position: absolute; inset: 0;
+    z-index: 0;
+    background:
+      radial-gradient(ellipse 90% 90% at 65% 50%, #0c1828 0%, #090d16 100%);
+  }
+
+  .bg-grid {
+    position: absolute; inset: 0;
+    z-index: 1;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: radial-gradient(ellipse 80% 80% at 65% 50%, black 20%, transparent 75%);
+  }
+
+  .bg-code {
+    position: absolute; inset: 0;
+    z-index: 2;
+    font-family: 'Courier New', monospace;
+    font-size: 10.5px;
+    line-height: 1.85;
+    color: rgba(255,255,255,0.05);
+    padding: 28px 50px 28px 440px;
+    pointer-events: none;
+    white-space: pre;
+    overflow: hidden;
+  }
+
+  .accent-stripe {
+    position: absolute;
+    z-index: 2;
+    top: -150px; left: 355px;
+    width: 2px;
+    height: 950px;
+    background: linear-gradient(to bottom,
+      transparent,
+      hsl(45,80%,45%) 35%,
+      hsl(45,90%,60%) 50%,
+      hsl(45,80%,45%) 65%,
+      transparent);
+    opacity: 0.35;
+    transform: rotate(-14deg);
+    transform-origin: top center;
+  }
+
+  .photo-glow {
+    position: absolute;
+    z-index: 2;
+    left: -60px; top: 50%;
+    transform: translateY(-50%);
+    width: 460px; height: 460px;
+    border-radius: 50%;
+    background: radial-gradient(circle,
+      rgba(200,150,30,0.15) 0%,
+      transparent 70%);
+    pointer-events: none;
+  }
+
+  /* ── FOREGROUND CONTENT (z-index 10) ── */
+  .photo-section {
+    position: relative;
+    z-index: 10;
+    flex: 0 0 420px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+
+  .photo-ring-outer {
+    position: relative;
+    width: 308px; height: 308px;
+    border-radius: 50%;
+    padding: 4px;
+    background: conic-gradient(
+      hsl(45,90%,60%) 0deg,
+      hsl(45,65%,32%) 90deg,
+      hsl(45,90%,60%) 180deg,
+      hsl(45,50%,22%) 270deg,
+      hsl(45,90%,60%) 360deg
+    );
+    box-shadow:
+      0 0 0 1px rgba(0,0,0,0.7),
+      0 0 55px rgba(200,150,30,0.32),
+      0 20px 60px rgba(0,0,0,0.85);
+  }
+
+  .photo-ring-inner {
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid #090d16;
+  }
+
+  .photo-ring-inner img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+
+  .dot {
+    position: absolute;
+    border-radius: 50%;
+    background: hsl(45,80%,52%);
+  }
+  .dot-1 { width: 9px; height: 9px; top: 22px; right: 28px; opacity: 0.55; }
+  .dot-2 { width: 5px; height: 5px; bottom: 34px; right: 50px; opacity: 0.35; }
+  .dot-3 { width: 13px; height: 13px; bottom: 65px; left: 22px; opacity: 0.25; }
+
+  /* ── TEXT SECTION ── */
+  .text-section {
+    position: relative;
+    z-index: 10;
+    flex: 1;
+    padding: 0 54px 0 44px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .eyebrow {
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+    color: hsl(45,80%,55%);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 24px; height: 1px;
+    background: hsl(45,80%,55%);
+    flex-shrink: 0;
+  }
+
+  .name {
+    /* font-family: 'Playfair Display', serif; */
+    font-size: 70px;
+    font-weight: 900;
+    line-height: 0.93;
+    color: var(--text-main);
+    letter-spacing: -2px;
+    margin-bottom: 18px;
+  }
+  .name .last {
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(241,242,246,0.5);
+  }
+
+  .role {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: hsl(45,85%,58%);
+    margin-bottom: 22px;
+  }
+
+  .divider {
+    width: 44px; height: 2px;
+    background: linear-gradient(90deg, hsl(45,80%,45%), transparent);
+    margin-bottom: 22px;
+  }
+
+  .info-row {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+  }
+  .info-pill {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-muted);
+    background: rgba(255,255,255,0.045);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 100px;
+    padding: 4px 12px;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-bottom: 34px;
+  }
+  .tag {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-muted);
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 4px;
+    padding: 5px 11px;
+  }
+  .tag.gold {
+    background: rgba(200,150,30,0.12);
+    border-color: rgba(200,150,30,0.35);
+    color: hsl(45,90%,65%);
+  }
+
+  .cta-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: hsl(45,80%,45%);
+    color: #0d0a00;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    padding: 11px 22px;
+    border-radius: 5px;
+    text-decoration: none;
+    box-shadow:
+      0 4px 18px rgba(200,150,30,0.38),
+      inset 0 1px 0 rgba(255,255,255,0.2);
+  }
+
+  .url-line {
+    font-size: 12.5px;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--text-muted);
+    opacity: 0.7;
+    letter-spacing: 0.3px;
+  }
+
+  .corner-badge {
+    position: absolute;
+    z-index: 10;
+    bottom: 20px;
+    right: 28px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    opacity: 0.3;
+  }
+  .corner-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: hsl(45,80%,50%);
+  }
+  .corner-text {
+    font-size: 9.5px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+</style>
+</head>
+<body>
+<div class="card">
+
+  <div class="bg-gradient"></div>
+  <div class="bg-grid"></div>
+  <div class="bg-code">const dev = {
+  name: "Stefano Videsott",
+  education: "CS @ UniTN",
+  focus: ["Backend","System Architecture","API Design"],
+  stack: {
+    languages: ["PHP","JavaScript","TypeScript","Bash","Java"],
+    backend:   ["Laravel","Node.js","MySQL","PostgreSQL","Redis"],
+    devops:    ["Docker","CI/CD","Nginx","Linux"],
+    frontend:  ["Vue.js","Vanilla JS","CSS"],
+  },
+  philosophy: "build from scratch, master the infra",
+  firstProject: { name: "Air Force 1943", age: 15 },
+};
+
+export default dev;</div>
+  <div class="accent-stripe"></div>
+  <div class="photo-glow"></div>
+
+  <!-- PHOTO -->
+  <div class="photo-section">
+    <div class="photo-ring-outer">
+      <div class="photo-ring-inner">
+        <img src="https://www.stefanovidesott.com/static/images/profile.webp" alt="Stefano Videsott">
+      </div>
+    </div>
+    <div class="dot dot-1"></div>
+    <div class="dot dot-2"></div>
+    <div class="dot dot-3"></div>
+  </div>
+
+  <!-- TEXT -->
+  <div class="text-section">
+    <div class="eyebrow">Computer Science · Università di Trento</div>
+
+    <div style="padding-left: 10px;" class="name">
+      Stefano<br>
+      <span style="padding-left: 20px;" class="last">Videsott</span>
+    </div>
+
+    <div style="padding-left: 40px;" class="role">Software Developer &amp; Computer Science Student</div>
+    <div style="margin-left: 50px;" class="divider"></div>
+
+    <div style="padding-left: 60px;" class="info-row">
+      <div class="info-pill">🎓 UniTN — Computer Science</div>
+      <div class="info-pill">💼 ex Airpim SRL</div>
+      <div class="info-pill">🎮 Indie dev @ 15</div>
+    </div>
+
+    <div style="padding-left: 70px;" class="tags">
+      <span class="tag gold">Backend &amp; Architecture</span>
+      <!-- <span class="tag">API Design</span> -->
+      <span class="tag">Full Stack</span>
+      <span class="tag">Docker &amp; DevOps</span>
+      <span class="tag">Database</span>
+      <!-- <span class="tag">Vanilla-first</span> -->
+    </div>
+
+    <div style="padding-left: 90px;" class="cta-row">
+      <a class="cta-btn" href="https://www.stefanovidesott.com">View Portfolio →</a>
+      <span class="url-line">www.stefanovidesott.com</span>
+    </div>
+  </div>
+
+  <div class="corner-badge">
+    <div class="corner-dot"></div>
+    <span class="corner-text">Portfolio 2026</span>
+  </div>
+
+</div>
+</body>
+</html>
