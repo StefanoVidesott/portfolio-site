@@ -708,6 +708,8 @@ textarea.form-control {
     display: flex;
     align-items: center;
     gap: 10px;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
 }
 
 .contact-email i {
@@ -831,3 +833,94 @@ textarea.form-control {
 .admin-form-actions { margin-top: 40px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 25px; text-align: right; }
 .btn-save { padding: 12px 30px; }
 .mr-8 { margin-right: 8px; }
+.mr-10 { margin-right: 10px; }
+
+/* =========================================================================
+   15. FOOTER
+   ========================================================================= */
+footer p { margin: 0; }
+.footer-text { margin: 0; }
+.footer-link {
+    color: var(--text-muted);
+    text-decoration: underline;
+    transition: color 0.2s;
+}
+.footer-link:hover { color: var(--primary-light); }
+
+/* =========================================================================
+   16. CONTACT SECTION (replaces former inline styles)
+   ========================================================================= */
+.contact-info-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.contact-email {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+.contact-bio {
+    color: var(--text-muted);
+    margin-bottom: 30px;
+}
+
+.contact-social { margin-top: 0; }
+
+.contact-form-card { padding: 30px; }
+
+/* Privacy consent row */
+.privacy-consent-wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+.privacy-consent-checkbox {
+    margin-top: 5px;
+    accent-color: var(--primary-color);
+    cursor: pointer;
+    flex-shrink: 0;
+}
+.privacy-consent-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-align: left;
+    cursor: pointer;
+    line-height: 1.5;
+}
+.privacy-consent-link {
+    text-decoration: underline;
+    color: var(--primary-color);
+}
+
+/* =========================================================================
+   17. IMAGE UPLOAD FIELD (admin form — replaces former inline styles)
+   ========================================================================= */
+.image-upload-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.image-preview {
+    height: 60px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    object-fit: cover;
+}
+
+input[type="file"].file-input {
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.upload-hint {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    margin-top: -5px;
+}
+
+/* Inline form (delete button inside table row) */
+.form-inline { display: inline; }

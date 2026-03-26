@@ -9,7 +9,11 @@
         "experience": "Experience",
         "education": "Education",
         "projects": "Projects",
-        "contact": "Contact"
+        "contact": "Contact",
+        "menu_open": "Open navigation",
+        "menu_close": "Close navigation",
+        "theme_toggle": "Toggle theme",
+        "language_select": "Select language"
     },
     "general": {
         "view-projects": "View Projects",
@@ -67,6 +71,7 @@
             "message": "Your Message",
             "send": "Send Message",
             "sending": "Sending...",
+            "captcha_wait": "Please wait for the security check.",
             "success": "Message sent successfully! I will get back to you soon.",
             "error": "An error occurred. Please try again later or email me directly."
         }

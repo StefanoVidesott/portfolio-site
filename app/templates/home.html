@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block extra_head %}
+<script nonce="{{ request.state.nonce }}" async src="https://challenges.cloudflare.com/turnstile/v0/api.js"></script>
+{% endblock %}
+
 {% block content %}
 <header id="home">
     <div class="header-content">
@@ -14,10 +18,10 @@
 
         <div class="header-buttons reveal delay-3">
             <a href="/{{ lang }}/projects" class="btn">
-                <i class="fas fa-folder-open" style="margin-right: 8px;"></i> {{ t['general']['view-projects'] }}
+                <i class="fas fa-folder-open mr-8"></i> {{ t['general']['view-projects'] }}
             </a>
             <a href="#contact" class="btn btn-primary">
-                <i class="fas fa-paper-plane" style="margin-right: 8px;"></i> {{ t['general']['get-in-touch'] }}
+                <i class="fas fa-paper-plane mr-8"></i> {{ t['general']['get-in-touch'] }}
             </a>
         </div>
     </div>
@@ -34,7 +38,7 @@
             <div class="reveal delay-4 download-btn-wrapper">
                 <a href="{{ url_for('static', path='/docs/' ~ lang ~ '/CV_Stefano_Videsott.pdf') }}" download
                     class="btn btn-primary">
-                    <i class="fas fa-file-download" style="margin-right: 10px;"></i> {{ t['general']['download-cv'] }}
+                    <i class="fas fa-file-download mr-10"></i> {{ t['general']['download-cv'] }}
                 </a>
             </div>
         </div>
@@ -123,7 +127,7 @@
             <h2 class="col-title">{{ t['home']['interests-title'] }}</h2>
 
             {% for interest in interests %}
-            <div class="info-card base-card" style="margin-bottom: 20px;">
+            <div class="info-card base-card">
                 <h3>{% if lang == 'it' %}{{ interest.title_it }}{% else %}{{ interest.title_en }}{% endif %}</h3>
                 <p class="info-subtitle">{{ interest.organization }}</p>
                 <p class="info-meta">
@@ -165,15 +169,13 @@
 
         <div class="two-col-layout">
             <div class="col-sidebar reveal delay-1">
-                <div class="info-card base-card"
-                    style="height: 100%; display: flex; flex-direction: column; justify-content: center;">
-                    <div class="contact-email" style="font-size: 1.2rem; margin-bottom: 20px;">
+                <div class="info-card base-card contact-info-card">
+                    <div class="contact-email">
                         <i class="fas fa-envelope"></i>
                         <a href="mailto:stefano.videsott.work@gmail.com">stefano.videsott.work@gmail.com</a>
                     </div>
-                    <p style="color: var(--text-muted); margin-bottom: 30px;">
-                        {{ t['home']['about-desc-3'] }} </p>
-                    <div class="social-links" style="margin-top: 0;">
+                    <p class="contact-bio">{{ t['home']['about-desc-3'] }}</p>
+                    <div class="social-links contact-social">
                         <a href="https://github.com/StefanoVidesott" target="_blank" aria-label="GitHub"><i
                                 class="fab fa-github"></i></a>
                         <a href="https://www.instagram.com/stefano.videsott" target="_blank" aria-label="Instagram"><i
@@ -185,8 +187,13 @@
             </div>
 
             <div class="col-main reveal delay-2">
-                <div class="base-card" style="padding: 30px;">
-                    <form id="contactForm" class="contact-form">
+                <div class="base-card contact-form-card">
+                    {# data-* attributes carry i18n strings so JS avoids hardcoded Italian text #}
+                    <form id="contactForm" class="contact-form"
+                          data-msg-captcha="{{ t['home']['contact-form']['captcha_wait'] }}"
+                          data-msg-sending="{{ t['home']['contact-form']['sending'] }}"
+                          data-msg-success="{{ t['home']['contact-form']['success'] }}"
+                          data-msg-error="{{ t['home']['contact-form']['error'] }}">
                         <input type="text" id="name" name="name" class="form-control"
                             placeholder="{{ t['home']['contact-form']['name'] }}" required>
                         <input type="email" id="email" name="email" class="form-control"
@@ -200,19 +207,18 @@
                             </div>
                         </div>
 
-                        <div style="margin-bottom: 15px; display: flex; align-items: flex-start; gap: 10px;">
+                        <div class="privacy-consent-wrapper">
                             <input type="checkbox" id="privacy_consent" name="privacy_consent" required
-                                style="margin-top: 5px; accent-color: var(--primary-color); cursor: pointer;">
-                            <label for="privacy_consent"
-                                style="font-size: 0.85rem; color: var(--text-muted); text-align: left; cursor: pointer;">
+                                class="privacy-consent-checkbox">
+                            <label for="privacy_consent" class="privacy-consent-label">
                                 {{ t['general']['privacy-consent-pre'] }} <a href="/{{ lang }}/privacy" target="_blank"
-                                    style="text-decoration: underline; color: var(--primary-color);">{{
+                                    class="privacy-consent-link">{{
                                     t['general']['privacy-policy'] }}</a>. *
                             </label>
                         </div>
 
                         <button type="submit" class="btn btn-primary" id="submitBtn">
-                            <i class="fas fa-paper-plane" style="margin-right: 8px;"></i> <span id="btnText">{{
+                            <i class="fas fa-paper-plane mr-8"></i> <span id="btnText">{{
                                 t['home']['contact-form']['send'] }}</span>
                         </button>
 

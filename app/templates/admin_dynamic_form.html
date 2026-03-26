@@ -13,6 +13,10 @@
 
         <div class="base-card reveal delay-1 admin-form-card">
             <form action="{{ action_url }}" method="POST" class="contact-form" enctype="multipart/form-data">
+
+                {# CSRF protection token #}
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
                 {% for group_name, fields in schema.items() %}
 
                     <h3 class="admin-group-title {% if not loop.first %}mt-40{% endif %}">
@@ -43,17 +47,17 @@
                                     <label class="admin-label">
                                         {{ t['admin']['forms']['labels'].get(field.name, field.name) }} {% if field.required %}<span class="admin-required">*</span>{% endif %}
                                     </label>
-                                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                                    <div class="image-upload-container">
                                         {% if field.value %}
                                         <div>
-                                            <img src="{{ field.value }}" alt="Preview" style="height: 60px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.1); object-fit: cover;">
+                                            <img src="{{ field.value }}" alt="Preview" class="image-preview">
                                         </div>
                                         {% endif %}
 
-                                        <input type="file" name="{{ field.name }}_file" class="form-control" accept="image/*" style="padding: 10px; background: rgba(0,0,0,0.2);">
+                                        <input type="file" name="{{ field.name }}_file" class="form-control file-input" accept=".jpg,.jpeg,.png,.webp,.gif" aria-describedby="upload-hint-{{ field.name }}">
 
                                         <input type="text" id="{{ field.name }}" name="{{ field.name }}" class="form-control" value="{{ field.value }}" placeholder="Oppure incolla un URL (es: https://...)">
-                                        <small style="color: var(--text-muted); font-size: 0.8rem; margin-top: -5px;">Carica un file dal PC oppure incolla un URL. L'upload ignorerà l'URL.</small>
+                                        <small id="upload-hint-{{ field.name }}" class="upload-hint">Carica un file dal PC oppure incolla un URL. L'upload ignorerà l'URL.</small>
                                     </div>
 
                                 {% else %}

@@ -9,7 +9,11 @@
         "education": "Istruzione",
         "experience": "Esperienza",
         "projects": "Progetti",
-        "contact": "Contatti"
+        "contact": "Contatti",
+        "menu_open": "Apri navigazione",
+        "menu_close": "Chiudi navigazione",
+        "theme_toggle": "Cambia tema",
+        "language_select": "Seleziona lingua"
     },
     "general": {
         "view-projects": "Visualizza Progetti",
@@ -67,6 +71,7 @@
             "message": "Il tuo Messaggio",
             "send": "Invia Messaggio",
             "sending": "Invio in corso...",
+            "captcha_wait": "Per favore, attendi la verifica di sicurezza.",
             "success": "Messaggio inviato con successo! Ti risponderò al più presto.",
             "error": "Si è verificato un errore. Riprova più tardi o scrivimi direttamente via mail."
         }

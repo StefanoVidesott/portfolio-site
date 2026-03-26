@@ -53,6 +53,9 @@
     }
     </script>
 
+    {# Apply stored theme before first paint to prevent flash of unstyled content #}
+    <script nonce="{{ request.state.nonce }}">(function(){var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);})();</script>
+
     {% if env == 'prod' %}
     <link rel="stylesheet" href="{{ url_for('static', path='/css/style-min.css') }}">
     {% else %}
@@ -72,8 +75,8 @@
     <script nonce="{{ request.state.nonce }}" defer src="{{ url_for('static', path='/js/main.js') }}"></script>
     {% endif %}
 
-    <script nonce="{{ request.state.nonce }}" defer src="https://challenges.cloudflare.com/turnstile/v0/api.js" async
-        defer></script>
+    {# Per-page scripts (e.g. Turnstile on the home page contact form) #}
+    {% block extra_head %}{% endblock %}
 </head>
 
 <body>
@@ -83,7 +86,11 @@
             <div class="logo">
                 <a href="/{{ lang }}/home">SV <span>Portfolio</span></a>
             </div>
-            <button class="nav-toggle" aria-label="Toggle navigation">
+            <button class="nav-toggle"
+                    aria-label="{{ t['nav']['menu_open'] }}"
+                    aria-expanded="false"
+                    data-label-open="{{ t['nav']['menu_open'] }}"
+                    data-label-close="{{ t['nav']['menu_close'] }}">
                 <i class="fas fa-bars"></i>
             </button>
             <ul class="nav-menu">
@@ -94,12 +101,12 @@
                 <li><a href="/{{ lang }}/projects">{{ t['nav']['projects'] }}</a></li>
                 <li><a href="/{{ lang }}/home#contact">{{ t['nav']['contact'] }}</a></li>
                 <li>
-                    <button id="themeToggle" class="theme-toggle-btn" aria-label="Cambia tema">
+                    <button id="themeToggle" class="theme-toggle-btn" aria-label="{{ t['nav']['theme_toggle'] }}">
                         <i class="fas fa-sun"></i>
                     </button>
                 </li>
                 <li>
-                    <select id="languageSwitcher" aria-label="Select language">
+                    <select id="languageSwitcher" aria-label="{{ t['nav']['language_select'] }}">
                         <option value="/en/{{ current_page }}" {% if lang=='en' %}selected{% endif %}>English</option>
                         <option value="/it/{{ current_page }}" {% if lang=='it' %}selected{% endif %}>Italiano</option>
                     </select>
@@ -114,10 +121,9 @@
 
     <footer>
         <div class="container">
-            <p style="margin: 0;">
+            <p class="footer-text">
                 {{ t['general']['footer-text'] }} |
-                <a href="/{{ lang }}/privacy"
-                    style="color: var(--text-muted); text-decoration: underline; transition: color 0.2s;">
+                <a href="/{{ lang }}/privacy" class="footer-link">
                     {{ t['general']['privacy-policy'] }}
                 </a>
             </p>
