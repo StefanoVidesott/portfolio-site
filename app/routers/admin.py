@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 
 from app.database import get_db
 from app import models
-from app.cms import generate_form_schema, populate_instance_from_form, UPLOAD_DIR
+from app.cms import generate_form_schema, populate_instance_from_form, UPLOAD_DIR, PDF_UPLOAD_DIR
 from app.shared import templates, translations, SUPPORTED_LANGS
 
 import os
@@ -21,6 +21,8 @@ ENTITY_MODELS = {
     "education": models.Education,
     "interests": models.Interest,
     "languages": models.Language,
+    "open_to_work": models.OpenToWork,
+    "cv_documents": models.CVDocument,
 }
 
 ADMIN_USERNAME = os.getenv("ADMIN_USERNAME", "")
@@ -137,6 +139,8 @@ async def admin_dashboard(request: Request, lang: str, db: Session = Depends(get
     db_education = db.query(models.Education).order_by(models.Education.order).all()
     db_interests = db.query(models.Interest).order_by(models.Interest.order).all()
     db_languages = db.query(models.Language).order_by(models.Language.order).all()
+    db_open_to_work = db.query(models.OpenToWork).first()
+    db_cv_documents = db.query(models.CVDocument).all()
 
     return templates.TemplateResponse(
         request=request,
@@ -148,6 +152,8 @@ async def admin_dashboard(request: Request, lang: str, db: Session = Depends(get
             "education": db_education,
             "interests": db_interests,
             "languages": db_languages,
+            "open_to_work": db_open_to_work,
+            "cv_documents": db_cv_documents,
             "lang": lang,
             "t": translations[lang],
             "current_page": "admin/dashboard",
@@ -325,6 +331,12 @@ async def delete_entity(
                 file_path = os.path.join("app", image_url.lstrip("/"))
                 if os.path.isfile(file_path):
                     os.remove(file_path)
+            # Clean up uploaded PDF file if present
+            file_url = getattr(db_item, "file_url", None)
+            if file_url and str(file_url).startswith("/static/docs/uploaded/"):
+                pdf_path = os.path.join("app", file_url.lstrip("/"))
+                if os.path.isfile(pdf_path):
+                    os.remove(pdf_path)
 
             db.delete(db_item)
             db.commit()

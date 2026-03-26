@@ -99,6 +99,13 @@ def test_wannawork_detail_page():
     assert b"WannaWork" in response.content
 
 
+def test_portfolio_detail_page():
+    """Verifica che la pagina di dettaglio del portfolio si carichi"""
+    response = client.get("/en/project/portfolio")
+    assert response.status_code == 200
+    assert b"Portfolio" in response.content
+
+
 def test_404_not_found():
     """Verifica che un URL inesistente restituisca la pagina 404 personalizzata"""
     response = client.get("/en/pagina-che-non-esiste")

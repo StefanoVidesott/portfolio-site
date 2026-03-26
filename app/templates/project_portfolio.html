@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block page_title %}{{ t['portfolio']['title'] }} | Stefano Videsott{% endblock %}
+{% block page_desc %}{{ t['portfolio']['what-is-text'] }}{% endblock %}
+{% block og_title %}{{ t['portfolio']['title'] }} | Stefano Videsott{% endblock %}
+{% block og_desc %}{{ t['portfolio']['what-is-text'] }}{% endblock %}
+
+{% block content %}
+    <header id="project-header">
+        <div class="container">
+            <h1 class="reveal delay-1">{{ t['portfolio']['title'] }}</h1>
+            <p class="reveal delay-2">{{ t['portfolio']['subtitle'] }}</p>
+
+            <div class="header-buttons reveal delay-3 header-buttons-wrap">
+                <a href="https://github.com/StefanoVidesott/portfolio-site" target="_blank" rel="noopener noreferrer" class="btn">
+                    <i class="fab fa-github mr-8"></i>
+                    {{ t['portfolio']['visit-github'] }}
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <section id="project-details" class="section-bg-default">
+        <div class="container container-medium">
+
+            <div class="detail-card base-card reveal delay-1">
+                <h2>{{ t['portfolio']['what-is'] }}</h2>
+                <p>{{ t['portfolio']['what-is-text'] }}</p>
+
+                <h3>{{ t['portfolio']['problem'] }}</h3>
+                <p>{{ t['portfolio']['problem-text'] }}</p>
+            </div>
+
+            <div class="detail-card base-card reveal delay-2">
+                <h2>{{ t['portfolio']['tech'] }}</h2>
+                <ul class="tech-list">
+                    <li><i class="fab fa-python tech-icon tech-icon-python"></i> <strong>{{ t['portfolio']['tech-back'].split(':')[0] }}:</strong> {{ t['portfolio']['tech-back'].split(':')[1] }}</li>
+                    <li><i class="fab fa-js tech-icon tech-icon-js"></i> <strong>{{ t['portfolio']['tech-front'].split(':')[0] }}:</strong> {{ t['portfolio']['tech-front'].split(':')[1] }}</li>
+                    <li><i class="fab fa-docker tech-icon tech-icon-docker"></i> <strong>{{ t['portfolio']['tech-devops'].split(':')[0] }}:</strong> {{ t['portfolio']['tech-devops'].split(':')[1] }}</li>
+                    <li><i class="fas fa-shield-alt tech-icon tech-icon-primary"></i> <strong>{{ t['portfolio']['tech-security'].split(':')[0] }}:</strong> {{ t['portfolio']['tech-security'].split(':')[1] }}</li>
+                </ul>
+            </div>
+
+            <div class="detail-card base-card reveal delay-3 detail-card-accent">
+                <h2><i class="fas fa-star detail-icon-primary"></i>{{ t['portfolio']['features'] }}</h2>
+                <ul class="item-list">
+                    <li>{{ t['portfolio']['feature-1'] }}</li>
+                    <li>{{ t['portfolio']['feature-2'] }}</li>
+                    <li>{{ t['portfolio']['feature-3'] }}</li>
+                    <li>{{ t['portfolio']['feature-4'] }}</li>
+                    <li>{{ t['portfolio']['feature-5'] }}</li>
+                </ul>
+            </div>
+
+            <div class="reveal delay-4 center-actions">
+                <a href="/{{ lang }}/projects" class="btn"><i class="fas fa-arrow-left mr-8"></i> {{ t['general']['back-to-projects'] }}</a>
+            </div>
+
+        </div>
+    </section>
+{% endblock %}

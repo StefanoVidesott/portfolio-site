@@ -15,7 +15,7 @@ from sentry_sdk.integrations.starlette import StarletteIntegration
 
 from app.shared import templates, translations, SUPPORTED_LANGS
 from app.routers import public, admin, api
-from app.cms import UPLOAD_DIR
+from app.cms import UPLOAD_DIR, PDF_UPLOAD_DIR
 
 load_dotenv()
 
@@ -38,6 +38,7 @@ if not _secret_key:
     _secret_key = "dev-only-insecure-fallback-do-not-use-in-production"
 
 os.makedirs(UPLOAD_DIR, exist_ok=True)
+os.makedirs(PDF_UPLOAD_DIR, exist_ok=True)
 
 if SENTRY_DSN:
     sentry_sdk.init(

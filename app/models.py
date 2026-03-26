@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String, Boolean, JSON
 from app.database import Base
 
+
 class SkillCategory(Base):
     __tablename__ = "skill_categories"
     id = Column(Integer, primary_key=True, index=True)
@@ -22,10 +23,15 @@ class Project(Base):
 
     slug = Column(String, unique=True, index=True, nullable=False, info={"type": "text", "group": "general-data", "size": "4"})
     order = Column(Integer, default=0, info={"type": "number", "group": "general-data", "size": "4"})
-    is_featured = Column(Boolean, default=False, info={"type": "checkbox", "group": "general-data", "size": "4"})
+    is_featured = Column(Boolean, default=False, info={"type": "checkbox", "group": "general-data", "size": "2"})
+    is_case_study = Column(Boolean, default=False, info={"type": "checkbox", "group": "general-data", "size": "2"})
 
     image_url = Column(String, nullable=False, info={"type": "image_upload", "group": "general-data", "size": "6"})
     url = Column(String, nullable=True, info={"type": "text", "group": "general-data", "size": "6"})
+    # If set, overrides `url` and opens an internal detail page at /{lang}{internal_url}
+    internal_url = Column(String, nullable=True, info={"type": "text", "group": "general-data", "size": "6"})
+    # Comma-separated tech stack tags displayed on the project card
+    tags = Column(String, nullable=True, info={"type": "text", "group": "general-data", "size": "12"})
 
     title_it = Column(String, nullable=False, info={"type": "text", "group": "it", "size": "6"})
     link_it = Column(String, nullable=False, info={"type": "text", "group": "it", "size": "6"})
@@ -110,3 +116,29 @@ class Language(Base):
 
     title_en = Column(String, nullable=False, info={"type": "text", "group": "en", "size": "6"})
     level_en = Column(String, nullable=False, info={"type": "text", "group": "en", "size": "6"})
+
+
+class OpenToWork(Base):
+    """Singleton-style table — always use .first(). is_enabled controls site visibility."""
+    __tablename__ = "open_to_work"
+    id = Column(Integer, primary_key=True, index=True)
+
+    is_enabled = Column(Boolean, default=False, info={"type": "checkbox", "group": "general-data", "size": "12"})
+
+    badge_it = Column(String, nullable=True, info={"type": "text", "group": "it", "size": "12"})
+    title_it = Column(String, nullable=True, info={"type": "text", "group": "it", "size": "12"})
+    message_it = Column(String, nullable=True, info={"type": "textarea", "group": "it", "size": "12"})
+
+    badge_en = Column(String, nullable=True, info={"type": "text", "group": "en", "size": "12"})
+    title_en = Column(String, nullable=True, info={"type": "text", "group": "en", "size": "12"})
+    message_en = Column(String, nullable=True, info={"type": "textarea", "group": "en", "size": "12"})
+
+
+class CVDocument(Base):
+    """One record per language (lang='it' or lang='en'), holding the current CV file URL."""
+    __tablename__ = "cv_documents"
+    id = Column(Integer, primary_key=True, index=True)
+
+    lang = Column(String, nullable=False, info={"type": "text", "group": "general-data", "size": "4"})
+    label = Column(String, nullable=False, info={"type": "text", "group": "general-data", "size": "8"})
+    file_url = Column(String, nullable=False, info={"type": "pdf_upload", "group": "general-data", "size": "12"})

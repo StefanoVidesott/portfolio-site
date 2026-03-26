@@ -51,10 +51,12 @@
     },
     "home": {
         "header-roles": [
-            "Computer Science Student",
-            "Software Developer",
-            "DevOps Enthusiast"
+            "I build things for the web.",
+            "I turn coffee into Python.",
+            "I automate the boring stuff.",
+            "Student by day, coder by night."
         ],
+        "open-to-work-badge": "Open to Work",
         "about-title": "About Me",
         "about-desc-1": "Hi, I'm Stefano Videsott, a passionate computer science student at the University of Trento and former software developer at Airpim SRL. I have worked on developing innovative software solutions and I am eager to learn and explore new technologies in the IT world.",
         "about-desc-2": "With a solid foundation in programming languages such as C++, C#, Python and Java, I enjoy building applications that solve real-world problems, as well as the occasional game. My journey in the tech field is driven by curiosity and a commitment to continuous improvement.",
@@ -77,7 +79,30 @@
         }
     },
     "projects": {
-        "title": "Projects"
+        "title": "Projects",
+        "case-study-badge": "Case Study",
+        "view-case-study": "View Case Study",
+        "tech-stack": "Tech Stack"
+    },
+    "portfolio": {
+        "title": "Personal Portfolio & Headless CMS",
+        "subtitle": "A full-stack personal project built from scratch",
+        "what-is": "What is this project?",
+        "what-is-text": "A dynamic, bilingual portfolio website built entirely from scratch with FastAPI and Vanilla JS, paired with a custom headless CMS powered by SQLite. Every section you see on this site — projects, experiences, skills — is managed through the admin panel without touching the code.",
+        "problem": "The Challenge",
+        "problem-text": "Most portfolio generators are either too rigid (static) or bloated with dependencies. The goal was to build something fully dynamic, multilingual, and self-hosted, with zero reliance on third-party CMS services, while keeping the codebase clean and maintainable.",
+        "tech": "Tech Stack",
+        "tech-back": "Backend: Python 3.14, FastAPI, SQLAlchemy 2.0, Alembic (migrations), SQLite.",
+        "tech-front": "Frontend: Vanilla JS (no framework), Jinja2 SSR templates, CSS custom properties for theming.",
+        "tech-devops": "DevOps: Docker, Docker Compose, Nginx, GitHub Actions CI/CD, Cloudflare CDN.",
+        "tech-security": "Security: Per-request CSP nonces, CSRF tokens, magic-bytes file validation, Cloudflare Turnstile, Sentry monitoring.",
+        "features": "Key Features",
+        "feature-1": "Full CRUD CMS: Create, edit, and delete any content section from the admin panel.",
+        "feature-2": "Bilingual (IT/EN): All content is stored in both languages; the UI adapts to the user's locale.",
+        "feature-3": "Dark/Light theme: Persisted in localStorage, applied before CSS renders to avoid FOUC.",
+        "feature-4": "CV Management: Upload and replace CVs (IT/EN) directly from the admin panel.",
+        "feature-5": "CI/CD Pipeline: GitHub Actions builds and deploys the Docker image on every push to main.",
+        "visit-github": "View on GitHub"
     },
     "wannawork": {
         "title": "WannaWork - Job Matching",
@@ -144,7 +169,10 @@
                 "interests": "Interests & Extras",
                 "new_interest": "New Interest",
                 "languages": "Languages",
-                "new_language": "New Language"
+                "new_language": "New Language",
+                "open_to_work": "Open To Work Banner",
+                "cv_documents": "CV Documents",
+                "new_cv": "New CV Document"
             }
         },
         "forms": {
@@ -178,7 +206,18 @@
                 "tasks_it": "Responsibilities (one per line)",
                 "tasks_en": "Responsibilities (one per line)",
                 "level_it": "Proficiency Level",
-                "level_en": "Proficiency Level"
+                "level_en": "Proficiency Level",
+                "is_case_study": "Case Study Page",
+                "internal_url": "Internal URL (e.g. /project/wannawork)",
+                "tags": "Tech Tags (comma-separated)",
+                "is_enabled": "Show Banner on Site",
+                "badge_it": "Badge Text (IT)",
+                "badge_en": "Badge Text (EN)",
+                "message_it": "Message (IT)",
+                "message_en": "Message (EN)",
+                "lang": "Language Code (it / en)",
+                "label": "Label (e.g. CV English)",
+                "file_url": "CV File (PDF)"
             },
             "actions": {
                 "back_to_dashboard": "Back to Dashboard",

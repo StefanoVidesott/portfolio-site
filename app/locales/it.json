@@ -51,10 +51,12 @@
     },
     "home": {
         "header-roles": [
-            "Studente di Informatica",
-            "Sviluppatore Software",
-            "Appassionato di DevOps"
+            "Costruisco cose per il web.",
+            "Trasformo caffè in Python.",
+            "Automatizo le cose noiose.",
+            "Studente di giorno, coder di notte."
         ],
+        "open-to-work-badge": "Disponibile",
         "about-title": "Chi Sono",
         "about-desc-1": "Ciao, sono Stefano Videsott, uno studente appassionato di informatica all'Università di Trento ed ex sviluppatore software presso Airpim SRL. Mi sono occupato nello sviluppo di soluzioni software e sono desideroso di imparare ed esplorare nuove tecnologie nel mondo IT.",
         "about-desc-2": "Con una solida base in linguaggi di programmazione come C++, C#, Python e Java, mi piace costruire applicazioni che risolvono problemi reali, o anche qualche gioco. Il mio percorso nel settore tecnologico è guidato dalla curiosità e da un impegno per il miglioramento continuo.",
@@ -77,7 +79,30 @@
         }
     },
     "projects": {
-        "title": "Progetti"
+        "title": "Progetti",
+        "case-study-badge": "Case Study",
+        "view-case-study": "Leggi il Case Study",
+        "tech-stack": "Stack Tecnologico"
+    },
+    "portfolio": {
+        "title": "Portfolio Personale & Headless CMS",
+        "subtitle": "Un progetto full-stack costruito da zero",
+        "what-is": "Di cosa si tratta?",
+        "what-is-text": "Un portfolio web dinamico e bilingue costruito da zero con FastAPI e Vanilla JS, abbinato a un CMS headless personalizzato basato su SQLite. Ogni sezione che vedi su questo sito — progetti, esperienze, competenze — è gestita tramite il pannello di amministrazione senza toccare il codice.",
+        "problem": "La Sfida",
+        "problem-text": "La maggior parte dei generatori di portfolio è o troppo rigida (statica) o gonfia di dipendenze. L'obiettivo era costruire qualcosa di completamente dinamico, multilingue e self-hosted, senza dipendere da servizi CMS di terze parti, mantenendo il codice pulito e manutenibile.",
+        "tech": "Stack Tecnologico",
+        "tech-back": "Backend: Python 3.14, FastAPI, SQLAlchemy 2.0, Alembic (migrazioni), SQLite.",
+        "tech-front": "Frontend: Vanilla JS (senza framework), template Jinja2 SSR, CSS custom properties per il tema.",
+        "tech-devops": "DevOps: Docker, Docker Compose, Nginx, GitHub Actions CI/CD, Cloudflare CDN.",
+        "tech-security": "Sicurezza: CSP nonce per request, token CSRF, validazione magic-bytes dei file, Cloudflare Turnstile, Sentry.",
+        "features": "Funzionalità Principali",
+        "feature-1": "CMS CRUD completo: Crea, modifica ed elimina qualsiasi sezione di contenuto dal pannello admin.",
+        "feature-2": "Bilingue (IT/EN): Tutti i contenuti sono memorizzati in entrambe le lingue; l'interfaccia si adatta alla lingua.",
+        "feature-3": "Tema scuro/chiaro: Salvato in localStorage, applicato prima del render CSS per evitare il FOUC.",
+        "feature-4": "Gestione CV: Carica e sostituisci i CV (IT/EN) direttamente dal pannello admin.",
+        "feature-5": "Pipeline CI/CD: GitHub Actions compila e distribuisce l'immagine Docker ad ogni push su main.",
+        "visit-github": "Vedi su GitHub"
     },
     "wannawork": {
         "title": "WannaWork - Job Matching",
@@ -144,7 +169,10 @@
                 "interests": "Interessi & Extra",
                 "new_interest": "Nuovo Interesse",
                 "languages": "Lingue",
-                "new_language": "Nuova Lingua"
+                "new_language": "Nuova Lingua",
+                "open_to_work": "Banner Open To Work",
+                "cv_documents": "Documenti CV",
+                "new_cv": "Nuovo Documento CV"
             }
         },
         "forms": {
@@ -178,7 +206,18 @@
                 "tasks_it": "Mansioni (una per riga)",
                 "tasks_en": "Mansioni (una per riga)",
                 "level_it": "Livello di competenza",
-                "level_en": "Livello di competenza"
+                "level_en": "Livello di competenza",
+                "is_case_study": "Pagina Case Study",
+                "internal_url": "URL Interno (es. /project/wannawork)",
+                "tags": "Tag Tecnologie (separati da virgola)",
+                "is_enabled": "Mostra Banner sul Sito",
+                "badge_it": "Testo Badge (IT)",
+                "badge_en": "Testo Badge (EN)",
+                "message_it": "Messaggio (IT)",
+                "message_en": "Messaggio (EN)",
+                "lang": "Codice Lingua (it / en)",
+                "label": "Etichetta (es. CV Italiano)",
+                "file_url": "File CV (PDF)"
             },
             "actions": {
                 "back_to_dashboard": "Torna alla Dashboard",

@@ -68,6 +68,10 @@ async def home(request: Request, lang: str, db: Session = Depends(get_db)):
         .all()
     )
 
+    open_to_work = db.query(models.OpenToWork).first()
+    cv_doc = db.query(models.CVDocument).filter(models.CVDocument.lang == lang).first()
+    cv_url = cv_doc.file_url if cv_doc else None
+
     return templates.TemplateResponse(
         request=request,
         name="home.html",
@@ -79,6 +83,8 @@ async def home(request: Request, lang: str, db: Session = Depends(get_db)):
             "skills": db_skills,
             "interests": db_interests,
             "languages": db_languages,
+            "open_to_work": open_to_work,
+            "cv_url": cv_url,
             "current_page": "home",
         },
     )
@@ -120,6 +126,22 @@ async def project_wannawork(request: Request, lang: str):
             "lang": lang,
             "t": translations[lang],
             "current_page": "project/wannawork",
+        },
+    )
+
+
+@router.get("/{lang}/project/portfolio")
+async def project_portfolio(request: Request, lang: str):
+    if lang not in SUPPORTED_LANGS:
+        return RedirectResponse(url="/en/project/portfolio")
+
+    return templates.TemplateResponse(
+        request=request,
+        name="project_portfolio.html",
+        context={
+            "lang": lang,
+            "t": translations[lang],
+            "current_page": "project/portfolio",
         },
     )
 

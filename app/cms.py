@@ -4,8 +4,16 @@ import uuid
 from fastapi import HTTPException
 
 UPLOAD_DIR = os.path.join("app", "static", "images", "uploaded")
+PDF_UPLOAD_DIR = os.path.join("app", "static", "docs", "uploaded")
+
 ALLOWED_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp", ".gif"}
+ALLOWED_PDF_EXTENSION = {".pdf"}
 MAX_UPLOAD_BYTES = 5 * 1024 * 1024  # 5 MB
+
+
+def _is_valid_pdf(data: bytes) -> bool:
+    """Check PDF magic bytes (%PDF-)."""
+    return data[:5] == b"%PDF-"
 
 
 def _is_allowed_image(data: bytes) -> bool:
@@ -66,16 +74,13 @@ def populate_instance_from_form(instance, model_class, form_data) -> None:
         if column.name == "id":
             continue
 
-        # --- File upload ---
+        # --- File upload (image or PDF) ---
         file_field_name = f"{column.name}_file"
         if file_field_name in form_data:
             uploaded_file = form_data[file_field_name]
             if hasattr(uploaded_file, "filename") and uploaded_file.filename:
+                field_type = (column.info or {}).get("type", "")
                 ext = os.path.splitext(uploaded_file.filename)[1].lower()
-                if ext not in ALLOWED_EXTENSIONS:
-                    raise HTTPException(
-                        status_code=400, detail=f"File type not allowed: {ext}"
-                    )
 
                 contents = uploaded_file.file.read(MAX_UPLOAD_BYTES + 1)
                 if len(contents) > MAX_UPLOAD_BYTES:
@@ -83,26 +88,47 @@ def populate_instance_from_form(instance, model_class, form_data) -> None:
                         status_code=413, detail="File too large (max 5 MB)."
                     )
 
-                # Validate via magic bytes — rejects renamed non-images.
-                # imghdr was removed in Python 3.13, so we check signatures manually.
-                if not _is_allowed_image(contents):
-                    raise HTTPException(
-                        status_code=400, detail="Invalid image content."
-                    )
+                if field_type == "pdf_upload":
+                    if ext not in ALLOWED_PDF_EXTENSION:
+                        raise HTTPException(status_code=400, detail="Only PDF files are allowed.")
+                    if not _is_valid_pdf(contents):
+                        raise HTTPException(status_code=400, detail="Invalid PDF content.")
 
-                # Remove the old uploaded file to avoid storage leakage
-                old_val = getattr(instance, column.name, None)
-                if old_val and str(old_val).startswith("/static/images/uploaded/"):
-                    old_path = os.path.join("app", old_val.lstrip("/"))
-                    if os.path.isfile(old_path):
-                        os.remove(old_path)
+                    old_val = getattr(instance, column.name, None)
+                    if old_val and str(old_val).startswith("/static/docs/uploaded/"):
+                        old_path = os.path.join("app", old_val.lstrip("/"))
+                        if os.path.isfile(old_path):
+                            os.remove(old_path)
 
-                unique_filename = f"{uuid.uuid4().hex}{ext}"
-                file_path = os.path.join(UPLOAD_DIR, unique_filename)
-                with open(file_path, "wb") as buffer:
-                    buffer.write(contents)
+                    unique_filename = f"{uuid.uuid4().hex}{ext}"
+                    file_path = os.path.join(PDF_UPLOAD_DIR, unique_filename)
+                    with open(file_path, "wb") as buffer:
+                        buffer.write(contents)
 
-                setattr(instance, column.name, f"/static/images/uploaded/{unique_filename}")
+                    setattr(instance, column.name, f"/static/docs/uploaded/{unique_filename}")
+                else:
+                    # image_upload
+                    if ext not in ALLOWED_EXTENSIONS:
+                        raise HTTPException(
+                            status_code=400, detail=f"File type not allowed: {ext}"
+                        )
+                    if not _is_allowed_image(contents):
+                        raise HTTPException(
+                            status_code=400, detail="Invalid image content."
+                        )
+
+                    old_val = getattr(instance, column.name, None)
+                    if old_val and str(old_val).startswith("/static/images/uploaded/"):
+                        old_path = os.path.join("app", old_val.lstrip("/"))
+                        if os.path.isfile(old_path):
+                            os.remove(old_path)
+
+                    unique_filename = f"{uuid.uuid4().hex}{ext}"
+                    file_path = os.path.join(UPLOAD_DIR, unique_filename)
+                    with open(file_path, "wb") as buffer:
+                        buffer.write(contents)
+
+                    setattr(instance, column.name, f"/static/images/uploaded/{unique_filename}")
                 continue
 
         # --- Boolean ---

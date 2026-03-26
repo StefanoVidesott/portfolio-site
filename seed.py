@@ -1,5 +1,5 @@
 from app.database import SessionLocal
-from app.models import Project, Experience, Education, SkillCategory, Language, Interest
+from app.models import Project, Experience, Education, SkillCategory, Language, Interest, OpenToWork, CVDocument
 
 def seed_data():
     db = SessionLocal()
@@ -40,7 +40,10 @@ def seed_data():
             "link_it": "Scopri di più",
             "link_en": "Read more",
             "image_url": "/static/images/project-wannawork.webp",
+            "internal_url": "/project/wannawork",
             "is_featured": True,
+            "is_case_study": True,
+            "tags": "Vue.js 3, Node.js, Express, MongoDB, Docker, JWT",
             "order": 3
         },
         {
@@ -49,11 +52,14 @@ def seed_data():
             "title_en": "Personal Portfolio & CMS",
             "description_it": "Portfolio web dinamico e bilingue sviluppato da zero con FastAPI e Vanilla JS. Integra un Custom CMS basato su SQLite e una pipeline CI/CD automatizzata.",
             "description_en": "Dynamic and bilingual web portfolio built from scratch with FastAPI and Vanilla JS. It integrates a custom SQLite-based CMS and an automated CI/CD pipeline.",
-            "link_it": "Visualizza su GitHub",
-            "link_en": "View on GitHub",
+            "link_it": "Scopri di più",
+            "link_en": "Read more",
             "image_url": "/static/images/project-portfolio.webp",
             "url": "https://github.com/StefanoVidesott/portfolio-site",
+            "internal_url": "/project/portfolio",
             "is_featured": True,
+            "is_case_study": True,
+            "tags": "Python, FastAPI, SQLAlchemy, Docker, Vanilla JS, GitHub Actions",
             "order": 4
         }
     ]
@@ -217,6 +223,27 @@ def seed_data():
     for data in languages_data:
         if not db.query(Language).filter(Language.title_it == data["title_it"]).first():
             db.add(Language(**data))
+
+    # --- OpenToWork default (disabled) ---
+    if not db.query(OpenToWork).first():
+        db.add(OpenToWork(
+            is_enabled=False,
+            badge_it="Disponibile",
+            title_it="Cerco nuove opportunità",
+            message_it="Sono aperto a posizioni full-time, stage o freelance. Contattami!",
+            badge_en="Available",
+            title_en="Open to opportunities",
+            message_en="I am open to full-time, internship, or freelance positions. Get in touch!",
+        ))
+
+    # --- CV documents (point to existing static files) ---
+    cv_defaults = [
+        {"lang": "it", "label": "CV Italiano", "file_url": "/static/docs/it/CV_Stefano_Videsott.pdf"},
+        {"lang": "en", "label": "CV English",  "file_url": "/static/docs/en/CV_Stefano_Videsott.pdf"},
+    ]
+    for cv in cv_defaults:
+        if not db.query(CVDocument).filter(CVDocument.lang == cv["lang"]).first():
+            db.add(CVDocument(**cv))
 
     db.commit()
     print("🎉 Modelli caricati nel DB!")

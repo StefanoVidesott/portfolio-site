@@ -5,22 +5,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>{{ t['meta']['title'] }}</title>
+    <title>{% block page_title %}{{ t['meta']['title'] }}{% endblock %}</title>
 
-    <meta name="description" content="{{ t['meta']['desc'] }}">
+    <meta name="description" content="{% block page_desc %}{{ t['meta']['desc'] }}{% endblock %}">
     <meta name="author" content="Stefano Videsott">
     <meta name="theme-color" content="#f5c73d">
 
+    {% if current_page and current_page.startswith('admin') %}
+    <meta name="robots" content="noindex, nofollow">
+    {% else %}
     <link rel="canonical" href="https://www.stefanovidesott.com/{{ lang }}/{{ current_page }}">
-
     <link rel="alternate" hreflang="it" href="https://www.stefanovidesott.com/it/{{ current_page }}" />
     <link rel="alternate" hreflang="en" href="https://www.stefanovidesott.com/en/{{ current_page }}" />
     <link rel="alternate" hreflang="x-default" href="https://www.stefanovidesott.com/en/{{ current_page }}" />
+    {% endif %}
 
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Stefano Videsott">
-    <meta property="og:title" content="{{ t['meta']['title'] }}">
-    <meta property="og:description" content="{{ t['meta']['desc'] }}">
+    <meta property="og:title" content="{% block og_title %}{{ t['meta']['title'] }}{% endblock %}">
+    <meta property="og:description" content="{% block og_desc %}{{ t['meta']['desc'] }}{% endblock %}">
     <meta property="og:url" content="https://www.stefanovidesott.com/{{ lang }}/{{ current_page }}">
 
     <meta property="og:image" content="{{ url_for('static', path='/images/og-image.png') }}">
@@ -29,8 +32,8 @@
     <meta property="og:image:height" content="630">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{{ t['meta']['title'] }}">
-    <meta name="twitter:description" content="{{ t['meta']['desc'] }}">
+    <meta name="twitter:title" content="{{ self.og_title() }}">
+    <meta name="twitter:description" content="{{ self.og_desc() }}">
     <meta name="twitter:image" content="{{ url_for('static', path='/images/og-image.png') }}">
 
     <script type="application/ld+json" nonce="{{ request.state.nonce }}">

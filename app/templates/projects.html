@@ -9,7 +9,12 @@
                 {% for project in projects %}
                     <div class="project base-card reveal delay-{{ loop.index }}">
 
-                        <img src="{{ project.image_url }}" alt="{% if lang == 'it' %}{{ project.title_it }}{% else %}{{ project.title_en }}{% endif %}" loading="lazy">
+                        <div class="project-img-wrapper">
+                            <img src="{{ project.image_url }}" alt="{% if lang == 'it' %}{{ project.title_it }}{% else %}{{ project.title_en }}{% endif %}" loading="lazy">
+                            {% if project.is_case_study %}
+                            <span class="project-case-study-ribbon">{{ t['projects']['case-study-badge'] }}</span>
+                            {% endif %}
+                        </div>
 
                         <div class="project-content">
                             <h3>
@@ -28,18 +33,22 @@
                                 {% endif %}
                             </p>
 
-                            {% if project.slug == 'wannawork' %}
-                                {% if lang == 'it' %}
-                                    <a href="/{{ lang }}/project/{{ project.slug }}">{{ project.link_it }}</a>
-                                {% else %}
-                                    <a href="/{{ lang }}/project/{{ project.slug }}">{{ project.link_en }}</a>
-                                {% endif %}
-                            {% else %}
-                                {% if lang == 'it' %}
-                                    <a href="{{ project.url }}" target="_blank">{{ project.link_it }}</a>
-                                {% else %}
-                                    <a href="{{ project.url }}" target="_blank">{{ project.link_en }}</a>
-                                {% endif %}
+                            {% if project.tags %}
+                            <div class="project-tags">
+                                {% for tag in project.tags.split(',') %}
+                                <span class="project-tag">{{ tag.strip() }}</span>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+
+                            {% if project.internal_url %}
+                                <a href="/{{ lang }}{{ project.internal_url }}" class="btn btn-sm btn-primary">
+                                    {% if lang == 'it' %}{{ project.link_it }}{% else %}{{ project.link_en }}{% endif %}
+                                </a>
+                            {% elif project.url %}
+                                <a href="{{ project.url }}" target="_blank" rel="noopener noreferrer" class="btn btn-sm">
+                                    {% if lang == 'it' %}{{ project.link_it }}{% else %}{{ project.link_en }}{% endif %}
+                                </a>
                             {% endif %}
                         </div>
                     </div>

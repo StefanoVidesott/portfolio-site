@@ -6,7 +6,7 @@
 
         <div class="reveal active admin-form-header">
             <a href="/{{ lang }}/admin/dashboard" class="back-link back-link-top">
-                <i class="fas fa-arrow-left mr-8"></i> Torna alla Dashboard
+                <i class="fas fa-arrow-left mr-8"></i> {{ t['admin']['forms']['actions']['back_to_dashboard'] }}
             </a>
             <h2 class="section-title admin-header-title">{{ title }}</h2>
         </div>
@@ -56,8 +56,24 @@
 
                                         <input type="file" name="{{ field.name }}_file" class="form-control file-input" accept=".jpg,.jpeg,.png,.webp,.gif" aria-describedby="upload-hint-{{ field.name }}">
 
-                                        <input type="text" id="{{ field.name }}" name="{{ field.name }}" class="form-control" value="{{ field.value }}" placeholder="Oppure incolla un URL (es: https://...)">
-                                        <small id="upload-hint-{{ field.name }}" class="upload-hint">Carica un file dal PC oppure incolla un URL. L'upload ignorerà l'URL.</small>
+                                        <input type="text" id="{{ field.name }}" name="{{ field.name }}" class="form-control" value="{{ field.value }}" placeholder="Or paste a URL (e.g. https://...)">
+                                        <small id="upload-hint-{{ field.name }}" class="upload-hint">Upload a file or paste a URL. File upload takes priority.</small>
+                                    </div>
+
+                                {% elif field.type == 'pdf_upload' %}
+                                    <label class="admin-label">
+                                        {{ t['admin']['forms']['labels'].get(field.name, field.name) }} {% if field.required %}<span class="admin-required">*</span>{% endif %}
+                                    </label>
+                                    <div class="image-upload-container">
+                                        {% if field.value %}
+                                        <p class="upload-hint">
+                                            <i class="fas fa-file-pdf"></i>
+                                            <a href="{{ field.value }}" target="_blank" class="pdf-preview-link">{{ field.value }}</a>
+                                        </p>
+                                        {% endif %}
+
+                                        <input type="file" name="{{ field.name }}_file" class="form-control file-input" accept=".pdf" aria-describedby="upload-hint-{{ field.name }}">
+                                        <small id="upload-hint-{{ field.name }}" class="upload-hint">Upload a PDF to replace the current file (max 5 MB).</small>
                                     </div>
 
                                 {% else %}

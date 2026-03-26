@@ -24,12 +24,23 @@
 
   <url>
     <loc>https://www.stefanovidesott.com/it/project/wannawork</loc>
-    <lastmod>2026-02-20</lastmod>
+    <lastmod>2026-03-27</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.stefanovidesott.com/en/project/wannawork</loc>
-    <lastmod>2026-02-20</lastmod>
+    <lastmod>2026-03-27</lastmod>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://www.stefanovidesott.com/it/project/portfolio</loc>
+    <lastmod>2026-03-27</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.stefanovidesott.com/en/project/portfolio</loc>
+    <lastmod>2026-03-27</lastmod>
     <priority>0.9</priority>
   </url>
 </urlset>

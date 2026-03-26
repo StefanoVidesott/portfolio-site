@@ -7,6 +7,16 @@
 {% block content %}
 <header id="home">
     <div class="header-content">
+
+        {% if open_to_work and open_to_work.is_enabled %}
+        <div class="otw-badge reveal active">
+            <span class="otw-dot"></span>
+            <span class="otw-badge-label">
+                {% if lang == 'it' %}{{ open_to_work.badge_it }}{% else %}{{ open_to_work.badge_en }}{% endif %}
+            </span>
+        </div>
+        {% endif %}
+
         <img src="{{ url_for('static', path='/images/profile.webp') }}" alt="Stefano Videsott"
             class="profile-img reveal active" fetchpriority="high">
         <h1 class="reveal delay-1">Stefano Videsott</h1>
@@ -23,6 +33,11 @@
             <a href="#contact" class="btn btn-primary">
                 <i class="fas fa-paper-plane mr-8"></i> {{ t['general']['get-in-touch'] }}
             </a>
+            {% if cv_url %}
+            <a href="{{ cv_url }}" download class="btn btn-outline">
+                <i class="fas fa-file-download mr-8"></i> {{ t['general']['download-cv'] }}
+            </a>
+            {% endif %}
         </div>
     </div>
 </header>
@@ -34,13 +49,6 @@
             <p class="reveal delay-1">{{ t['home']['about-desc-1'] }}</p>
             <p class="reveal delay-2">{{ t['home']['about-desc-2'] }}</p>
             <p class="reveal delay-3">{{ t['home']['about-desc-3'] }}</p>
-
-            <div class="reveal delay-4 download-btn-wrapper">
-                <a href="{{ url_for('static', path='/docs/' ~ lang ~ '/CV_Stefano_Videsott.pdf') }}" download
-                    class="btn btn-primary">
-                    <i class="fas fa-file-download mr-10"></i> {{ t['general']['download-cv'] }}
-                </a>
-            </div>
         </div>
     </div>
 </section>
