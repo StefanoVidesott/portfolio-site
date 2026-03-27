@@ -52,14 +52,16 @@
     "home": {
         "header-roles": [
             "Costruisco cose per il web.",
-            "Trasformo caffè in Python.",
+            "Trasformo idee in software.",
             "Automatizo le cose noiose.",
-            "Studente di giorno, coder di notte."
+            "Studente di giorno, coder di notte.",
+            "Debuggo codice, non persone.",
+            "Il codice pulito è il mio linguaggio madre."
         ],
         "about-title": "Chi Sono",
-        "about-desc-1": "Ciao, sono Stefano Videsott — studente di Informatica all'Università di Trento e sviluppatore web freelance con sede a Trento. Mi occupo attualmente della progettazione e sviluppo di siti web ad alte prestazioni per aziende locali, seguendo l'intero ciclo del progetto: dall'analisi dei requisiti e le proposte commerciali fino al deployment e alla configurazione di servizi rispettosi della privacy. In precedenza ho lavorato come sviluppatore software presso Airpim SRL.",
-        "about-desc-2": "Le mie radici tecniche sono in Python, Java, C++ e C#, ma lavoro con disinvoltura su tutto lo stack. Ultimamente sto costruendo siti statici veloci e ottimizzati per la SEO locale con Astro, Tailwind CSS e Vanilla JS, oltre a web app più dinamiche con FastAPI. Mi piace costruire cose che risolvono problemi reali — che si tratti di una web app, un sito per un'azienda locale, o qualche gioco.",
-        "about-desc-3": "Quando non lavoro a un progetto, mi piace suonare, sperimentare con l'AI e approfondire nuove tecnologie attraverso blog e tutorial.",
+        "about-desc-1": "Ciao, sono Stefano Videsott, sviluppatore software e studente di Informatica all'Università di Trento. Ho lavorato come sviluppatore presso Airpim SRL e attualmente seguo alcuni clienti come freelance a Trento e in Trentino. Mi appassiona lo sviluppo software in senso ampio — dal backend alle applicazioni web — e sono sempre curioso di esplorare nuove tecnologie nel mondo IT.",
+        "about-desc-2": "Ho una base solida in Python, C++, C# e Java, e mi trovo a mio agio su tutto lo stack. Mi piace costruire applicazioni che risolvono problemi reali, con un occhio alla pulizia del codice e alla manutenibilità. Questo che si tratti di una web app, un sito per un'azienda locale, o qualche gioco.",
+        "about-desc-3": "Quando non sto programmando, mi piace suonare, esplorare progetti, sperimentare le ultime novità in AI e accrescere le mie conoscenze attraverso blog e tutorial.",
         "skills-title": "Competenze",
         "experience-title": "Esperienze Lavorative",
         "education-title": "Istruzione",

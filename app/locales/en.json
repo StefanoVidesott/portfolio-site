@@ -52,14 +52,16 @@
     "home": {
         "header-roles": [
             "I build things for the web.",
-            "I turn coffee into Python.",
+            "I turn ideas into software.",
             "I automate the boring stuff.",
-            "Student by day, coder by night."
+            "Student by day, coder by night.",
+            "I debug code, not people.",
+            "Clean code is my love language."
         ],
         "about-title": "About Me",
-        "about-desc-1": "Hi, I'm Stefano Videsott — a Computer Science student at the University of Trento and freelance web developer based in Trento, Italy. I currently design and build high-performance websites for local businesses, handling the full project lifecycle: from requirements analysis and commercial proposals to deployment and privacy-friendly service configuration. Before going independent, I worked as a software developer at Airpim SRL.",
-        "about-desc-2": "My background is in Python, Java, C++ and C#, but I work comfortably across the full stack. Lately I've been building fast, SEO-optimized static sites with Astro, Tailwind CSS and Vanilla JS alongside more dynamic apps powered by FastAPI. I like building things that solve real problems — whether it's a web app, a local-business site, or the occasional game.",
-        "about-desc-3": "When I'm not working on a project, I enjoy playing music, experimenting with AI, and expanding my knowledge through blogs and tutorials.",
+        "about-desc-1": "Hi, I'm Stefano Videsott, a software developer and Computer Science student at the University of Trento, Italy. I previously worked as a developer at Airpim SRL and currently take on freelance projects for clients in Trento and across Trentino. I'm passionate about software development broadly — from backend systems to web applications — and I'm always looking for new challenges in the IT world.",
+        "about-desc-2": "I have a solid foundation in Python, C++, C# and Java, and I'm comfortable across the full stack. I enjoy building applications that solve real problems, with an eye for clean and maintainable code. Whether it's a web app, a local-business site, or the occasional game.",
+        "about-desc-3": "When I'm not coding, I enjoy playing music, exploring projects, experimenting with the latest in AI, and expanding my knowledge through blogs and tutorials.",
         "skills-title": "Skills",
         "experience-title": "Work Experience",
         "education-title": "Education",
