@@ -42,6 +42,29 @@
     </div>
 </header>
 
+{% if open_to_work and open_to_work.is_enabled %}
+<section id="open-to-work" class="otw-section">
+    <div class="container container-medium">
+        <div class="otw-banner base-card reveal active">
+            <div class="otw-banner-icon">
+                <i class="fas fa-briefcase"></i>
+            </div>
+            <div class="otw-banner-body">
+                <p class="otw-banner-title">
+                    {% if lang == 'it' %}{{ open_to_work.title_it }}{% else %}{{ open_to_work.title_en }}{% endif %}
+                </p>
+                <p class="otw-banner-message">
+                    {% if lang == 'it' %}{{ open_to_work.message_it }}{% else %}{{ open_to_work.message_en }}{% endif %}
+                </p>
+            </div>
+            <a href="#contact" class="btn btn-primary btn-sm">
+                <i class="fas fa-paper-plane mr-8"></i> {{ t['general']['get-in-touch'] }}
+            </a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
 <section id="about">
     <div class="container">
         <h2 class="reveal">{{ t['home']['about-title'] }}</h2>
