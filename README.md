@@ -14,7 +14,7 @@
     <img src="https://img.shields.io/badge/Cloudflare-F38020?style=for-the-badge&logo=cloudflare&logoColor=white" alt="Cloudflare">
   </p>
 
-  <a href="https://www.stefanovidesott.com">www.stefanovidesott.com</a>
+  <img src="https://img.shields.io/badge/🌐_Live-www.stefanovidesott.com-005571?style=for-the-badge" alt="Portfolio" />
 </div>
 
 ---
