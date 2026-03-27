@@ -1,9 +1,15 @@
 {% extends "base.html" %}
 
+{% block page_title %}{{ t['projects']['title'] }} | Stefano Videsott{% endblock %}
+{% block page_desc %}{{ t['general']['meta-desc'] }}{% endblock %}
+{% block og_title %}{{ t['projects']['title'] }} | Stefano Videsott{% endblock %}
+{% block og_desc %}{{ t['general']['meta-desc'] }}{% endblock %}
+
 {% block content %}
     <section id="projects" class="page-section section-bg-default">
         <div class="container">
             <h2 class="reveal section-title">{{ t['projects']['title'] }}</h2>
+            <p class="reveal section-subtitle">{{ t['projects']['subtitle'] }}</p>
             <div class="projects-container">
 
                 {% for project in projects %}

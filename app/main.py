@@ -13,9 +13,13 @@ from dotenv import load_dotenv
 from sentry_sdk.integrations.fastapi import FastApiIntegration
 from sentry_sdk.integrations.starlette import StarletteIntegration
 
+from slowapi import _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
+
 from app.shared import templates, translations, SUPPORTED_LANGS
 from app.routers import public, admin, api
 from app.cms import UPLOAD_DIR, PDF_UPLOAD_DIR
+from app.limiter import limiter
 
 load_dotenv()
 
@@ -56,6 +60,8 @@ if SENTRY_DSN:
 # App & static files
 # ---------------------------------------------------------------------------
 app = FastAPI()
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
 # Expose runtime globals to all Jinja2 templates

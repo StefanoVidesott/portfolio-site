@@ -1,10 +1,11 @@
 import os
 import httpx
 
-from fastapi import APIRouter, BackgroundTasks, HTTPException
+from fastapi import APIRouter, BackgroundTasks, HTTPException, Request
 
 from app.schemas import ContactRequest
 from app.email_utils import send_email_task
+from app.limiter import limiter
 
 router = APIRouter()
 
@@ -12,7 +13,12 @@ TURNSTILE_SECRET_KEY = os.getenv("TURNSTILE_SECRET_KEY", "")
 
 
 @router.post("/api/contact")
-async def handle_contact(contact: ContactRequest, background_tasks: BackgroundTasks):
+@limiter.limit("5/hour")
+async def handle_contact(
+    request: Request,
+    contact: ContactRequest,
+    background_tasks: BackgroundTasks,
+):
     if TURNSTILE_SECRET_KEY:
         async with httpx.AsyncClient() as client:
             response = await client.post(
@@ -24,7 +30,7 @@ async def handle_contact(contact: ContactRequest, background_tasks: BackgroundTa
             )
             result = response.json()
             if not result.get("success"):
-                raise HTTPException(status_code=400, detail="Controllo anti-spam fallito.")
+                raise HTTPException(status_code=400, detail="Anti-spam check failed.")
 
     background_tasks.add_task(send_email_task, contact)
     return {"status": "success", "message": "Email is being sent"}

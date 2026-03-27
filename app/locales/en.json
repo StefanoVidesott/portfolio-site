@@ -1,7 +1,7 @@
 {
     "meta": {
         "title": "Stefano Videsott | Software Developer",
-        "desc": "Personal portfolio of Stefano Videsott. Software Developer with experience in Python, FastAPI, React, and cloud architectures."
+        "desc": "Personal portfolio of Stefano Videsott. Software Developer based in Trento, Italy, with experience in Python, FastAPI, and cloud architectures."
     },
     "nav": {
         "about": "About",
@@ -56,7 +56,6 @@
             "I automate the boring stuff.",
             "Student by day, coder by night."
         ],
-        "open-to-work-badge": "Open to Work",
         "about-title": "About Me",
         "about-desc-1": "Hi, I'm Stefano Videsott, a passionate computer science student at the University of Trento and former software developer at Airpim SRL. I have worked on developing innovative software solutions and I am eager to learn and explore new technologies in the IT world.",
         "about-desc-2": "With a solid foundation in programming languages such as C++, C#, Python and Java, I enjoy building applications that solve real-world problems, as well as the occasional game. My journey in the tech field is driven by curiosity and a commitment to continuous improvement.",
@@ -80,6 +79,7 @@
     },
     "projects": {
         "title": "Projects",
+        "subtitle": "A selection of things I've built.",
         "case-study-badge": "Case Study",
         "view-case-study": "View Case Study",
         "tech-stack": "Tech Stack"

@@ -113,6 +113,14 @@ h2.section-title::after, section > .container > h2::after {
     border-radius: 4px;
 }
 
+.section-subtitle {
+    text-align: center;
+    color: var(--text-muted);
+    margin-top: -40px;
+    margin-bottom: 40px;
+    font-size: 1.05rem;
+}
+
 /* Titoli per allineamento a sinistra (es. Interessi e Lingue) */
 .col-title {
     margin-bottom: 30px;
@@ -358,8 +366,7 @@ nav {
     font-size: 1.1rem;
     color: var(--text-main);
 }
-.about-text p:last-of-type { margin-bottom: 40px; }
-.download-btn-wrapper { margin-top: 30px; text-align: center; }
+.about-text p:last-of-type { margin-bottom: 0; }
 
 /* -- Skills -- */
 .skills-container {
@@ -974,44 +981,12 @@ input[type="file"].file-input {
 .form-message-top { margin-bottom: 25px; }
 
 /* =========================================================================
-   19. OPEN TO WORK — badge (hero) + banner section
+   19. OPEN TO WORK — banner section
    ========================================================================= */
-
-/* --- Small pill badge in the hero --- */
-.otw-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    background: rgba(212, 160, 23, 0.12);
-    border: 1.5px solid var(--primary-color);
-    border-radius: 999px;
-    padding: 5px 14px;
-    margin-bottom: 20px;
-    font-size: 0.78rem;
-    font-weight: 700;
-    color: var(--primary-light);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-}
-
-.otw-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--primary-color);
-    flex-shrink: 0;
-    animation: otw-pulse 2.4s ease-in-out infinite;
-}
-
-@keyframes otw-pulse {
-    0%, 100% { opacity: 1;   transform: scale(1); }
-    50%       { opacity: 0.4; transform: scale(1.4); }
-}
 
 /* --- Full banner section below the hero --- */
 .otw-section {
-    /* padding: 0 0 0; */
-    padding-top: 80;
+    padding-top: 80px;
     padding-bottom: 0;
     background: var(--bg-body);
 }

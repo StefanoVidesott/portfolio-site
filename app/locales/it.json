@@ -1,7 +1,7 @@
 {
     "meta": {
         "title": "Stefano Videsott | Sviluppatore Software",
-        "desc": "Portfolio personale di Stefano Videsott. Sviluppatore Software con esperienza in Python, FastAPI, React e architetture cloud."
+        "desc": "Portfolio personale di Stefano Videsott. Sviluppatore Software basato a Trento con esperienza in Python, FastAPI e architetture cloud."
     },
     "nav": {
         "about": "Chi Sono",
@@ -56,7 +56,6 @@
             "Automatizo le cose noiose.",
             "Studente di giorno, coder di notte."
         ],
-        "open-to-work-badge": "Disponibile",
         "about-title": "Chi Sono",
         "about-desc-1": "Ciao, sono Stefano Videsott, uno studente appassionato di informatica all'Università di Trento ed ex sviluppatore software presso Airpim SRL. Mi sono occupato nello sviluppo di soluzioni software e sono desideroso di imparare ed esplorare nuove tecnologie nel mondo IT.",
         "about-desc-2": "Con una solida base in linguaggi di programmazione come C++, C#, Python e Java, mi piace costruire applicazioni che risolvono problemi reali, o anche qualche gioco. Il mio percorso nel settore tecnologico è guidato dalla curiosità e da un impegno per il miglioramento continuo.",
@@ -80,6 +79,7 @@
     },
     "projects": {
         "title": "Progetti",
+        "subtitle": "Una selezione di cose che ho costruito.",
         "case-study-badge": "Case Study",
         "view-case-study": "Leggi il Case Study",
         "tech-stack": "Stack Tecnologico"

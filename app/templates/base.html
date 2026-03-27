@@ -36,6 +36,11 @@
     <meta name="twitter:description" content="{{ self.og_desc() }}">
     <meta name="twitter:image" content="{{ url_for('static', path='/images/og-image.png') }}">
 
+    <meta name="geo.region" content="IT-TN">
+    <meta name="geo.placename" content="Trento, Italy">
+    <meta name="geo.position" content="46.0748;11.1217">
+    <meta name="ICBM" content="46.0748, 11.1217">
+
     <script type="application/ld+json" nonce="{{ request.state.nonce }}">
     {
       "@context": "https://schema.org",
@@ -44,9 +49,19 @@
       "url": "https://www.stefanovidesott.com",
       "image": "https://www.stefanovidesott.com/static/images/profile.webp",
       "jobTitle": "Software Developer",
+      "description": "Software Developer and Computer Science student based in Trento, Italy. Specialised in Python, FastAPI, and cloud architectures.",
+      "homeLocation": {
+        "@type": "Place",
+        "name": "Trento, Italy"
+      },
       "alumniOf": {
         "@type": "CollegeOrUniversity",
-        "name": "Università di Trento"
+        "name": "Università di Trento",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Trento",
+          "addressCountry": "IT"
+        }
       },
       "sameAs": [
         "https://github.com/StefanoVidesott",
