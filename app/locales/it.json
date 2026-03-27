@@ -57,9 +57,9 @@
             "Studente di giorno, coder di notte."
         ],
         "about-title": "Chi Sono",
-        "about-desc-1": "Ciao, sono Stefano Videsott, uno studente appassionato di informatica all'Università di Trento ed ex sviluppatore software presso Airpim SRL. Mi sono occupato nello sviluppo di soluzioni software e sono desideroso di imparare ed esplorare nuove tecnologie nel mondo IT.",
-        "about-desc-2": "Con una solida base in linguaggi di programmazione come C++, C#, Python e Java, mi piace costruire applicazioni che risolvono problemi reali, o anche qualche gioco. Il mio percorso nel settore tecnologico è guidato dalla curiosità e da un impegno per il miglioramento continuo.",
-        "about-desc-3": "Quando non sto programmando, mi piace suonare, esplorare progetti, sperimentare le ultime novità in AI ed accrescere le mie conoscenze attraverso blog, tutorial e post.",
+        "about-desc-1": "Ciao, sono Stefano Videsott — studente di Informatica all'Università di Trento e sviluppatore web freelance con sede a Trento. Mi occupo attualmente della progettazione e sviluppo di siti web ad alte prestazioni per aziende locali, seguendo l'intero ciclo del progetto: dall'analisi dei requisiti e le proposte commerciali fino al deployment e alla configurazione di servizi rispettosi della privacy. In precedenza ho lavorato come sviluppatore software presso Airpim SRL.",
+        "about-desc-2": "Le mie radici tecniche sono in Python, Java, C++ e C#, ma lavoro con disinvoltura su tutto lo stack. Ultimamente sto costruendo siti statici veloci e ottimizzati per la SEO locale con Astro, Tailwind CSS e Vanilla JS, oltre a web app più dinamiche con FastAPI. Mi piace costruire cose che risolvono problemi reali — che si tratti di una web app, un sito per un'azienda locale, o qualche gioco.",
+        "about-desc-3": "Quando non lavoro a un progetto, mi piace suonare, sperimentare con l'AI e approfondire nuove tecnologie attraverso blog e tutorial.",
         "skills-title": "Competenze",
         "experience-title": "Esperienze Lavorative",
         "education-title": "Istruzione",

@@ -57,9 +57,9 @@
             "Student by day, coder by night."
         ],
         "about-title": "About Me",
-        "about-desc-1": "Hi, I'm Stefano Videsott, a passionate computer science student at the University of Trento and former software developer at Airpim SRL. I have worked on developing innovative software solutions and I am eager to learn and explore new technologies in the IT world.",
-        "about-desc-2": "With a solid foundation in programming languages such as C++, C#, Python and Java, I enjoy building applications that solve real-world problems, as well as the occasional game. My journey in the tech field is driven by curiosity and a commitment to continuous improvement.",
-        "about-desc-3": "When I'm not coding, I enjoy playing music, exploring projects, experimenting with the latest in AI, and expanding my knowledge through blogs, tutorials and posts.",
+        "about-desc-1": "Hi, I'm Stefano Videsott — a Computer Science student at the University of Trento and freelance web developer based in Trento, Italy. I currently design and build high-performance websites for local businesses, handling the full project lifecycle: from requirements analysis and commercial proposals to deployment and privacy-friendly service configuration. Before going independent, I worked as a software developer at Airpim SRL.",
+        "about-desc-2": "My background is in Python, Java, C++ and C#, but I work comfortably across the full stack. Lately I've been building fast, SEO-optimized static sites with Astro, Tailwind CSS and Vanilla JS alongside more dynamic apps powered by FastAPI. I like building things that solve real problems — whether it's a web app, a local-business site, or the occasional game.",
+        "about-desc-3": "When I'm not working on a project, I enjoy playing music, experimenting with AI, and expanding my knowledge through blogs and tutorials.",
         "skills-title": "Skills",
         "experience-title": "Work Experience",
         "education-title": "Education",
