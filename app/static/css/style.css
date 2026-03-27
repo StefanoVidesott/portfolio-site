@@ -1010,7 +1010,9 @@ input[type="file"].file-input {
 
 /* --- Full banner section below the hero --- */
 .otw-section {
-    padding: 0 0 0;
+    /* padding: 0 0 0; */
+    padding-top: 80;
+    padding-bottom: 0;
     background: var(--bg-body);
 }
 

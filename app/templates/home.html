@@ -8,17 +8,18 @@
 <header id="home">
     <div class="header-content">
 
-        {% if open_to_work and open_to_work.is_enabled %}
+        <img src="{{ url_for('static', path='/images/profile.webp') }}" alt="Stefano Videsott"
+            class="profile-img reveal active" fetchpriority="high">
+
+        <!-- {% if open_to_work and open_to_work.is_enabled %}
         <div class="otw-badge reveal active">
             <span class="otw-dot"></span>
             <span class="otw-badge-label">
                 {% if lang == 'it' %}{{ open_to_work.badge_it }}{% else %}{{ open_to_work.badge_en }}{% endif %}
             </span>
         </div>
-        {% endif %}
+        {% endif %} -->
 
-        <img src="{{ url_for('static', path='/images/profile.webp') }}" alt="Stefano Videsott"
-            class="profile-img reveal active" fetchpriority="high">
         <h1 class="reveal delay-1">Stefano Videsott</h1>
 
         <div class="typing-container reveal delay-2">
