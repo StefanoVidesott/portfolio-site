@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
 {% block page_title %}{{ t['portfolio']['title'] }} | Stefano Videsott{% endblock %}
-{% block page_desc %}{{ t['portfolio']['what-is-text'] }}{% endblock %}
+{% block page_desc %}{{ t['portfolio']['meta-desc'] }}{% endblock %}
 {% block og_title %}{{ t['portfolio']['title'] }} | Stefano Videsott{% endblock %}
-{% block og_desc %}{{ t['portfolio']['what-is-text'] }}{% endblock %}
+{% block og_desc %}{{ t['portfolio']['meta-desc'] }}{% endblock %}
 
 {% block content %}
     <header id="project-header">
@@ -34,7 +34,7 @@
             <div class="detail-card base-card reveal delay-2">
                 <h2>{{ t['portfolio']['tech'] }}</h2>
                 <ul class="tech-list">
-                    <li><i class="fab fa-python tech-icon tech-icon-python"></i> <strong>{{ t['portfolio']['tech-back'].split(':')[0] }}:</strong> {{ t['portfolio']['tech-back'].split(':')[1] }}</li>
+                    <li><i class="fab fa-python tech-icon tech-icon-python"></i> {{ t['portfolio']['tech-back'] | safe }}</li>
                     <li><i class="fab fa-js tech-icon tech-icon-js"></i> <strong>{{ t['portfolio']['tech-front'].split(':')[0] }}:</strong> {{ t['portfolio']['tech-front'].split(':')[1] }}</li>
                     <li><i class="fab fa-docker tech-icon tech-icon-docker"></i> <strong>{{ t['portfolio']['tech-devops'].split(':')[0] }}:</strong> {{ t['portfolio']['tech-devops'].split(':')[1] }}</li>
                     <li><i class="fas fa-shield-alt tech-icon tech-icon-primary"></i> <strong>{{ t['portfolio']['tech-security'].split(':')[0] }}:</strong> {{ t['portfolio']['tech-security'].split(':')[1] }}</li>
