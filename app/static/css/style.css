@@ -347,6 +347,12 @@ nav {
     transform: rotate(15deg);
 }
 
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
 .nav-toggle {
     display: none;
     background: none;
@@ -619,6 +625,18 @@ footer {
 @media (max-width: 768px) {
     header h1 { font-size: 2.5rem; }
 
+    .header-buttons {
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 0 16px;
+    }
+    .header-buttons .btn {
+        flex: 1 1 auto;
+        min-width: 140px;
+        padding: 12px 20px;
+        font-size: 14px;
+    }
+
     .nav-toggle { display: block; }
 
     .nav-menu {
@@ -649,7 +667,9 @@ footer {
     }
 
     .nav-menu li a { display: block; width: 100%; }
-    .nav-menu li select { margin-top: 10px; }
+
+    .contact-form-card { padding: 20px 16px; }
+    .contact-form .btn { width: 100%; }
 }
 
 /* =========================================================================
