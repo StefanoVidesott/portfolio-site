@@ -1,7 +1,7 @@
 {
     "meta": {
-        "title": "Stefano Videsott | Software Developer",
-        "desc": "Personal portfolio of Stefano Videsott. Software Developer based in Trento, Italy, with experience in Python, FastAPI, and cloud architectures."
+        "title": "Stefano Videsott | Software Engeneer",
+        "desc": "Portfolio of Stefano Videsott, freelance Software Developer and CS student based in Trento, Italy. Specializing in Python, C++, backend systems, and web apps."
     },
     "nav": {
         "about": "About",
@@ -31,7 +31,7 @@
         "last_updated": "Last updated: March 2026",
         "intro": "This policy describes how the personal data of users visiting this website is collected, used, and protected, in compliance with the General Data Protection Regulation (GDPR - EU Regulation 2016/679).",
         "section1_title": "1. Data Controller",
-        "section1_text": "The Data Controller is <strong>Stefano Videsott</strong>.<br>Contact email: <a href=\"mailto:stefano.videsott.work@gmail.com\" style=\"color: var(--primary-color);\">stefano.videsott.work@gmail.com</a>",
+        "section1_text": "The Data Controller is <strong>Stefano Videsott</strong>.<br>Contact email: <a href=\"mailto:work@stefanovidesott.com\" style=\"color: var(--primary-color);\">work@stefanovidesott.com</a>",
         "section2_title": "2. Data Collected and Purposes",
         "section2_li1": "<strong>Data provided voluntarily (Contact Form):</strong> When you fill out the contact form, we collect your Name and Email address. This data is used exclusively to respond to your contact request. The legal basis is your explicit consent (Art. 6(1)(a) GDPR), given by checking the consent box before submitting the form. You may withdraw your consent at any time by contacting the Data Controller; this will not affect the lawfulness of any processing carried out before withdrawal.",
         "section2_li2": "<strong>Navigation data and Security:</strong> During navigation, the computer systems responsible for operating the site acquire certain data (e.g., anonymized IP addresses, user agents) whose transmission is implicit in the use of Internet protocols. This data serves solely to ensure site security and block cyber attacks or bots.",
@@ -47,16 +47,16 @@
         "section5_title": "5. Data Retention",
         "section5_text": "Emails received via the contact form are kept in the Data Controller's email inbox for the time strictly necessary to process the request. They are not added to any newsletter or marketing database without explicit consent.",
         "section6_title": "6. User Rights",
-        "section6_text": "Under Articles 15 and following of the GDPR, you have the right to request access to your personal data at any time, its rectification, deletion, restriction of processing, and — where consent is the legal basis — its portability and withdrawal of consent. You also have the right to lodge a complaint with the competent supervisory authority: in Italy, the <a href=\"https://www.garanteprivacy.it\" target=\"_blank\" rel=\"noopener noreferrer\" style=\"color: var(--primary-color);\">Garante per la protezione dei dati personali</a> (www.garanteprivacy.it). To exercise your rights directly with the Data Controller, send an email to <a href=\"mailto:stefano.videsott.work@gmail.com\" style=\"color: var(--primary-color);\">stefano.videsott.work@gmail.com</a>."
+        "section6_text": "Under Articles 15 and following of the GDPR, you have the right to request access to your personal data at any time, its rectification, deletion, restriction of processing, and — where consent is the legal basis — its portability and withdrawal of consent. You also have the right to lodge a complaint with the competent supervisory authority: in Italy, the <a href=\"https://www.garanteprivacy.it\" target=\"_blank\" rel=\"noopener noreferrer\" style=\"color: var(--primary-color);\">Garante per la protezione dei dati personali</a> (www.garanteprivacy.it). To exercise your rights directly with the Data Controller, send an email to <a href=\"mailto:work@stefanovidesott.com\" style=\"color: var(--primary-color);\">work@stefanovidesott.com</a>."
     },
     "home": {
         "header-roles": [
-            "I build things for the web.",
-            "I turn ideas into software.",
-            "I automate the boring stuff.",
-            "Student by day, coder by night.",
-            "I debug code, not people.",
-            "Clean code is my love language."
+            "Full-Stack Software Developer.",
+            "Architecting clean and scalable solutions.",
+            "Computer Science student in Trento.",
+            "From backend systems to web apps.",
+            "Turning complex problems into elegant code.",
+            "I automate the boring stuff."
         ],
         "about-title": "About Me",
         "about-desc-1": "Hi, I'm Stefano Videsott, a software developer and Computer Science student at the University of Trento, Italy. I previously worked as a developer at Airpim SRL and currently take on freelance projects for clients in Trento and across Trentino. I'm passionate about software development broadly — from backend systems to web applications — and I'm always looking for new challenges in the IT world.",

@@ -1,7 +1,7 @@
 {
     "meta": {
-        "title": "Stefano Videsott | Sviluppatore Software",
-        "desc": "Portfolio personale di Stefano Videsott. Sviluppatore Software basato a Trento con esperienza in Python, FastAPI e architetture cloud."
+        "title": "Stefano Videsott | Software Engineer",
+        "desc": "Portfolio di Stefano Videsott, Sviluppatore Software freelance e studente di Informatica a Trento. Specializzato in Python, C++, backend system e web app."
     },
     "nav": {
         "about": "Chi Sono",
@@ -31,7 +31,7 @@
         "last_updated": "Ultimo aggiornamento: Marzo 2026",
         "intro": "La presente informativa descrive come vengono raccolti, utilizzati e protetti i dati personali degli utenti che visitano questo sito web, nel rispetto del Regolamento Generale sulla Protezione dei Dati (GDPR - Regolamento UE 2016/679).",
         "section1_title": "1. Titolare del Trattamento",
-        "section1_text": "Il Titolare del trattamento dei dati è <strong>Stefano Videsott</strong>.<br>Email di contatto: <a href=\"mailto:stefano.videsott.work@gmail.com\" style=\"color: var(--primary-color);\">stefano.videsott.work@gmail.com</a>",
+        "section1_text": "Il Titolare del trattamento dei dati è <strong>Stefano Videsott</strong>.<br>Email di contatto: <a href=\"mailto:work@stefanovidesott.com\" style=\"color: var(--primary-color);\">work@stefanovidesott.com</a>",
         "section2_title": "2. Dati Raccolti e Finalità",
         "section2_li1": "<strong>Dati forniti volontariamente (Modulo di Contatto):</strong> Quando compili il modulo di contatto, raccogliamo il tuo Nome e il tuo indirizzo Email. Questi dati vengono utilizzati esclusivamente per rispondere alla tua richiesta di contatto. La base giuridica è il tuo consenso esplicito (art. 6, par. 1, lett. a) del GDPR), espresso spuntando la casella di consenso prima dell'invio del modulo. Puoi revocare il consenso in qualsiasi momento contattando il Titolare del trattamento; ciò non pregiudica la liceità del trattamento effettuato prima della revoca.",
         "section2_li2": "<strong>Dati di navigazione e Sicurezza:</strong> Durante la navigazione, i sistemi informatici preposti al funzionamento del sito acquisiscono alcuni dati (es. indirizzi IP anonimizzati, user agent) la cui trasmissione è implicita nell'uso dei protocolli di Internet. Questi dati servono unicamente a garantire la sicurezza del sito e bloccare attacchi informatici o bot.",
@@ -47,16 +47,16 @@
         "section5_title": "5. Conservazione dei Dati",
         "section5_text": "Le email ricevute tramite il modulo di contatto vengono conservate sulla casella di posta elettronica del Titolare per il tempo strettamente necessario a evadere la richiesta. Non vengono inserite in nessuna newsletter o database di marketing senza esplicito consenso.",
         "section6_title": "6. Diritti dell'Utente",
-        "section6_text": "Ai sensi degli artt. 15 e seguenti del GDPR, hai il diritto di chiedere in qualsiasi momento l'accesso ai tuoi dati personali, la rettifica, la cancellazione degli stessi, la limitazione del trattamento e — laddove la base giuridica sia il consenso — la portabilità dei dati e la revoca del consenso. Hai inoltre il diritto di proporre reclamo all'autorità di controllo competente: in Italia, il <a href=\"https://www.garanteprivacy.it\" target=\"_blank\" rel=\"noopener noreferrer\" style=\"color: var(--primary-color);\">Garante per la protezione dei dati personali</a> (www.garanteprivacy.it). Per esercitare i tuoi diritti direttamente con il Titolare, invia un'email a <a href=\"mailto:stefano.videsott.work@gmail.com\" style=\"color: var(--primary-color);\">stefano.videsott.work@gmail.com</a>."
+        "section6_text": "Ai sensi degli artt. 15 e seguenti del GDPR, hai il diritto di chiedere in qualsiasi momento l'accesso ai tuoi dati personali, la rettifica, la cancellazione degli stessi, la limitazione del trattamento e — laddove la base giuridica sia il consenso — la portabilità dei dati e la revoca del consenso. Hai inoltre il diritto di proporre reclamo all'autorità di controllo competente: in Italia, il <a href=\"https://www.garanteprivacy.it\" target=\"_blank\" rel=\"noopener noreferrer\" style=\"color: var(--primary-color);\">Garante per la protezione dei dati personali</a> (www.garanteprivacy.it). Per esercitare i tuoi diritti direttamente con il Titolare, invia un'email a <a href=\"mailto:work@stefanovidesott.com\" style=\"color: var(--primary-color);\">work@stefanovidesott.com</a>."
     },
     "home": {
         "header-roles": [
-            "Costruisco cose per il web.",
-            "Trasformo idee in software.",
-            "Automatizo le cose noiose.",
-            "Studente di giorno, coder di notte.",
-            "Debuggo codice, non persone.",
-            "Il codice pulito è il mio linguaggio madre."
+            "Sviluppatore Software Full-Stack.",
+            "Progetto architetture pulite e scalabili.",
+            "Studente di Informatica a Trento.",
+            "Dai sistemi backend alle applicazioni web.",
+            "Trasformo problemi complessi in codice elegante.",
+            "Automatizzo i processi noiosi."
         ],
         "about-title": "Chi Sono",
         "about-desc-1": "Ciao, sono Stefano Videsott, sviluppatore software e studente di Informatica all'Università di Trento. Ho lavorato come sviluppatore presso Airpim SRL e attualmente seguo alcuni clienti come freelance a Trento e in Trentino. Mi appassiona lo sviluppo software in senso ampio — dal backend alle applicazioni web — e sono sempre curioso di esplorare nuove tecnologie nel mondo IT.",
