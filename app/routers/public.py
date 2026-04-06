@@ -1,76 +1,83 @@
-from fastapi import APIRouter, Request, Depends
-from fastapi.responses import RedirectResponse, FileResponse
-from sqlalchemy.orm import Session
+import asyncio
 
-from app.database import get_db
-from app import models
+import httpx
+
+from fastapi import APIRouter, Request
+from fastapi.responses import RedirectResponse, FileResponse
+
 from app.shared import templates, translations, SUPPORTED_LANGS
 
 router = APIRouter()
 
 
-@router.get("/favicon.ico")
+async def _fetch(client: httpx.AsyncClient, url: str) -> list | dict:
+    """GET a CMS endpoint; return parsed JSON or [] on any error."""
+    try:
+        response = await client.get(url, timeout=5.0)
+        response.raise_for_status()
+        return response.json()
+    except Exception as e:
+        print(f"CMS fetch error [{url}]: {e}")
+        return []
+
+
+# ---------------------------------------------------------------------------
+# Infrastructure
+# ---------------------------------------------------------------------------
+
+@router.get("/favicon.ico", include_in_schema=False)
 async def get_favicon():
     return FileResponse("app/static/favicon.ico")
 
 
-@router.get("/robots.txt")
+@router.get("/robots.txt", include_in_schema=False)
 async def get_robots():
     return FileResponse("app/static/robots.txt")
 
 
-@router.get("/sitemap.xml")
+@router.get("/sitemap.xml", include_in_schema=False)
 async def get_sitemap():
     return FileResponse("app/static/sitemap.xml")
 
 
-@router.get("/")
+@router.get("/", include_in_schema=False)
 async def root(request: Request):
     accept_language = request.headers.get("accept-language", "")
-    if accept_language.startswith("it"):
-        return RedirectResponse(url="/it/home")
-    return RedirectResponse(url="/en/home")
+    lang = "it" if accept_language.startswith("it") else "en"
+    return RedirectResponse(url=f"/{lang}/home")
 
+
+# ---------------------------------------------------------------------------
+# Public pages
+# ---------------------------------------------------------------------------
 
 @router.get("/{lang}/home")
-async def home(request: Request, lang: str, db: Session = Depends(get_db)):
+async def home(request: Request, lang: str):
     if lang not in SUPPORTED_LANGS:
         return RedirectResponse(url="/en/home")
 
-    db_experiences = (
-        db.query(models.Experience)
-        .filter(models.Experience.is_featured == True)
-        .order_by(models.Experience.order)
-        .all()
-    )
-    db_education = (
-        db.query(models.Education)
-        .filter(models.Education.is_featured == True)
-        .order_by(models.Education.order)
-        .all()
-    )
-    db_skills = (
-        db.query(models.SkillCategory)
-        .filter(models.SkillCategory.is_featured == True)
-        .order_by(models.SkillCategory.order)
-        .all()
-    )
-    db_interests = (
-        db.query(models.Interest)
-        .filter(models.Interest.is_featured == True)
-        .order_by(models.Interest.order)
-        .all()
-    )
-    db_languages = (
-        db.query(models.Language)
-        .filter(models.Language.is_featured == True)
-        .order_by(models.Language.order)
-        .all()
+    client: httpx.AsyncClient = request.app.state.http_client
+    base = request.app.state.cms_base_url
+
+    (
+        api_experiences, api_education, api_skills, api_interests,
+        api_languages, api_otw, api_cvs,
+    ) = await asyncio.gather(
+        _fetch(client, f"{base}/api/public/experiences?lang={lang}"),
+        _fetch(client, f"{base}/api/public/educations?lang={lang}"),
+        _fetch(client, f"{base}/api/public/skill-categories?lang={lang}"),
+        _fetch(client, f"{base}/api/public/interests?lang={lang}"),
+        _fetch(client, f"{base}/api/public/languages?lang={lang}"),
+        _fetch(client, f"{base}/api/public/open-to-work?lang={lang}"),
+        _fetch(client, f"{base}/api/public/cv-documents?lang={lang}"),
     )
 
-    open_to_work = db.query(models.OpenToWork).first()
-    cv_doc = db.query(models.CVDocument).filter(models.CVDocument.lang == lang).first()
-    cv_url = cv_doc.file_url if cv_doc else None
+    # Show the download button only when the ERP has a CV for this language.
+    # The href points to the ERP's dedicated download endpoint so the browser
+    # receives a proper Content-Disposition header with a clean filename.
+    cv_exists = any(cv.get("lang") == lang for cv in (api_cvs or []))
+    cms_public = request.app.state.cms_public_origin
+    cv_url = f"{cms_public}/api/public/download-cv?lang={lang}" if cv_exists else None
 
     return templates.TemplateResponse(
         request=request,
@@ -78,12 +85,12 @@ async def home(request: Request, lang: str, db: Session = Depends(get_db)):
         context={
             "lang": lang,
             "t": translations[lang],
-            "experiences": db_experiences,
-            "education": db_education,
-            "skills": db_skills,
-            "interests": db_interests,
-            "languages": db_languages,
-            "open_to_work": open_to_work,
+            "experiences": [x for x in (api_experiences or []) if x.get("is_featured")],
+            "education": [x for x in (api_education or []) if x.get("is_featured")],
+            "skills": [x for x in (api_skills or []) if x.get("is_featured")],
+            "interests": [x for x in (api_interests or []) if x.get("is_featured")],
+            "languages": [x for x in (api_languages or []) if x.get("is_featured")],
+            "open_to_work": (api_otw or [None])[0],
             "cv_url": cv_url,
             "current_page": "home",
         },
@@ -91,16 +98,14 @@ async def home(request: Request, lang: str, db: Session = Depends(get_db)):
 
 
 @router.get("/{lang}/projects")
-async def projects(request: Request, lang: str, db: Session = Depends(get_db)):
+async def projects(request: Request, lang: str):
     if lang not in SUPPORTED_LANGS:
         return RedirectResponse(url="/en/projects")
 
-    db_projects = (
-        db.query(models.Project)
-        .filter(models.Project.is_featured == True)
-        .order_by(models.Project.order)
-        .all()
-    )
+    client: httpx.AsyncClient = request.app.state.http_client
+    base = request.app.state.cms_base_url
+
+    api_projects = await _fetch(client, f"{base}/api/public/projects?lang={lang}")
 
     return templates.TemplateResponse(
         request=request,
@@ -108,7 +113,7 @@ async def projects(request: Request, lang: str, db: Session = Depends(get_db)):
         context={
             "lang": lang,
             "t": translations[lang],
-            "projects": db_projects,
+            "projects": api_projects or [],
             "current_page": "projects",
         },
     )

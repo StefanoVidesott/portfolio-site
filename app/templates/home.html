@@ -7,18 +7,8 @@
 {% block content %}
 <header id="home">
     <div class="header-content">
-
         <img src="{{ url_for('static', path='/images/profile.webp') }}" alt="Stefano Videsott"
             class="profile-img reveal active" fetchpriority="high">
-
-        <!-- {% if open_to_work and open_to_work.is_enabled %}
-        <div class="otw-badge reveal active">
-            <span class="otw-dot"></span>
-            <span class="otw-badge-label">
-                {% if lang == 'it' %}{{ open_to_work.badge_it }}{% else %}{{ open_to_work.badge_en }}{% endif %}
-            </span>
-        </div>
-        {% endif %} -->
 
         <h1 class="reveal delay-1">Stefano Videsott</h1>
 
@@ -35,7 +25,7 @@
                 <i class="fas fa-paper-plane mr-8"></i> {{ t['general']['get-in-touch'] }}
             </a>
             {% if cv_url %}
-            <a href="{{ cv_url }}" download class="btn btn-outline">
+            <a href="{{ cv_url }}" download="CV-Stefano_Videsott-{{ lang }}.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
                 <i class="fas fa-file-download mr-8"></i> {{ t['general']['download-cv'] }}
             </a>
             {% endif %}
@@ -51,12 +41,8 @@
                 <i class="fas fa-briefcase"></i>
             </div>
             <div class="otw-banner-body">
-                <p class="otw-banner-title">
-                    {% if lang == 'it' %}{{ open_to_work.title_it }}{% else %}{{ open_to_work.title_en }}{% endif %}
-                </p>
-                <p class="otw-banner-message">
-                    {% if lang == 'it' %}{{ open_to_work.message_it }}{% else %}{{ open_to_work.message_en }}{% endif %}
-                </p>
+                <p class="otw-banner-title">{{ open_to_work.title }}</p>
+                <p class="otw-banner-message">{{ open_to_work.message }}</p>
             </div>
             <a href="#contact" class="btn btn-primary btn-sm">
                 <i class="fas fa-paper-plane mr-8"></i> {{ t['general']['get-in-touch'] }}
@@ -81,15 +67,13 @@
     <div class="container">
         <h2 class="reveal">{{ t['home']['skills-title'] }}</h2>
         <div class="skills-container">
-
             {% for skill in skills %}
             <div class="skill base-card reveal delay-{{ loop.index }}">
                 <i class="{{ skill.icon_class }}"></i>
-                <h3>{% if lang == 'it' %}{{ skill.title_it }}{% else %}{{ skill.title_en }}{% endif %}</h3>
-                <p>{% if lang == 'it' %}{{ skill.skills_list_it }}{% else %}{{ skill.skills_list_en }}{% endif %}</p>
+                <h3>{{ skill.title }}</h3>
+                <p>{{ skill.skills_list }}</p>
             </div>
             {% endfor %}
-
         </div>
     </div>
 </section>
@@ -99,21 +83,14 @@
         <h2 class="reveal section-title">{{ t['home']['experience-title'] }}</h2>
 
         {% for job in experiences %}
-        <div
-            class="resume-card base-card {% if not job.is_highlighted %}border-secondary{% endif %} reveal delay-{{ loop.index }}">
-
-            <h3>{% if lang == 'it' %}{{ job.title_it }}{% else %}{{ job.title_en }}{% endif %} <span>@ {{ job.company
-                    }}</span></h3>
-
+        <div class="resume-card base-card {% if not job.is_highlighted %}border-secondary{% endif %} reveal delay-{{ loop.index }}">
+            <h3>{{ job.title }} <span>@ {{ job.company }}</span></h3>
             <p class="meta-info {% if not job.is_highlighted %}muted{% endif %}">
-                <i class="fas fa-calendar-alt"></i> {% if lang == 'it' %}{{ job.date_it }}{% else %}{{ job.date_en }}{%
-                endif %} &nbsp;|&nbsp;
+                <i class="fas fa-calendar-alt"></i> {{ job.date }} &nbsp;|&nbsp;
                 <i class="fas fa-map-marker-alt"></i> {{ job.location }}
             </p>
-
             <ul class="item-list">
-                {% set tasks = job.tasks_it if lang == 'it' else job.tasks_en %}
-                {% for task in tasks %}
+                {% for task in job.tasks %}
                 <li>{{ task }}</li>
                 {% endfor %}
             </ul>
@@ -128,21 +105,14 @@
         <h2 class="reveal section-title">{{ t['home']['education-title'] }}</h2>
 
         {% for edu in education %}
-        <div
-            class="resume-card base-card {% if not edu.is_highlighted %}border-secondary{% endif %} reveal delay-{{ loop.index }}">
-
-            <h3>{% if lang == 'it' %}{{ edu.title_it }}{% else %}{{ edu.title_en }}{% endif %} <span>@ {{ edu.school
-                    }}</span></h3>
-
+        <div class="resume-card base-card {% if not edu.is_highlighted %}border-secondary{% endif %} reveal delay-{{ loop.index }}">
+            <h3>{{ edu.title }} <span>@ {{ edu.school }}</span></h3>
             <p class="meta-info {% if not edu.is_highlighted %}muted{% endif %}">
-                <i class="fas fa-graduation-cap"></i> {% if lang == 'it' %}{{ edu.date_it }}{% else %}{{ edu.date_en
-                }}{% endif %} &nbsp;|&nbsp;
+                <i class="fas fa-graduation-cap"></i> {{ edu.date }} &nbsp;|&nbsp;
                 <i class="fas fa-map-marker-alt"></i> {{ edu.location }}
             </p>
-
             <ul class="item-list">
-                {% set tasks = edu.tasks_it if lang == 'it' else edu.tasks_en %}
-                {% for task in tasks %}
+                {% for task in edu.tasks %}
                 <li>{{ task }}</li>
                 {% endfor %}
             </ul>
@@ -154,23 +124,19 @@
 
 <section id="interests-languages" class="section-bg-alt">
     <div class="container container-medium two-col-layout">
-
         <div class="col-main reveal delay-1">
             <h2 class="col-title">{{ t['home']['interests-title'] }}</h2>
 
             {% for interest in interests %}
             <div class="info-card base-card">
-                <h3>{% if lang == 'it' %}{{ interest.title_it }}{% else %}{{ interest.title_en }}{% endif %}</h3>
+                <h3>{{ interest.title }}</h3>
                 <p class="info-subtitle">{{ interest.organization }}</p>
                 <p class="info-meta">
-                    <i class="fas fa-calendar-alt"></i> {% if lang == 'it' %}{{ interest.date_it }}{% else %}{{
-                    interest.date_en }}{% endif %} | <i class="fas fa-map-marker-alt"></i> {{ interest.location }}
+                    <i class="fas fa-calendar-alt"></i> {{ interest.date }} | <i class="fas fa-map-marker-alt"></i> {{ interest.location }}
                 </p>
-                <p class="info-desc">{% if lang == 'it' %}{{ interest.description_it }}{% else %}{{
-                    interest.description_en }}{% endif %}</p>
+                <p class="info-desc">{{ interest.description }}</p>
                 <ul class="item-list">
-                    {% set tasks = interest.tasks_it if lang == 'it' else interest.tasks_en %}
-                    {% for task in tasks %}
+                    {% for task in interest.tasks %}
                     <li>{{ task }}</li>
                     {% endfor %}
                 </ul>
@@ -185,18 +151,17 @@
             <div class="lang-card base-card">
                 <i class="{{ language.icon_class }}"></i>
                 <div>
-                    <h3>{% if lang == 'it' %}{{ language.title_it }}{% else %}{{ language.title_en }}{% endif %}</h3>
-                    <p>{% if lang == 'it' %}{{ language.level_it }}{% else %}{{ language.level_en }}{% endif %}</p>
+                    <h3>{{ language.title }}</h3>
+                    <p>{{ language.level }}</p>
                 </div>
             </div>
             {% endfor %}
         </div>
-
     </div>
 </section>
 
 <section id="contact" class="section-bg-default">
-    <div class="container container-medium">
+    <div class="container">
         <h2 class="reveal section-title">{{ t['home']['contact-title'] }}</h2>
 
         <div class="two-col-layout">

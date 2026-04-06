@@ -16,45 +16,36 @@
                     <div class="project base-card reveal delay-{{ loop.index }}">
 
                         <div class="project-img-wrapper">
-                            <img src="{{ project.image_url }}" alt="{% if lang == 'it' %}{{ project.title_it }}{% else %}{{ project.title_en }}{% endif %}" loading="lazy">
+                            <img src="{{ project.image_url }}" alt="{{ project.title }}" loading="lazy">
+
                             {% if project.is_case_study %}
                             <span class="project-case-study-ribbon">{{ t['projects']['case-study-badge'] }}</span>
                             {% endif %}
                         </div>
 
                         <div class="project-content">
-                            <h3>
-                                {% if lang == 'it' %}
-                                    {{ project.title_it }}
-                                {% else %}
-                                    {{ project.title_en }}
-                                {% endif %}
-                            </h3>
+                            <h3>{{ project.title }}</h3>
 
-                            <p>
-                                {% if lang == 'it' %}
-                                    {{ project.description_it }}
-                                {% else %}
-                                    {{ project.description_en }}
-                                {% endif %}
-                            </p>
+                            <p>{{ project.description }}</p>
 
                             {% if project.tags %}
                             <div class="project-tags">
-                                {% for tag in project.tags.split(',') %}
-                                <span class="project-tag">{{ tag.strip() }}</span>
+                                {% for tag in project.tags %}
+                                <span class="project-tag">{{ tag }}</span>
                                 {% endfor %}
                             </div>
                             {% endif %}
 
-                            {% if project.internal_url %}
-                                <a href="/{{ lang }}{{ project.internal_url }}" class="btn btn-sm btn-primary">
-                                    {% if lang == 'it' %}{{ project.link_it }}{% else %}{{ project.link_en }}{% endif %}
-                                </a>
-                            {% elif project.url %}
+                            {% if project.url %}
+                                {% if project.is_external %}
                                 <a href="{{ project.url }}" target="_blank" rel="noopener noreferrer" class="btn btn-sm">
-                                    {% if lang == 'it' %}{{ project.link_it }}{% else %}{{ project.link_en }}{% endif %}
+                                    {{ project.link | default('→') }}
                                 </a>
+                                {% else %}
+                                <a href="/{{ lang }}{{ project.url }}" class="btn btn-sm btn-primary">
+                                    {{ project.link | default('→') }}
+                                </a>
+                                {% endif %}
                             {% endif %}
                         </div>
                     </div>

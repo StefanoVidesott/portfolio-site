@@ -6,7 +6,8 @@ services:
       - "8001:80"
     env_file:
       - .env
-    volumes:
-      - ./data:/portfolio/data
-      - ./alembic:/portfolio/alembic
-    restart: always
+    environment:
+      - ERP_API_URL=http://host.docker.internal:8004
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped

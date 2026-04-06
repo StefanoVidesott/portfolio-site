@@ -1,14 +1,14 @@
 import os
 import secrets
+from contextlib import asynccontextmanager
 
+import httpx
 import sentry_sdk
 
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import RedirectResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from starlette.middleware.base import BaseHTTPMiddleware
-from starlette.middleware.sessions import SessionMiddleware
 from dotenv import load_dotenv
 from sentry_sdk.integrations.fastapi import FastApiIntegration
 from sentry_sdk.integrations.starlette import StarletteIntegration
@@ -17,8 +17,7 @@ from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 
 from app.shared import templates, translations, SUPPORTED_LANGS
-from app.routers import public, admin, api
-from app.cms import UPLOAD_DIR, PDF_UPLOAD_DIR
+from app.routers import public, api
 from app.limiter import limiter
 
 load_dotenv()
@@ -30,19 +29,11 @@ CURRENT_ENV = os.getenv("ENVIRONMENT", "dev")
 TURNSTILE_SITE_KEY = os.getenv("TURNSTILE_SITE_KEY", "")
 CLOUDFLARE_WEB_ANALYTICS_TOKEN = os.getenv("CLOUDFLARE_WEB_ANALYTICS_TOKEN", "")
 SENTRY_DSN = os.getenv("SENTRY_DSN", "")
-
-_secret_key = os.getenv("SECRET_KEY")
-if not _secret_key:
-    if CURRENT_ENV == "prod":
-        raise RuntimeError(
-            "SECRET_KEY environment variable must be set in production. "
-            "Generate one with: python -c \"import secrets; print(secrets.token_hex(32))\""
-        )
-    # Dev-only fallback — never used in prod
-    _secret_key = "dev-only-insecure-fallback-do-not-use-in-production"
-
-os.makedirs(UPLOAD_DIR, exist_ok=True)
-os.makedirs(PDF_UPLOAD_DIR, exist_ok=True)
+CMS_API_BASE_URL = os.getenv("CMS_API_BASE_URL", "http://host.docker.internal:8004")
+# Public origin used by the *browser* to load static assets (images, etc.).
+# Must differ from CMS_API_BASE_URL in Docker dev: the browser cannot resolve
+# host.docker.internal, so we need the host-accessible address here.
+CMS_PUBLIC_ORIGIN = os.getenv("CMS_PUBLIC_ORIGIN", "http://localhost:8004")
 
 if SENTRY_DSN:
     sentry_sdk.init(
@@ -57,9 +48,27 @@ if SENTRY_DSN:
     )
 
 # ---------------------------------------------------------------------------
+# Lifespan — manages the shared httpx client
+# ---------------------------------------------------------------------------
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Create one shared AsyncClient for the process lifetime.
+
+    Re-using a single client is more efficient than opening a new TCP connection
+    on every incoming request (connection pooling, keep-alive, DNS caching).
+    """
+    app.state.http_client = httpx.AsyncClient()
+    app.state.cms_base_url = CMS_API_BASE_URL
+    app.state.cms_public_origin = CMS_PUBLIC_ORIGIN
+    yield
+    await app.state.http_client.aclose()
+
+
+# ---------------------------------------------------------------------------
 # App & static files
 # ---------------------------------------------------------------------------
-app = FastAPI()
+app = FastAPI(lifespan=lifespan)
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
@@ -101,10 +110,9 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
                 "https://static.cloudflareinsights.com "
                 "https://umami.stefanovidesott.com;"
             ),
-            # No 'unsafe-inline' — all inline styles have been moved to CSS classes
             "style-src 'self' https://cdnjs.cloudflare.com https://fonts.googleapis.com;",
             "font-src 'self' data: https://cdnjs.cloudflare.com https://fonts.gstatic.com;",
-            "img-src 'self' data:;",
+            f"img-src 'self' data: {CMS_PUBLIC_ORIGIN};",
             "frame-src 'self' https://challenges.cloudflare.com;",
             (
                 "connect-src 'self' "
@@ -119,13 +127,11 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
 
 
 app.add_middleware(SecurityHeadersMiddleware)
-app.add_middleware(SessionMiddleware, secret_key=_secret_key)
 
 # ---------------------------------------------------------------------------
 # Routers
 # ---------------------------------------------------------------------------
 app.include_router(public.router)
-app.include_router(admin.router)
 app.include_router(api.router)
 
 # ---------------------------------------------------------------------------
