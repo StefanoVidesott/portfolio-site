@@ -35,47 +35,112 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
     revealElements.forEach(el => revealOnScroll.observe(el));
-
+// -----------------------------------------------------------------------
+    // Enhanced Hacker / Decode Animation
     // -----------------------------------------------------------------------
-    // Typing animation
-    // -----------------------------------------------------------------------
-    const typedTextSpan = document.querySelector(".typed-text");
+    const scrambleEl = document.querySelector(".typed-text");
     const cursorSpan = document.querySelector(".cursor");
 
-    if (typedTextSpan && cursorSpan) {
-        const textArray = typedTextSpan.getAttribute("data-words").split("|");
-        const typingDelay = 100;
-        const erasingDelay = 50;
-        const newTextDelay = 2000;
-        let textArrayIndex = 0;
-        let charIndex = 0;
+    if (scrambleEl) {
+        // Un set di caratteri più "tecnico" (molti simboli, meno lettere standard)
+        const CHARS = "01!@#$%^&*<>[]{}—=+_~/?\\|01";
+        const DECODE_CHAR_MS = 60;   // Tempo di "blocco" per ogni singola lettera corretta
+        const PAUSE_MS       = 2500; // Pausa a parola completata
+        const SCRAMBLE_IN_MS = 400;  // Durata della transizione puro "rumore"
 
-        function type() {
-            if (charIndex < textArray[textArrayIndex].length) {
-                if (!cursorSpan.classList.contains("typing")) cursorSpan.classList.add("typing");
-                typedTextSpan.textContent += textArray[textArrayIndex].charAt(charIndex);
-                charIndex++;
-                setTimeout(type, typingDelay);
-            } else {
-                cursorSpan.classList.remove("typing");
-                setTimeout(erase, newTextDelay);
+        const words = scrambleEl.dataset.words.split("|");
+        const rand = () => CHARS[Math.floor(Math.random() * CHARS.length)];
+
+        /** Renderizza la parte bloccata (corretta) e aggiunge il rumore in coda */
+        function render(word, lockedCount, currentLength) {
+            let out = word.slice(0, lockedCount);
+            // Il rumore riempie lo spazio rimanente fino alla currentLength
+            const noiseLength = Math.max(0, currentLength - lockedCount);
+            for (let i = 0; i < noiseLength; i++) {
+                out += rand();
+            }
+            scrambleEl.textContent = out;
+        }
+
+        /** * Transizione di puro rumore: interpola fluidamente la lunghezza
+         * dalla parola precedente a quella successiva.
+         */
+        function scrambleIn(oldLength, newLength, duration) {
+            return new Promise(resolve => {
+                const startTime = performance.now();
+
+                (function frame(now) {
+                    const elapsed = now - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+
+                    // Calcola la lunghezza attuale basandosi sul progresso
+                    const currentLength = Math.round(oldLength + (newLength - oldLength) * progress);
+
+                    let out = "";
+                    for (let i = 0; i < currentLength; i++) out += rand();
+                    scrambleEl.textContent = out;
+
+                    if (progress < 1) {
+                        requestAnimationFrame(frame);
+                    } else {
+                        resolve();
+                    }
+                })(performance.now());
+            });
+        }
+
+        /** Decodifica da sinistra a destra ad ogni frame visivo */
+        function decode(word) {
+            return new Promise(resolve => {
+                let locked = 0;
+                const startTime = performance.now();
+
+                (function frame(now) {
+                    // Calcola quante lettere dovrebbero essere bloccate in base al tempo trascorso
+                    locked = Math.floor((now - startTime) / DECODE_CHAR_MS);
+
+                    if (locked < word.length) {
+                        // Passiamo la lunghezza della parola target, così non ci sono sbalzi
+                        render(word, locked, word.length);
+                        requestAnimationFrame(frame);
+                    } else {
+                        scrambleEl.textContent = word; // Fissa la parola finale
+                        resolve();
+                    }
+                })(performance.now());
+            });
+        }
+
+        const wait = ms => new Promise(r => setTimeout(r, ms));
+
+        async function run() {
+            let i = 0;
+            let currentLength = words[i].length;
+
+            if (cursorSpan) cursorSpan.classList.add("typing");
+            await decode(words[i]);
+
+            while (true) {
+                if (cursorSpan) cursorSpan.classList.remove("typing");
+                await wait(PAUSE_MS);
+                if (cursorSpan) cursorSpan.classList.add("typing");
+
+                const nextIndex = (i + 1) % words.length;
+                const nextLength = words[nextIndex].length;
+
+                // Scramble puro passando gradualmente dalla lunghezza vecchia a quella nuova
+                await scrambleIn(currentLength, nextLength, SCRAMBLE_IN_MS);
+
+                // Decodifica la nuova parola
+                await decode(words[nextIndex]);
+
+                currentLength = nextLength;
+                i = nextIndex;
             }
         }
 
-        function erase() {
-            if (charIndex > 0) {
-                if (!cursorSpan.classList.contains("typing")) cursorSpan.classList.add("typing");
-                typedTextSpan.textContent = textArray[textArrayIndex].substring(0, charIndex - 1);
-                charIndex--;
-                setTimeout(erase, erasingDelay);
-            } else {
-                cursorSpan.classList.remove("typing");
-                textArrayIndex = (textArrayIndex + 1) % textArray.length;
-                setTimeout(type, typingDelay + 500);
-            }
-        }
-
-        setTimeout(type, newTextDelay);
+        // Avvio opzionale con un piccolo ritardo per permettere al DOM di caricare
+        setTimeout(run, 200);
     }
 
     // -----------------------------------------------------------------------
