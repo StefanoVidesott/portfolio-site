@@ -98,6 +98,11 @@ def test_wannawork_detail_page():
     assert response.status_code == 200
     assert b"WannaWork" in response.content
 
+def test_customblock_detail_page():
+    """Verifica che la pagina di dettaglio di customblock si carichi"""
+    response = client.get("/it/project/customblock")
+    assert response.status_code == 200
+    assert b"CustomBlock" in response.content
 
 def test_portfolio_detail_page():
     """Verifica che la pagina di dettaglio del portfolio si carichi"""
