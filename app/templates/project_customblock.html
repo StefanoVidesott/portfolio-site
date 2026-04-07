@@ -1,0 +1,248 @@
+{% extends "base.html" %}
+
+{% block page_title %}{{ t['customblock']['title'] }} | Stefano Videsott{% endblock %}
+{% block page_desc %}{{ t['customblock']['meta-desc'] }}{% endblock %}
+{% block og_title %}{{ t['customblock']['title'] }} | Stefano Videsott{% endblock %}
+{% block og_desc %}{{ t['customblock']['meta-desc'] }}{% endblock %}
+
+{% block content %}
+    <header id="project-header">
+        <div class="container">
+            <h1 class="reveal delay-1">{{ t['customblock']['title'] }}</h1>
+            <p class="reveal delay-2">{{ t['customblock']['subtitle'] }}</p>
+            <div class="header-buttons reveal delay-3 header-buttons-wrap">
+                <a href="https://github.com/StefanoVidesott/customblock" target="_blank" rel="noopener noreferrer" class="btn">
+                    <i class="fab fa-github mr-8"></i>{{ t['customblock']['visit-github'] }}
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <section id="project-details" class="section-bg-default">
+        <div class="container container-medium">
+
+            {# ── 1. Overview & Challenge ─────────────────────────────────────── #}
+            <div class="detail-card base-card reveal delay-1">
+                <h2>{{ t['customblock']['what-is'] }}</h2>
+                <p>{{ t['customblock']['what-is-text'] }}</p>
+                <h3>{{ t['customblock']['problem'] }}</h3>
+                <p>{{ t['customblock']['problem-text'] }}</p>
+            </div>
+
+            {# ── 2. Architecture ──────────────────────────────────────────────── #}
+            <div class="detail-card base-card reveal delay-2">
+                <h2>{{ t['customblock']['arch-title'] }}</h2>
+                <p>{{ t['customblock']['arch-desc'] }}</p>
+
+                <div class="cb-arch-grid">
+                    <div class="cb-arch-box cb-arch-box-core">
+                        <div class="cb-arch-label">core/</div>
+                        <ul class="cb-arch-list">
+                            <li>api/dynamic_crud.py</li>
+                            <li>auth/ &amp; security/rbac.py</li>
+                            <li>ui/ (builder, components)</li>
+                            <li>models/ (User, AuditLog)</li>
+                            <li>gdpr.py · flash.py</li>
+                            <li>main.py (create_app)</li>
+                        </ul>
+                    </div>
+                    <div class="cb-arch-box">
+                        <div class="cb-arch-label">customers/&lt;name&gt;/</div>
+                        <ul class="cb-arch-list">
+                            <li>models.py</li>
+                            <li>router.py</li>
+                            <li>menu.py</li>
+                            <li>migrations/</li>
+                            <li>.env</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="cb-callout">
+                    <strong>{{ t['customblock']['arch-upgrade-label'] }}</strong>
+                    {{ t['customblock']['arch-upgrade'] }}
+                </div>
+            </div>
+
+            {# ── 3. Tech Stack ────────────────────────────────────────────────── #}
+            <div class="detail-card base-card reveal delay-3">
+                <h2>{{ t['customblock']['tech'] }}</h2>
+                <table class="cb-tech-table">
+                    <tr><td>{{ t['customblock']['tech-layer-lang'] }}</td>    <td>Python 3.14</td></tr>
+                    <tr><td>{{ t['customblock']['tech-layer-web'] }}</td>     <td>FastAPI (async)</td></tr>
+                    <tr><td>{{ t['customblock']['tech-layer-orm'] }}</td>     <td>SQLAlchemy 2.x — aiomysql</td></tr>
+                    <tr><td>{{ t['customblock']['tech-layer-db'] }}</td>      <td>MySQL 8.4</td></tr>
+                    <tr><td>{{ t['customblock']['tech-layer-tpl'] }}</td>     <td>Jinja2 — ChoiceLoader</td></tr>
+                    <tr><td>{{ t['customblock']['tech-layer-ui'] }}</td>      <td>Tabler + Tabulator.js</td></tr>
+                    <tr><td>{{ t['customblock']['tech-layer-auth'] }}</td>    <td>JWT HS256 — HttpOnly cookies</td></tr>
+                    <tr><td>{{ t['customblock']['tech-layer-hash'] }}</td>    <td>bcrypt (12 rounds)</td></tr>
+                    <tr><td>{{ t['customblock']['tech-layer-mig'] }}</td>     <td>Alembic</td></tr>
+                    <tr><td>{{ t['customblock']['tech-layer-devops'] }}</td>  <td>Docker + Docker Compose</td></tr>
+                    <tr><td>{{ t['customblock']['tech-layer-cfg'] }}</td>     <td>Pydantic v2 BaseSettings</td></tr>
+                </table>
+            </div>
+
+            {# ── 4. Dynamic CRUD Engine ───────────────────────────────────────── #}
+            <div class="detail-card base-card reveal delay-4 detail-card-accent">
+                <h2><i class="fas fa-cogs detail-icon-primary"></i>{{ t['customblock']['crud-title'] }}</h2>
+                <p>{{ t['customblock']['crud-desc'] }}</p>
+
+                <table class="cb-routes-table">
+                    <thead>
+                        <tr>
+                            <th>{{ t['customblock']['crud-col-method'] }}</th>
+                            <th>{{ t['customblock']['crud-col-path'] }}</th>
+                            <th>{{ t['customblock']['crud-col-desc'] }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="cb-method cb-method-get">GET</span></td>
+                            <td class="cb-route-path">/api/tabulator{path}</td>
+                            <td class="cb-route-desc">{{ t['customblock']['crud-r1'] }}</td>
+                        </tr>
+                        <tr>
+                            <td><span class="cb-method cb-method-get">GET</span></td>
+                            <td class="cb-route-path">{path}</td>
+                            <td class="cb-route-desc">{{ t['customblock']['crud-r2'] }}</td>
+                        </tr>
+                        <tr>
+                            <td><span class="cb-method cb-method-get">GET</span></td>
+                            <td class="cb-route-path">{path}/new</td>
+                            <td class="cb-route-desc">{{ t['customblock']['crud-r3'] }}</td>
+                        </tr>
+                        <tr>
+                            <td><span class="cb-method cb-method-post">POST</span></td>
+                            <td class="cb-route-path">{path}/new</td>
+                            <td class="cb-route-desc">{{ t['customblock']['crud-r4'] }}</td>
+                        </tr>
+                        <tr>
+                            <td><span class="cb-method cb-method-get">GET</span></td>
+                            <td class="cb-route-path">{path}/{pk}</td>
+                            <td class="cb-route-desc">{{ t['customblock']['crud-r5'] }}</td>
+                        </tr>
+                        <tr>
+                            <td><span class="cb-method cb-method-get">GET</span></td>
+                            <td class="cb-route-path">{path}/{pk}/edit</td>
+                            <td class="cb-route-desc">{{ t['customblock']['crud-r6'] }}</td>
+                        </tr>
+                        <tr>
+                            <td><span class="cb-method cb-method-post">POST</span></td>
+                            <td class="cb-route-path">{path}/{pk}/edit</td>
+                            <td class="cb-route-desc">{{ t['customblock']['crud-r7'] }}</td>
+                        </tr>
+                        <tr>
+                            <td><span class="cb-method cb-method-post">POST</span></td>
+                            <td class="cb-route-path">{path}/{pk}/delete</td>
+                            <td class="cb-route-desc">{{ t['customblock']['crud-r8'] }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            {# ── 5. Server-Driven UI ──────────────────────────────────────────── #}
+            <div class="detail-card base-card reveal delay-5">
+                <h2><i class="fas fa-layer-group detail-icon-primary"></i>{{ t['customblock']['ui-title'] }}</h2>
+                <p>{{ t['customblock']['ui-desc'] }}</p>
+
+                <h3>{{ t['customblock']['ui-component-title'] }}</h3>
+                <div class="cb-component-tree"><span class="cb-tree-hl">BaseComponent</span> <span class="cb-tree-dim">(ABC)</span>
+├── <span class="cb-tree-hl">CardComponent</span>        <span class="cb-tree-dim">— Tabler card wrapper (title + body)</span>
+├── <span class="cb-tree-hl">DataGridComponent</span>    <span class="cb-tree-dim">— Key/value pairs from any ORM instance</span>
+├── <span class="cb-tree-hl">DetailComponent</span>      <span class="cb-tree-dim">— Read-only record detail page</span>
+├── <span class="cb-tree-hl">FormComponent</span>        <span class="cb-tree-dim">— Full form with validation &amp; delete</span>
+├── <span class="cb-tree-hl">RowComponent</span>         <span class="cb-tree-dim">— Bootstrap row of equal-width columns</span>
+├── <span class="cb-tree-hl">StatsCardComponent</span>   <span class="cb-tree-dim">— Single KPI metric card</span>
+└── <span class="cb-tree-hl">TabulatorComponent</span>   <span class="cb-tree-dim">— Interactive Tabulator.js data table</span></div>
+
+                <h3 style="margin-top:28px;">{{ t['customblock']['ui-metadata-title'] }}</h3>
+                <p>{{ t['customblock']['ui-metadata-desc'] }}</p>
+                <div class="cb-code"><span class="hl-key">title</span>: Mapped[str] = mapped_column(
+    String(255),
+    info={
+        <span class="hl-str">"label"</span>:       <span class="hl-val">"Project Title"</span>,
+        <span class="hl-str">"ui"</span>:          <span class="hl-val">"text"</span>,        <span class="hl-cmt"># widget: text | textarea | select | checkbox | file …</span>
+        <span class="hl-str">"visible"</span>:     <span class="hl-val">True</span>,         <span class="hl-cmt"># show column in Tabulator list view</span>
+        <span class="hl-str">"size"</span>:         <span class="hl-val">6</span>,            <span class="hl-cmt"># Bootstrap col-md-6</span>
+        <span class="hl-str">"placeholder"</span>: <span class="hl-val">"My Project"</span>,
+    }
+)</div>
+            </div>
+
+            {# ── 6. Security ──────────────────────────────────────────────────── #}
+            <div class="detail-card base-card reveal delay-6">
+                <h2><i class="fas fa-shield-alt detail-icon-primary"></i>{{ t['customblock']['security-title'] }}</h2>
+
+                <div class="cb-security-grid">
+                    <div class="cb-security-card">
+                        <div class="cb-security-icon"><i class="fas fa-key"></i></div>
+                        <h4>{{ t['customblock']['sec-jwt-title'] }}</h4>
+                        <p>{{ t['customblock']['sec-jwt-desc'] }}</p>
+                    </div>
+                    <div class="cb-security-card">
+                        <div class="cb-security-icon"><i class="fas fa-user-lock"></i></div>
+                        <h4>{{ t['customblock']['sec-rbac-title'] }}</h4>
+                        <p>{{ t['customblock']['sec-rbac-desc'] }}</p>
+                    </div>
+                    <div class="cb-security-card">
+                        <div class="cb-security-icon"><i class="fas fa-history"></i></div>
+                        <h4>{{ t['customblock']['sec-audit-title'] }}</h4>
+                        <p>{{ t['customblock']['sec-audit-desc'] }}</p>
+                    </div>
+                    <div class="cb-security-card">
+                        <div class="cb-security-icon"><i class="fas fa-user-slash"></i></div>
+                        <h4>{{ t['customblock']['sec-gdpr-title'] }}</h4>
+                        <p>{{ t['customblock']['sec-gdpr-desc'] }}</p>
+                    </div>
+                </div>
+            </div>
+
+            {# ── 7. Active Tenants ────────────────────────────────────────────── #}
+            <div class="detail-card base-card reveal delay-7">
+                <h2>{{ t['customblock']['tenants-title'] }}</h2>
+
+                <div class="cb-tenants-grid">
+                    <div class="cb-tenant-card">
+                        <div class="cb-tenant-badge">demo</div>
+                        <div class="cb-tenant-subtitle">{{ t['customblock']['tenant-demo-subtitle'] }}</div>
+                        <p>{{ t['customblock']['tenant-demo-desc'] }}</p>
+                    </div>
+                    <div class="cb-tenant-card">
+                        <div class="cb-tenant-badge">portfolio</div>
+                        <div class="cb-tenant-subtitle">{{ t['customblock']['tenant-portfolio-subtitle'] }}</div>
+                        <p>{{ t['customblock']['tenant-portfolio-desc'] }}</p>
+                    </div>
+                </div>
+            </div>
+
+            {# ── 8. Docker Architecture & cbenv.sh ────────────────────────────── #}
+            <div class="detail-card base-card reveal delay-8">
+                <h2><i class="fab fa-docker detail-icon-primary"></i>{{ t['customblock']['docker-title'] }}</h2>
+                <p>{{ t['customblock']['docker-desc'] }}</p>
+
+                <div class="cb-callout">
+                    <strong>{{ t['customblock']['docker-live-title'] }} — </strong>{{ t['customblock']['docker-live-desc'] }}
+                </div>
+
+                <h3 style="margin-top:28px;">{{ t['customblock']['docker-cli-title'] }}</h3>
+                <p>{{ t['customblock']['docker-cli-desc'] }}</p>
+
+                <ul class="tech-list" style="margin-top:16px;">
+                    <li><i class="fas fa-terminal tech-icon tech-icon-primary"></i> <code>cbdev build &lt;version&gt;</code> — {{ t['customblock']['cli-build'] }}</li>
+                    <li><i class="fas fa-play tech-icon tech-icon-primary"></i> <code>cbdev &lt;customer&gt; start</code> — {{ t['customblock']['cli-start'] }}</li>
+                    <li><i class="fas fa-database tech-icon tech-icon-primary"></i> <code>cbdev &lt;customer&gt; migrate</code> — {{ t['customblock']['cli-migrate'] }}</li>
+                    <li><i class="fas fa-terminal tech-icon tech-icon-primary"></i> <code>cbdev &lt;customer&gt; bash</code> — {{ t['customblock']['cli-bash'] }}</li>
+                    <li><i class="fas fa-trash-alt tech-icon tech-icon-primary"></i> <code>cbdev &lt;customer&gt; remove</code> — {{ t['customblock']['cli-remove'] }}</li>
+                </ul>
+            </div>
+
+            {# ── Back ─────────────────────────────────────────────────────────── #}
+            <div class="reveal delay-9 center-actions">
+                <a href="/{{ lang }}/projects" class="btn">
+                    <i class="fas fa-arrow-left mr-8"></i>{{ t['general']['back-to-projects'] }}
+                </a>
+            </div>
+
+        </div>
+    </section>
+{% endblock %}

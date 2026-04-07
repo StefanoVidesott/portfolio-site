@@ -151,6 +151,22 @@ async def project_portfolio(request: Request, lang: str):
     )
 
 
+@router.get("/{lang}/project/customblock")
+async def project_customblock(request: Request, lang: str):
+    if lang not in SUPPORTED_LANGS:
+        return RedirectResponse(url="/en/project/customblock")
+
+    return templates.TemplateResponse(
+        request=request,
+        name="project_customblock.html",
+        context={
+            "lang": lang,
+            "t": translations[lang],
+            "current_page": "project/customblock",
+        },
+    )
+
+
 @router.get("/{lang}/privacy")
 async def privacy_policy(request: Request, lang: str):
     if lang not in SUPPORTED_LANGS:
