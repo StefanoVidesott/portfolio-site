@@ -1,7 +1,7 @@
 {
     "meta": {
-        "title": "Stefano Videsott | Software Engeneer",
-        "desc": "Portfolio of Stefano Videsott, freelance Software Developer and CS student based in Trento, Italy. Specializing in Python, C++, backend systems, and web apps."
+        "title": "Stefano Videsott | Software Engineer",
+        "desc": "Portfolio of Stefano Videsott, freelance Software Engineer, Developer and CS student based in Trento, Italy. Specializing in Python, C++, backend systems, and web apps."
     },
     "nav": {
         "about": "About",
@@ -22,7 +22,7 @@
         "back-to-home": "Back to Home",
         "back-to-projects": "Back to Projects",
         "footer-text": "© 2026 Stefano Videsott. All rights reserved.",
-        "meta-desc": "Portfolio of Stefano Videsott, Software Developer and Computer Science student at the University of Trento. Discover my IT projects, web apps, and DevOps skills.",
+        "meta-desc": "Portfolio of Stefano Videsott, Software Engineer, Developer and Computer Science student at the University of Trento. Discover my IT projects, web apps, and DevOps skills.",
         "privacy-policy": "Privacy Policy",
         "privacy-consent-pre": "I have read and agree to the"
     },

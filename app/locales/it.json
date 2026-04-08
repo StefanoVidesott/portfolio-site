@@ -1,7 +1,7 @@
 {
     "meta": {
         "title": "Stefano Videsott | Software Engineer",
-        "desc": "Portfolio di Stefano Videsott, Sviluppatore Software freelance e studente di Informatica a Trento. Specializzato in Python, C++, backend system e web app."
+        "desc": "Portfolio di Stefano Videsott, Software Engineer, Sviluppatore freelance e studente di Informatica a Trento. Specializzato in Python, C++, backend system e web app."
     },
     "nav": {
         "about": "Chi Sono",
@@ -22,7 +22,7 @@
         "back-to-home": "Torna alla Home",
         "back-to-projects": "Torna ai Progetti",
         "footer-text": "© 2026 Stefano Videsott. Tutti i diritti riservati.",
-        "meta-desc": "Portfolio di Stefano Videsott, Sviluppatore Software e studente di Informatica all'Università di Trento. Scopri i miei progetti IT, app web e competenze DevOps.",
+        "meta-desc": "Portfolio di Stefano Videsott, Software Engineer Sviluppatore freelance e studente di Informatica all'Università di Trento. Scopri i miei progetti IT, app web e competenze DevOps.",
         "privacy-policy": "Privacy Policy",
         "privacy-consent-pre": "Ho letto e accetto la"
     },
