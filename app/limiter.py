@@ -89,7 +89,11 @@ def _get_client_ip(request: Request) -> str:
         # header is injected by Cloudflare itself and can be trusted.
         cf_ip = request.headers.get("CF-Connecting-IP", "").strip()
         if cf_ip:
-            return cf_ip
+            try:
+                ipaddress.ip_address(cf_ip)
+                return cf_ip
+            except ValueError:
+                pass
 
     # Direct connection or non-Cloudflare proxy: trust only the socket peer.
     # X-Forwarded-For is deliberately ignored here — it is client-controlled

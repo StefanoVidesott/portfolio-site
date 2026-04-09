@@ -35,7 +35,7 @@ SENTRY_DSN = os.getenv("SENTRY_DSN", "")
 CMS_API_BASE_URL = os.getenv("CMS_API_BASE_URL", "http://host.docker.internal:8004")
 _cms_public_origin_raw = os.getenv("CMS_PUBLIC_ORIGIN", "http://localhost:8004")
 
-_VALID_ORIGIN_RE = re.compile(r"^https?://[a-zA-Z0-9._:/-]+$")
+_VALID_ORIGIN_RE = re.compile(r"^https?://[a-zA-Z0-9._:/-]+\Z")
 if not _VALID_ORIGIN_RE.match(_cms_public_origin_raw):
     print(
         f"FATAL: CMS_PUBLIC_ORIGIN '{_cms_public_origin_raw}' is not a valid "
@@ -50,7 +50,8 @@ if SENTRY_DSN:
     sentry_sdk.init(
         dsn=SENTRY_DSN,
         enable_tracing=True,
-        traces_sample_rate=1.0,
+        traces_sample_rate=0.05,   # 5% sample — sufficient for latency profiling
+        send_default_pii=False,    # do not attach visitor IPs or request bodies
         environment=CURRENT_ENV,
         integrations=[
             StarletteIntegration(transaction_style="url"),
@@ -132,20 +133,26 @@ templates.env.globals["cloudflare_web_analytics_token"] = CLOUDFLARE_WEB_ANALYTI
 # ---------------------------------------------------------------------------
 
 class BodySizeLimitMiddleware(BaseHTTPMiddleware):
-    """Reject requests whose Content-Length exceeds MAX_BODY_BYTES.
+    """Reject requests whose body exceeds MAX_BODY_BYTES.
 
-    FastAPI buffers the entire request body into memory before Pydantic
-    validation runs, so field-level constraints alone cannot prevent an OOM
-    caused by a single oversized payload. This middleware short-circuits at the
-    header level — before any body bytes are read — when the declared size
-    exceeds the cap.  Requests without a Content-Length header are allowed
-    through; Starlette's StreamingBody will handle them lazily and Pydantic's
-    own limits (ID-007) still apply.
+    Two-path enforcement:
+    1. Fast-path — Content-Length header declared: short-circuit before reading
+       any body bytes, returning 413 immediately.
+    2. Slow-path — chunked transfer encoding or missing Content-Length: wrap the
+       raw ASGI receive callable so each chunk is counted cumulatively. When the
+       running total exceeds the cap, a terminal empty chunk is injected to stop
+       further reads, keeping peak memory bounded at MAX_BODY_BYTES + one chunk.
+       The route handler receives a truncated body and may return a 422; this
+       middleware overrides that response with 413 after call_next returns.
+
+    This dual approach closes the chunked-body DoS vector (ID-016) that the
+    Content-Length-only check left open.
     """
 
     MAX_BODY_BYTES = 32 * 1024  # 32 KB — generous for any contact form payload
 
     async def dispatch(self, request: Request, call_next):
+        # ── Fast-path: Content-Length declared ──────────────────────────────
         content_length = request.headers.get("content-length")
         if content_length is not None:
             try:
@@ -159,7 +166,32 @@ class BodySizeLimitMiddleware(BaseHTTPMiddleware):
                     {"detail": "Invalid Content-Length header."},
                     status_code=400,
                 )
-        return await call_next(request)
+
+        body_bytes_received: int = 0
+        limit_exceeded: bool = False
+        original_receive = request._receive
+
+        async def capped_receive() -> dict:
+            nonlocal body_bytes_received, limit_exceeded
+            message = await original_receive()
+            if message.get("type") == "http.request":
+                body_bytes_received += len(message.get("body", b""))
+                if body_bytes_received > self.MAX_BODY_BYTES:
+                    limit_exceeded = True
+                    # Terminate the stream — no further chunks will be read.
+                    return {"type": "http.request", "body": b"", "more_body": False}
+            return message
+
+        request._receive = capped_receive
+        response = await call_next(request)
+
+        if limit_exceeded:
+            return JSONResponse(
+                {"detail": "Request body too large."},
+                status_code=413,
+            )
+
+        return response
 
 
 class SecurityHeadersMiddleware(BaseHTTPMiddleware):

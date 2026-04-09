@@ -42,11 +42,16 @@ def test_contact_form_invalid_email():
         payload = {
             "name": "Test User",
             "email": "not-an-email",
-            "message": "Hello",
+            "message": "Hello, this is a valid length test message.",  # >= 10 chars
             "turnstile_token": "test-token",
         }
         response = client.post("/api/contact", json=payload)
         assert response.status_code == 422
+        # Confirm the 422 is caused specifically by the email field, not by
+        # the message length constraint (which would mask an email validation
+        # regression if the message were too short).
+        errors = response.json()["detail"]
+        assert any(e["loc"] == ["body", "email"] for e in errors)
 
 def test_unsupported_language_redirect():
     """Verifica che una lingua non supportata (es. 'fr') reindirizzi all'inglese"""
