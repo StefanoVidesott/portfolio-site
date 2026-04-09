@@ -7,3 +7,6 @@ pytest==9.0.2
 sentry-sdk[fastapi]==2.53.0
 email-validator==2.2.0
 slowapi==0.1.9
+
+rjsmin==1.2.5
+rcssmin==1.2.2

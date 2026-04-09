@@ -11,19 +11,38 @@ router = APIRouter()
 
 
 async def _fetch(client: httpx.AsyncClient, url: str) -> list | dict:
-    """GET a CMS endpoint; return parsed JSON or [] on any error."""
+    """GET a CMS endpoint; return parsed JSON or [] on any error.
+
+    Distinguishes timeout (expected during CMS downtime) from HTTP errors and
+    unexpected failures, so operators can tell routine degradation from bugs.
+    """
     try:
         response = await client.get(url, timeout=5.0)
         response.raise_for_status()
         return response.json()
+    except httpx.TimeoutException:
+        print(f"CMS timeout [{url}]")
+        return []
+    except httpx.HTTPStatusError as e:
+        import sentry_sdk
+        print(f"CMS HTTP {e.response.status_code} [{url}]")
+        sentry_sdk.capture_exception(e)
+        return []
     except Exception as e:
-        print(f"CMS fetch error [{url}]: {e}")
+        import sentry_sdk
+        print(f"CMS unexpected error [{url}]: {e}")
+        sentry_sdk.capture_exception(e)
         return []
 
 
 # ---------------------------------------------------------------------------
 # Infrastructure
 # ---------------------------------------------------------------------------
+
+@router.get("/.well-known/security.txt", include_in_schema=False)
+async def get_security_txt():
+    return FileResponse("app/static/.well-known/security.txt", media_type="text/plain")
+
 
 @router.get("/favicon.ico", include_in_schema=False)
 async def get_favicon():

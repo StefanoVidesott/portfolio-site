@@ -19,18 +19,22 @@ async def handle_contact(
     contact: ContactRequest,
     background_tasks: BackgroundTasks,
 ):
-    if TURNSTILE_SECRET_KEY:
-        async with httpx.AsyncClient() as client:
-            response = await client.post(
-                "https://challenges.cloudflare.com/turnstile/v0/siteverify",
-                data={
-                    "secret": TURNSTILE_SECRET_KEY,
-                    "response": contact.turnstile_token,
-                },
-            )
-            result = response.json()
-            if not result.get("success"):
-                raise HTTPException(status_code=400, detail="Anti-spam check failed.")
+    if not TURNSTILE_SECRET_KEY:
+        # Fail closed: a missing secret key is a misconfiguration, not a reason
+        # to skip verification. Returning 503 signals the operator, not the user.
+        raise HTTPException(status_code=503, detail="CAPTCHA service unavailable.")
+
+    async with httpx.AsyncClient() as client:
+        response = await client.post(
+            "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+            data={
+                "secret": TURNSTILE_SECRET_KEY,
+                "response": contact.turnstile_token,
+            },
+        )
+        result = response.json()
+        if not result.get("success"):
+            raise HTTPException(status_code=400, detail="Anti-spam check failed.")
 
     background_tasks.add_task(send_email_task, contact)
     return {"status": "success", "message": "Email is being sent"}

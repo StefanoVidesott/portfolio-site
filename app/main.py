@@ -1,11 +1,14 @@
 import os
+import re
 import secrets
+import sys
 from contextlib import asynccontextmanager
 
 import httpx
 import sentry_sdk
 
 from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from starlette.middleware.base import BaseHTTPMiddleware
@@ -30,10 +33,18 @@ TURNSTILE_SITE_KEY = os.getenv("TURNSTILE_SITE_KEY", "")
 CLOUDFLARE_WEB_ANALYTICS_TOKEN = os.getenv("CLOUDFLARE_WEB_ANALYTICS_TOKEN", "")
 SENTRY_DSN = os.getenv("SENTRY_DSN", "")
 CMS_API_BASE_URL = os.getenv("CMS_API_BASE_URL", "http://host.docker.internal:8004")
-# Public origin used by the *browser* to load static assets (images, etc.).
-# Must differ from CMS_API_BASE_URL in Docker dev: the browser cannot resolve
-# host.docker.internal, so we need the host-accessible address here.
-CMS_PUBLIC_ORIGIN = os.getenv("CMS_PUBLIC_ORIGIN", "http://localhost:8004")
+_cms_public_origin_raw = os.getenv("CMS_PUBLIC_ORIGIN", "http://localhost:8004")
+
+_VALID_ORIGIN_RE = re.compile(r"^https?://[a-zA-Z0-9._:/-]+$")
+if not _VALID_ORIGIN_RE.match(_cms_public_origin_raw):
+    print(
+        f"FATAL: CMS_PUBLIC_ORIGIN '{_cms_public_origin_raw}' is not a valid "
+        "http(s) origin. Check your .env file. Refusing to start.",
+        file=sys.stderr,
+    )
+    sys.exit(1)
+
+CMS_PUBLIC_ORIGIN = _cms_public_origin_raw
 
 if SENTRY_DSN:
     sentry_sdk.init(
@@ -51,6 +62,41 @@ if SENTRY_DSN:
 # Lifespan — manages the shared httpx client
 # ---------------------------------------------------------------------------
 
+async def _load_cloudflare_networks(
+    client: httpx.AsyncClient,
+) -> list:
+    """Fetch Cloudflare's authoritative IP ranges at startup.
+
+    Falls back to the hardcoded CF_FALLBACK_NETWORKS list in limiter.py if
+    either URL is unreachable, so a Cloudflare outage never prevents the app
+    from starting — and the rate-limiter's IP-trust logic remains operative.
+    """
+    import ipaddress
+    from app.limiter import CF_FALLBACK_NETWORKS
+
+    urls = [
+        "https://www.cloudflare.com/ips-v4",
+        "https://www.cloudflare.com/ips-v6",
+    ]
+    networks: list[ipaddress.IPv4Network | ipaddress.IPv6Network] = []
+    try:
+        for url in urls:
+            resp = await client.get(url, timeout=5.0)
+            resp.raise_for_status()
+            for line in resp.text.splitlines():
+                line = line.strip()
+                if line:
+                    networks.append(ipaddress.ip_network(line, strict=False))
+        print(f"[startup] Loaded {len(networks)} Cloudflare IP networks.")
+        return networks
+    except Exception as e:
+        print(
+            f"[startup] WARNING: Could not fetch Cloudflare IP ranges ({e}). "
+            "Falling back to hardcoded list — rate-limiter trust logic is still active."
+        )
+        return CF_FALLBACK_NETWORKS
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Create one shared AsyncClient for the process lifetime.
@@ -61,6 +107,9 @@ async def lifespan(app: FastAPI):
     app.state.http_client = httpx.AsyncClient()
     app.state.cms_base_url = CMS_API_BASE_URL
     app.state.cms_public_origin = CMS_PUBLIC_ORIGIN
+    app.state.cloudflare_networks = await _load_cloudflare_networks(
+        app.state.http_client
+    )
     yield
     await app.state.http_client.aclose()
 
@@ -81,6 +130,37 @@ templates.env.globals["cloudflare_web_analytics_token"] = CLOUDFLARE_WEB_ANALYTI
 # ---------------------------------------------------------------------------
 # Middleware (order matters: last added = outermost)
 # ---------------------------------------------------------------------------
+
+class BodySizeLimitMiddleware(BaseHTTPMiddleware):
+    """Reject requests whose Content-Length exceeds MAX_BODY_BYTES.
+
+    FastAPI buffers the entire request body into memory before Pydantic
+    validation runs, so field-level constraints alone cannot prevent an OOM
+    caused by a single oversized payload. This middleware short-circuits at the
+    header level — before any body bytes are read — when the declared size
+    exceeds the cap.  Requests without a Content-Length header are allowed
+    through; Starlette's StreamingBody will handle them lazily and Pydantic's
+    own limits (ID-007) still apply.
+    """
+
+    MAX_BODY_BYTES = 32 * 1024  # 32 KB — generous for any contact form payload
+
+    async def dispatch(self, request: Request, call_next):
+        content_length = request.headers.get("content-length")
+        if content_length is not None:
+            try:
+                if int(content_length) > self.MAX_BODY_BYTES:
+                    return JSONResponse(
+                        {"detail": "Request body too large."},
+                        status_code=413,
+                    )
+            except ValueError:
+                return JSONResponse(
+                    {"detail": "Invalid Content-Length header."},
+                    status_code=400,
+                )
+        return await call_next(request)
+
 
 class SecurityHeadersMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
@@ -127,6 +207,7 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
 
 
 app.add_middleware(SecurityHeadersMiddleware)
+app.add_middleware(BodySizeLimitMiddleware)
 
 # ---------------------------------------------------------------------------
 # Routers

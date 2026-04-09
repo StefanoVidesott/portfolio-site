@@ -30,4 +30,11 @@ def send_email_task(contact: ContactRequest) -> None:
             server.send_message(msg)
     except Exception as e:
         sentry_sdk.capture_exception(e)
-        print(f"Errore invio email: {e}")
+        # Log the full submission so the contact can be recovered manually even
+        # if the SMTP delivery silently failed (ID-011: background task gives
+        # the user a 200 before delivery is confirmed).
+        print(
+            f"Errore invio email: {e}\n"
+            f"[SUBMISSION NOT DELIVERED] name={contact.name!r} "
+            f"email={contact.email!r}"
+        )
