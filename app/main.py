@@ -1,3 +1,4 @@
+import asyncio
 import os
 import re
 import secrets
@@ -8,7 +9,7 @@ import httpx
 import sentry_sdk
 
 from fastapi import FastAPI, Request
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, PlainTextResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from starlette.middleware.base import BaseHTTPMiddleware
@@ -132,6 +133,50 @@ templates.env.globals["cloudflare_web_analytics_token"] = CLOUDFLARE_WEB_ANALYTI
 # Middleware (order matters: last added = outermost)
 # ---------------------------------------------------------------------------
 
+class CurlTerminalMiddleware(BaseHTTPMiddleware):
+    """Return an ANSI-colored terminal page when the client is curl."""
+
+    async def dispatch(self, request: Request, call_next):
+        ua = request.headers.get("user-agent", "")
+        if not ua.lower().startswith("curl/"):
+            return await call_next(request)
+
+        path = request.url.path
+        if path.startswith(("/api/", "/static/", "/.well-known/")):
+            return await call_next(request)
+
+        parts = path.strip("/").split("/")
+        lang = parts[0] if parts and parts[0] in SUPPORTED_LANGS else "en"
+
+        from app.terminal import render_terminal_page
+
+        client = request.app.state.http_client
+        base = request.app.state.cms_base_url
+
+        (
+            api_experiences, api_education, api_skills, api_interests,
+            api_languages, api_otw,
+        ) = await asyncio.gather(
+            public._fetch(client, f"{base}/api/public/experiences?lang={lang}"),
+            public._fetch(client, f"{base}/api/public/educations?lang={lang}"),
+            public._fetch(client, f"{base}/api/public/skill-categories?lang={lang}"),
+            public._fetch(client, f"{base}/api/public/interests?lang={lang}"),
+            public._fetch(client, f"{base}/api/public/languages?lang={lang}"),
+            public._fetch(client, f"{base}/api/public/open-to-work?lang={lang}"),
+        )
+
+        content = render_terminal_page(lang, {
+            "t": translations[lang],
+            "experiences": [x for x in (api_experiences or []) if x.get("is_featured")],
+            "education":   [x for x in (api_education   or []) if x.get("is_featured")],
+            "skills":      [x for x in (api_skills       or []) if x.get("is_featured")],
+            "interests":   [x for x in (api_interests    or []) if x.get("is_featured")],
+            "languages":   [x for x in (api_languages    or []) if x.get("is_featured")],
+            "open_to_work": (api_otw or [None])[0],
+        })
+        return PlainTextResponse(content)
+
+
 class BodySizeLimitMiddleware(BaseHTTPMiddleware):
     """Reject requests whose body exceeds MAX_BODY_BYTES.
 
@@ -240,6 +285,7 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
 
 app.add_middleware(SecurityHeadersMiddleware)
 app.add_middleware(BodySizeLimitMiddleware)
+app.add_middleware(CurlTerminalMiddleware)
 
 # ---------------------------------------------------------------------------
 # Routers
