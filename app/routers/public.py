@@ -186,6 +186,54 @@ async def project_customblock(request: Request, lang: str):
     )
 
 
+@router.get("/{lang}/project/fas")
+async def project_fas(request: Request, lang: str):
+    if lang not in SUPPORTED_LANGS:
+        return RedirectResponse(url="/en/project/fas")
+
+    return templates.TemplateResponse(
+        request=request,
+        name="project_fas.html",
+        context={
+            "lang": lang,
+            "t": translations[lang],
+            "current_page": "project/fas",
+        },
+    )
+
+
+@router.get("/{lang}/project/svdev")
+async def project_svdev(request: Request, lang: str):
+    if lang not in SUPPORTED_LANGS:
+        return RedirectResponse(url="/en/project/svdev")
+
+    return templates.TemplateResponse(
+        request=request,
+        name="project_svdev.html",
+        context={
+            "lang": lang,
+            "t": translations[lang],
+            "current_page": "project/svdev",
+        },
+    )
+
+
+@router.get("/{lang}/project/fas-link")
+async def project_fas_link(request: Request, lang: str):
+    if lang not in SUPPORTED_LANGS:
+        return RedirectResponse(url="/en/project/fas-link")
+
+    return templates.TemplateResponse(
+        request=request,
+        name="project_fas_link.html",
+        context={
+            "lang": lang,
+            "t": translations[lang],
+            "current_page": "project/fas-link",
+        },
+    )
+
+
 @router.get("/{lang}/privacy")
 async def privacy_policy(request: Request, lang: str):
     if lang not in SUPPORTED_LANGS:

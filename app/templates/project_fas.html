@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block page_title %}{{ t['fas']['title'] }} | Stefano Videsott{% endblock %}
+{% block page_desc %}{{ t['fas']['meta-desc'] }}{% endblock %}
+{% block og_title %}{{ t['fas']['title'] }} | Stefano Videsott{% endblock %}
+{% block og_desc %}{{ t['fas']['meta-desc'] }}{% endblock %}
+
+{% block content %}
+    <header id="project-header">
+        <div class="container">
+            <h1 class="reveal delay-1">{{ t['fas']['title'] }}</h1>
+            <p class="reveal delay-2">{{ t['fas']['subtitle'] }}</p>
+        </div>
+    </header>
+
+    <section id="project-details" class="section-bg-default">
+        <div class="container container-medium">
+
+            {# ── 1. About the course ──────────────────────────────────────────── #}
+            <div class="detail-card base-card reveal delay-1">
+                <h2>{{ t['fas']['about-title'] }}</h2>
+                <p>{{ t['fas']['about-text'] }}</p>
+            </div>
+
+            {# ── 2. Curriculum ────────────────────────────────────────────────── #}
+            <div class="detail-card base-card reveal delay-2">
+                <h2>{{ t['fas']['curriculum-title'] }}</h2>
+                <div class="project-tags" style="margin-top: 12px;">
+                    <span class="project-tag">Shell</span>
+                    <span class="project-tag">Text Editors &amp; Data Wrangling</span>
+                    <span class="project-tag">Shell Scripting</span>
+                    <span class="project-tag">Python Scripting</span>
+                    <span class="project-tag">Version Control (Git)</span>
+                    <span class="project-tag">Local Infrastructure</span>
+                    <span class="project-tag">Provisioning &amp; Config Management</span>
+                    <span class="project-tag">Virtualization</span>
+                    <span class="project-tag">Containers &amp; Cloud</span>
+                    <span class="project-tag">Intro to DevOps</span>
+                    <span class="project-tag">Deploying &amp; CI/CD</span>
+                    <span class="project-tag">Monitoring &amp; Observability</span>
+                    <span class="project-tag">Infrastructure as Code</span>
+                </div>
+            </div>
+
+            {# ── 3. Projects ──────────────────────────────────────────────────── #}
+            <div class="detail-card base-card reveal delay-3 detail-card-accent">
+                <h2><i class="fas fa-folder-open detail-icon-primary"></i>{{ t['fas']['projects-title'] }}</h2>
+                <p>{{ t['fas']['projects-intro'] }}</p>
+
+                <div class="cb-tenants-grid">
+
+                    <div class="cb-tenant-card">
+                        <div class="cb-tenant-badge">{{ t['fas']['svdev-badge'] }}</div>
+                        <div class="cb-tenant-subtitle">{{ t['fas']['svdev-name'] }}</div>
+                        <p>{{ t['fas']['svdev-desc'] }}</p>
+                        <a href="/{{ lang }}/project/svdev" class="btn btn-sm btn-primary" style="margin-top: 16px; display: inline-block;">
+                            {{ t['fas']['svdev-cta'] }}
+                        </a>
+                    </div>
+
+                    <div class="cb-tenant-card">
+                        <div class="cb-tenant-badge">{{ t['fas']['link-badge'] }}</div>
+                        <div class="cb-tenant-subtitle">{{ t['fas']['link-name'] }}</div>
+                        <p>{{ t['fas']['link-desc'] }}</p>
+                        <a href="/{{ lang }}/project/fas-link" class="btn btn-sm btn-primary" style="margin-top: 16px; display: inline-block;">
+                            {{ t['fas']['link-cta'] }}
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+            {# ── Back ─────────────────────────────────────────────────────────── #}
+            <div class="reveal delay-4 center-actions">
+                <a href="/{{ lang }}/projects" class="btn">
+                    <i class="fas fa-arrow-left mr-8"></i>{{ t['general']['back-to-projects'] }}
+                </a>
+            </div>
+
+        </div>
+    </section>
+{% endblock %}

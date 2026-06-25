@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block page_title %}{{ t['fas-link']['title'] }} | Stefano Videsott{% endblock %}
+{% block page_desc %}{{ t['fas-link']['meta-desc'] }}{% endblock %}
+{% block og_title %}{{ t['fas-link']['title'] }} | Stefano Videsott{% endblock %}
+{% block og_desc %}{{ t['fas-link']['meta-desc'] }}{% endblock %}
+
+{% block content %}
+    <header id="project-header">
+        <div class="container">
+            <h1 class="reveal delay-1">{{ t['fas-link']['title'] }}</h1>
+            <p class="reveal delay-2">{{ t['fas-link']['subtitle'] }}</p>
+            <div class="header-buttons reveal delay-3 header-buttons-wrap">
+                <a href="{{ url_for('static', path='/docs/presentazione-link_shortner.pdf') }}" download class="btn btn-primary">
+                    <i class="fas fa-download mr-8"></i>{{ t['fas']['download-slides'] }}
+                </a>
+                <a href="https://github.com/StefanoVidesott/link_shortner-fas" target="_blank" rel="noopener noreferrer" class="btn">
+                    <i class="fab fa-github mr-8"></i>{{ t['fas-link']['visit-github'] }}
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <section id="project-details" class="section-bg-default">
+        <div class="container container-medium">
+
+            {# ── 1. Overview ──────────────────────────────────────────────────── #}
+            <div class="detail-card base-card reveal delay-1">
+                <h2>{{ t['fas-link']['what-is'] }}</h2>
+                <p>{{ t['fas-link']['what-is-text'] }}</p>
+            </div>
+
+            {# ── 2. Observability Stack ───────────────────────────────────────── #}
+            <div class="detail-card base-card reveal delay-2 detail-card-accent">
+                <h2><i class="fas fa-chart-line detail-icon-primary"></i>{{ t['fas-link']['obs-title'] }}</h2>
+                <p>{{ t['fas-link']['obs-text'] }}</p>
+                <ul class="item-list" style="margin-top: 16px;">
+                    <li>{{ t['fas-link']['obs-prometheus'] }}</li>
+                    <li>{{ t['fas-link']['obs-loki'] }}</li>
+                    <li>{{ t['fas-link']['obs-grafana'] }}</li>
+                    <li>{{ t['fas-link']['obs-sentry'] }}</li>
+                </ul>
+            </div>
+
+            {# ── 3. Tech Stack ────────────────────────────────────────────────── #}
+            <div class="detail-card base-card reveal delay-3">
+                <h2>{{ t['fas-link']['tech-title'] }}</h2>
+                <div class="project-tags" style="margin-top: 12px;">
+                    <span class="project-tag">Python / Flask</span>
+                    <span class="project-tag">MySQL</span>
+                    <span class="project-tag">Prometheus</span>
+                    <span class="project-tag">Grafana</span>
+                    <span class="project-tag">Loki</span>
+                    <span class="project-tag">Promtail</span>
+                    <span class="project-tag">Docker Compose</span>
+                    <span class="project-tag">Ansible</span>
+                    <span class="project-tag">Sentry</span>
+                    <span class="project-tag">Swagger / OpenAPI</span>
+                </div>
+            </div>
+
+            {# ── 4. Deployment ────────────────────────────────────────────────── #}
+            <div class="detail-card base-card reveal delay-4">
+                <h2><i class="fas fa-server detail-icon-primary"></i>{{ t['fas-link']['deploy-title'] }}</h2>
+                <p>{{ t['fas-link']['deploy-text'] }}</p>
+            </div>
+
+            {# ── 5. Team ──────────────────────────────────────────────────────── #}
+            <div class="detail-card base-card reveal delay-5">
+                <h2><i class="fas fa-users detail-icon-primary"></i>{{ t['fas-link']['team-title'] }}</h2>
+                <p>{{ t['fas-link']['team-text'] }}</p>
+            </div>
+
+            {# ── Back ─────────────────────────────────────────────────────────── #}
+            <div class="reveal delay-6 center-actions">
+                <a href="/{{ lang }}/projects" class="btn">
+                    <i class="fas fa-arrow-left mr-8"></i>{{ t['general']['back-to-projects'] }}
+                </a>
+            </div>
+
+        </div>
+    </section>
+{% endblock %}

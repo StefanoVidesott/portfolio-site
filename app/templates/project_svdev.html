@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block page_title %}{{ t['svdev']['title'] }} | Stefano Videsott{% endblock %}
+{% block page_desc %}{{ t['svdev']['meta-desc'] }}{% endblock %}
+{% block og_title %}{{ t['svdev']['title'] }} | Stefano Videsott{% endblock %}
+{% block og_desc %}{{ t['svdev']['meta-desc'] }}{% endblock %}
+
+{% block content %}
+    <header id="project-header">
+        <div class="container">
+            <h1 class="reveal delay-1">{{ t['svdev']['title'] }}</h1>
+            <p class="reveal delay-2">{{ t['svdev']['subtitle'] }}</p>
+            <div class="header-buttons reveal delay-3 header-buttons-wrap">
+                <a href="{{ url_for('static', path='/docs/presentazione-svdev.pdf') }}" download class="btn btn-primary">
+                    <i class="fas fa-download mr-8"></i>{{ t['fas']['download-slides'] }}
+                </a>
+                <a href="https://codeberg.org/StefanoVidesott/svdev" target="_blank" rel="noopener noreferrer" class="btn">
+                    <i class="fas fa-code-branch mr-8"></i>{{ t['svdev']['visit-codeberg'] }}
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <section id="project-details" class="section-bg-default">
+        <div class="container container-medium">
+
+            {# ── 1. Overview ──────────────────────────────────────────────────── #}
+            <div class="detail-card base-card reveal delay-1">
+                <h2>{{ t['svdev']['what-is'] }}</h2>
+                <p>{{ t['svdev']['what-is-text'] }}</p>
+            </div>
+
+            {# ── 2. Architecture Highlight ─────────────────────────────────────── #}
+            <div class="detail-card base-card reveal delay-2 detail-card-accent">
+                <h2><i class="fab fa-docker detail-icon-primary"></i>{{ t['svdev']['arch-title'] }}</h2>
+                <p>{{ t['svdev']['arch-text'] }}</p>
+            </div>
+
+            {# ── 3. CLI Commands ──────────────────────────────────────────────── #}
+            <div class="detail-card base-card reveal delay-3">
+                <h2><i class="fas fa-terminal detail-icon-primary"></i>{{ t['svdev']['commands-title'] }}</h2>
+                <ul class="tech-list" style="margin-top: 12px;">
+                    <li><i class="fas fa-plus tech-icon tech-icon-primary"></i> <code>svdev new</code> — {{ t['svdev']['cmd-new-desc'] }}</li>
+                    <li><i class="fas fa-list tech-icon tech-icon-primary"></i> <code>svdev list / status</code> — {{ t['svdev']['cmd-list-desc'] }}</li>
+                    <li><i class="fas fa-play tech-icon tech-icon-primary"></i> <code>svdev start / stop / restart / logs</code> — {{ t['svdev']['cmd-lifecycle-desc'] }}</li>
+                    <li><i class="fas fa-terminal tech-icon tech-icon-primary"></i> <code>svdev bash / edit</code> — {{ t['svdev']['cmd-bash-desc'] }}</li>
+                    <li><i class="fas fa-trash-alt tech-icon tech-icon-primary"></i> <code>svdev remove</code> — {{ t['svdev']['cmd-remove-desc'] }}</li>
+                </ul>
+            </div>
+
+            {# ── 4. Built-in Docs Tenant ──────────────────────────────────────── #}
+            <div class="detail-card base-card reveal delay-4">
+                <h2><i class="fas fa-book detail-icon-primary"></i>{{ t['svdev']['docs-title'] }}</h2>
+                <p>{{ t['svdev']['docs-text'] }}</p>
+            </div>
+
+            {# ── 5. Tech Stack ────────────────────────────────────────────────── #}
+            <div class="detail-card base-card reveal delay-5">
+                <h2>{{ t['svdev']['tech-title'] }}</h2>
+                <div class="project-tags" style="margin-top: 12px;">
+                    <span class="project-tag">Python</span>
+                    <span class="project-tag">Click</span>
+                    <span class="project-tag">Rich</span>
+                    <span class="project-tag">Docker SDK</span>
+                    <span class="project-tag">FastAPI</span>
+                    <span class="project-tag">Jinja2</span>
+                    <span class="project-tag">Docker Compose</span>
+                    <span class="project-tag">Bash</span>
+                </div>
+            </div>
+
+            {# ── Back ─────────────────────────────────────────────────────────── #}
+            <div class="reveal delay-6 center-actions">
+                <a href="/{{ lang }}/projects" class="btn">
+                    <i class="fas fa-arrow-left mr-8"></i>{{ t['general']['back-to-projects'] }}
+                </a>
+            </div>
+
+        </div>
+    </section>
+{% endblock %}
