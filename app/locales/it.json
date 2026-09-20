@@ -79,7 +79,8 @@
             "sending": "Invio in corso...",
             "captcha_wait": "Per favore, attendi la verifica di sicurezza.",
             "success": "Messaggio inviato con successo! Ti risponderò al più presto.",
-            "error": "Si è verificato un errore. Riprova più tardi o scrivimi direttamente via mail."
+            "error": "Si è verificato un errore. Riprova più tardi o scrivimi direttamente via mail.",
+            "invalid": "Controlla i dati inseriti: il messaggio deve avere da 10 a 2000 caratteri e l'email deve essere valida."
         }
     },
     "projects": {

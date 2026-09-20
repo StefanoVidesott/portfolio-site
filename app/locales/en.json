@@ -79,7 +79,8 @@
             "sending": "Sending...",
             "captcha_wait": "Please wait for the security check.",
             "success": "Message sent successfully! I will get back to you soon.",
-            "error": "An error occurred. Please try again later or email me directly."
+            "error": "An error occurred. Please try again later or email me directly.",
+            "invalid": "Please check your input: the message must be 10 to 2000 characters and the email address valid."
         }
     },
     "projects": {

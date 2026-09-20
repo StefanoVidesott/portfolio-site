@@ -105,3 +105,17 @@ def test_static_files_exist():
         response_sitemap = client.get("/sitemap.xml")
         assert response_sitemap.status_code == 200
         assert b"xml" in response_sitemap.content
+
+
+def test_contact_message_keeps_newlines_and_name_strips_them():
+    """Message keeps line breaks (body only); name loses them (Subject header)."""
+    from app.schemas import ContactRequest
+
+    c = ContactRequest(
+        name="Mar\nio",
+        email="a@example.com",
+        message="riga uno\r\nriga due",
+        turnstile_token="t",
+    )
+    assert c.name == "Mario"
+    assert c.message == "riga uno\nriga due"

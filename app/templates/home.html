@@ -190,12 +190,13 @@
                           data-msg-captcha="{{ t['home']['contact-form']['captcha_wait'] }}"
                           data-msg-sending="{{ t['home']['contact-form']['sending'] }}"
                           data-msg-success="{{ t['home']['contact-form']['success'] }}"
-                          data-msg-error="{{ t['home']['contact-form']['error'] }}">
-                        <input type="text" id="name" name="name" class="form-control"
+                          data-msg-error="{{ t['home']['contact-form']['error'] }}"
+                          data-msg-invalid="{{ t['home']['contact-form']['invalid'] }}">
+                        <input type="text" id="name" name="name" class="form-control" maxlength="100"
                             placeholder="{{ t['home']['contact-form']['name'] }}" required>
                         <input type="email" id="email" name="email" class="form-control"
                             placeholder="{{ t['home']['contact-form']['email'] }}" required>
-                        <textarea id="message" name="message" class="form-control"
+                        <textarea id="message" name="message" class="form-control" minlength="10" maxlength="2000"
                             placeholder="{{ t['home']['contact-form']['message'] }}" required></textarea>
 
                         <div class="turnstile-wrapper">

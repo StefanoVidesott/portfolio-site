@@ -118,6 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const msgSending = contactForm.dataset.msgSending;
         const msgSuccess = contactForm.dataset.msgSuccess;
         const msgError = contactForm.dataset.msgError;
+        const msgInvalid = contactForm.dataset.msgInvalid || msgError;
 
         contactForm.addEventListener("submit", async (e) => {
             e.preventDefault();
@@ -158,10 +159,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     contactForm.reset();
                     if (typeof turnstile !== "undefined") turnstile.reset();
                 } else {
-                    throw new Error("Server error");
+                    throw new Error(response.status === 422 ? "invalid" : "Server error");
                 }
-            } catch {
-                formResponse.innerText = msgError;
+            } catch (err) {
+                formResponse.innerText = err.message === "invalid" ? msgInvalid : msgError;
                 formResponse.classList.add("error");
             } finally {
                 submitBtn.disabled = false;
